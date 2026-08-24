@@ -89,6 +89,53 @@
 
       .nav a:hover { color: var(--text); }
 
+      .nav-dropdown {
+        position: relative;
+      }
+
+      .nav-dropdown summary {
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        list-style: none;
+        text-transform: uppercase;
+        transition: color 0.2s ease;
+      }
+
+      .nav-dropdown summary::-webkit-details-marker { display: none; }
+      .nav-dropdown summary::after { content: "⌄"; margin-left: 5px; }
+      .nav-dropdown[open] summary, .nav-dropdown summary:hover { color: var(--text); }
+
+      .submenu {
+        position: absolute;
+        top: calc(100% + 14px);
+        left: 50%;
+        z-index: 30;
+        width: max-content;
+        min-width: 178px;
+        margin: 0;
+        padding: 8px;
+        list-style: none;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--panel-strong);
+        box-shadow: var(--shadow);
+        transform: translateX(-50%);
+      }
+
+      .submenu li { padding: 0; }
+
+      .submenu a {
+        display: block;
+        padding: 9px 10px;
+        border-radius: 8px;
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+
+      .submenu a:hover { background: rgba(255,255,255,0.06); }
+
       .container {
         max-width: 1180px;
         margin: 0 auto;
@@ -447,6 +494,18 @@
         .nav {
           justify-content: flex-start;
         }
+
+        .nav-dropdown { width: 100%; }
+
+        .nav-dropdown summary { padding: 2px 0; }
+
+        .submenu {
+          position: static;
+          width: 100%;
+          margin-top: 8px;
+          transform: none;
+          box-shadow: none;
+        }
       }
     </style>
   </head>
@@ -457,17 +516,30 @@
         <nav>
           <ul class="nav">
             <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#ai-lab">AI Lab</a></li>
-            <li><a href="ai-sdlc.html">AI SDLC</a></li>
-            <li><a href="kids-corner/ai-for-kids.html">AI for Kids</a></li>
-            <li><a href="#architecture">Architecture</a></li>
-            <li><a href="#thinking">Thinking</a></li>
-            <li><a href="#ideas">Ideas</a></li>
-            <li><a href="#impact">Impact</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li>
+              <details class="nav-dropdown">
+                <summary>Work</summary>
+                <ul class="submenu">
+                  <li><a href="case-studies.html">Case Studies</a></li>
+                  <li><a href="#experience">Experience</a></li>
+                  <li><a href="#architecture">Architecture Lab</a></li>
+                  <li><a href="#impact">Impact</a></li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details class="nav-dropdown">
+                <summary>Thinking</summary>
+                <ul class="submenu">
+                  <li><a href="#ai-lab">AI Lab</a></li>
+                  <li><a href="ai-sdlc.html">AI SDLC</a></li>
+                  <li><a href="#thinking">How I Think</a></li>
+                  <li><a href="#ideas">Ideas</a></li>
+                </ul>
+              </details>
+            </li>
+            <li><a href="kids-corner/ai-for-kids.html">Kids Corner</a></li>
+            <li><a href="#contact">Connect</a></li>
           </ul>
         </nav>
       </div>
@@ -486,7 +558,7 @@
             operate, and evolve.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#projects">Explore My Work</a>
+            <a class="button primary" href="case-studies.html">Explore My Work</a>
             <a class="button secondary" href="#ai-lab">Explore My Thinking</a>
           </div>
           <ul class="mini-stats">
@@ -583,8 +655,8 @@
 
       <section class="section" id="projects">
         <div class="section-header">
-          <h2>Inventions &amp; projects</h2>
-          <span>What I build</span>
+          <h2>Featured case studies</h2>
+          <span>How I approach the work</span>
         </div>
         <div class="grid-3">
           <article class="card project-card">
@@ -608,6 +680,9 @@
             <div class="project-detail"><strong>Approach</strong><span>Explore specialized AI assistance from requirements and design through testing, review, and deployment.</span></div>
             <div class="project-detail"><strong>Principle</strong><span>Use human approval, testing, and traceability at every consequential decision.</span></div>
           </article>
+        </div>
+        <div class="hero-actions" style="margin-top: 22px;">
+          <a class="button secondary" href="case-studies.html">View all case studies</a>
         </div>
       </section>
 
