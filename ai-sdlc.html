@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI SDLC | Arularasan Deivassigamani</title>
+    <meta name="description" content="A practical view of an AI-enabled software development lifecycle: human judgment, specialized agents, and reliable engineering delivery." />
+    <style>
+      :root {
+        --bg: #071521;
+        --panel: rgba(15, 27, 39, 0.82);
+        --line: rgba(145, 175, 203, 0.2);
+        --text: #ebf2ff;
+        --muted: #afc2d9;
+        --primary: #77d7ff;
+        --primary-2: #8ef0c7;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        color: var(--text);
+        line-height: 1.7;
+        background:
+          radial-gradient(circle at top left, rgba(119, 215, 255, 0.12), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(142, 240, 199, 0.1), transparent 30%),
+          var(--bg);
+      }
+
+      a { color: inherit; }
+      .header {
+        border-bottom: 1px solid var(--line);
+        background: rgba(7, 21, 33, 0.78);
+        backdrop-filter: blur(12px);
+      }
+      .header-inner, main, footer { max-width: 980px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+      .header-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+      .brand { font-size: 0.82rem; font-weight: 800; letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase; }
+      .back { color: var(--muted); font-size: 0.9rem; text-decoration: none; }
+      .back:hover { color: var(--primary); }
+      main { padding-top: 72px; padding-bottom: 76px; }
+      .eyebrow { color: var(--primary); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+      h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); letter-spacing: -0.065em; line-height: 0.94; margin: 14px 0 24px; max-width: 800px; }
+      h2 { font-size: clamp(1.65rem, 3vw, 2.25rem); letter-spacing: -0.045em; line-height: 1.1; margin: 0 0 14px; }
+      h3 { font-size: 1.18rem; margin: 0 0 10px; }
+      .lede { color: var(--muted); font-size: clamp(1.12rem, 2vw, 1.42rem); max-width: 760px; }
+      .byline { color: var(--muted); font-size: 0.92rem; margin: -6px 0 24px; }
+      .rule { height: 1px; background: var(--line); margin: 54px 0; }
+      .section { margin-top: 52px; }
+      p, li { color: var(--muted); }
+      .callout, .card { border: 1px solid var(--line); border-radius: 20px; background: var(--panel); }
+      .callout { padding: 26px; margin-top: 28px; }
+      .callout p { color: var(--text); font-size: 1.12rem; margin: 0; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+      .card { padding: 22px; }
+      .card p { margin: 0; }
+      .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+      .step { padding: 18px; border-radius: 16px; border: 1px solid var(--line); background: rgba(255,255,255,0.025); }
+      .step strong { color: var(--primary-2); display: block; font-size: 0.78rem; letter-spacing: 0.09em; text-transform: uppercase; }
+      .step span { display: block; margin-top: 7px; font-weight: 700; }
+      ul { padding-left: 20px; }
+      footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding-top: 26px; padding-bottom: 26px; }
+      @media (max-width: 700px) { .grid, .flow { grid-template-columns: 1fr; } main { padding-top: 50px; } }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a class="brand" href="index.html">Arul</a>
+        <a class="back" href="index.html#ai-lab">← Back to AI Lab</a>
+      </div>
+    </header>
+
+    <main>
+      <p class="eyebrow">AI · Software delivery · Engineering systems</p>
+      <h1>AI changes the SDLC when it changes the workflow.</h1>
+      <p class="byline">By Arularasan Deivassigamani · Published August 23, 2026</p>
+      <p class="lede">
+        The useful question is not whether AI can write code. It is how AI can help a team understand
+        intent, make better decisions, reduce repetitive work, and deliver reliable software faster.
+      </p>
+
+      <div class="callout">
+        <p>
+          An AI-enabled SDLC pairs human accountability with specialized AI assistance across discovery,
+          design, delivery, and operations. The goal is not autonomous software production; it is a more
+          informed, traceable, and effective engineering system.
+        </p>
+      </div>
+
+      <section class="section">
+        <h2>From a linear process to a learning loop</h2>
+        <p>
+          Traditional lifecycle stages still matter, but they should not behave like isolated handoffs.
+          In an AI SDLC, context can flow between stages: a requirement can inform an architecture decision,
+          test design, implementation plan, operational checks, and future improvements. This makes the
+          delivery process more connected—and makes feedback useful sooner.
+        </p>
+        <div class="flow" aria-label="AI software development lifecycle">
+          <div class="step"><strong>01 · Discover</strong><span>Clarify outcomes, constraints, and domain context.</span></div>
+          <div class="step"><strong>02 · Design</strong><span>Explore options, trade-offs, and technical boundaries.</span></div>
+          <div class="step"><strong>03 · Build</strong><span>Assist implementation, reviews, tests, and documentation.</span></div>
+          <div class="step"><strong>04 · Deliver</strong><span>Automate quality gates, release readiness, and change review.</span></div>
+          <div class="step"><strong>05 · Operate</strong><span>Use signals from production to investigate and learn.</span></div>
+          <div class="step"><strong>06 · Improve</strong><span>Turn delivery evidence into better patterns and practices.</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Where AI can help</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Requirements and discovery</h3>
+            <p>Summarize source material, identify ambiguous requirements, map dependencies, and turn conversations into testable outcomes.</p>
+          </article>
+          <article class="card">
+            <h3>Architecture and planning</h3>
+            <p>Compare designs against known patterns, surface risks, draft implementation plans, and make trade-offs explicit for review.</p>
+          </article>
+          <article class="card">
+            <h3>Engineering and quality</h3>
+            <p>Accelerate routine coding, generate useful test cases, explain unfamiliar code, and support focused pull-request review.</p>
+          </article>
+          <article class="card">
+            <h3>Operations and learning</h3>
+            <p>Bring together logs, runbooks, service ownership, and incidents so teams can diagnose faster and improve the system deliberately.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Agentic workflows need orchestration</h2>
+        <p>
+          A single assistant is useful, but a production-quality workflow often needs specialized agents
+          with clear responsibilities: one might retrieve trusted knowledge, another plan a change, another
+          create tests, and another verify release criteria. Orchestration connects those tasks while
+          preserving context, approvals, and a record of what happened.
+        </p>
+        <p>
+          The difficult work is not adding more agents. It is defining the boundaries, the handoffs, the
+          sources of truth, and the points where a human must decide. Good orchestration should reduce
+          cognitive overhead, not introduce a new opaque system to manage.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Guardrails are part of the design</h2>
+        <p>AI assistance should be built into engineering controls rather than treated as an exception to them.</p>
+        <ul>
+          <li>Ground responses in approved, current knowledge instead of relying on model memory alone.</li>
+          <li>Protect code, credentials, customer data, and other sensitive information with clear access boundaries.</li>
+          <li>Keep human approval for consequential changes, especially architecture, security, and production releases.</li>
+          <li>Use automated tests, policy checks, and observability to validate output in the same way other engineering changes are validated.</li>
+          <li>Measure outcomes such as lead time, quality, rework, and developer experience—not just generated lines of code.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>A practical starting point</h2>
+        <p>
+          Start with one high-friction workflow where the inputs, the desired outcome, and the quality checks
+          are already understood. Make the trusted context accessible, introduce AI assistance at a narrow
+          step, and measure whether it improves the work. Then expand from evidence—not novelty.
+        </p>
+        <p>
+          The most durable AI SDLC will be designed around people and systems: engineers retain judgment and
+          ownership, while AI helps them spend more time on the work that requires both.
+        </p>
+      </section>
+    </main>
+
+    <footer>© 2026 Arularasan Deivassigamani · AI, Cloud, Architecture, and Engineering Innovation</footer>
+  </body>
+</html>
