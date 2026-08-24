@@ -1,13 +1,582 @@
-### Welcome to My Page ( Learn! Share!! and Grow!!! )
+---
+layout: default
+title: Arularasan Deivassigamani | AI, Cloud & Engineering
+---
 
-My name is Arularasan Deivassigamani (@adeivass), and I'm a Full Stack Developer with Cloud and DevOps skills. I fell in love with computer programming even before I knew what it was.<p>
+<style>
+  :root {
+    --bg: #071521;
+    --bg-2: #0d1d2e;
+    --panel: rgba(15, 27, 39, 0.82);
+    --panel-strong: rgba(9, 19, 31, 0.96);
+    --line: rgba(145, 175, 203, 0.2);
+    --text: #ebf2ff;
+    --muted: #afc2d9;
+    --primary: #77d7ff;
+    --primary-2: #8ef0c7;
+    --accent: #98a8ff;
+    --shadow: 0 28px 60px rgba(6, 12, 20, 0.45);
+  }
 
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(119, 215, 255, 0.12), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(142, 240, 199, 0.10), transparent 30%),
+      var(--bg);
+    color: var(--text);
+  }
 
-<p>
-I realize that any software application I create must support the organizations business goals and objectives. Therefore, I am quite adept at analyzing business requirements and crafting creative, user-centric, solutions which support and automate those needs.
+  .page-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(7, 21, 33, 0.75);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
 
+  .page-header .inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
 
-### My Contact
-LinkedIn :  <a href="https://www.linkedin.com/in/adeiva/">https://www.linkedin.com/in/adeiva/ <a>
+  .brand {
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-size: 0.82rem;
+    text-decoration: none;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+  }
+
+  .nav a:hover { color: var(--text); }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 24px 80px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.25fr 0.95fr;
+    gap: 32px;
+    align-items: center;
+    padding: 56px 0 26px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    margin: 0 0 18px;
+    color: var(--primary);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 5vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+    margin: 0 0 18px;
+    max-width: 640px;
+  }
+
+  .headline {
+    font-size: clamp(1.2rem, 2vw, 1.75rem);
+    margin: 0 0 18px;
+    color: var(--muted);
+    line-height: 1.45;
+    max-width: 680px;
+  }
+
+  .hero p:not(.eyebrow):not(.muted) {
+    color: var(--muted);
+    font-size: 1.04rem;
+    line-height: 1.8;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+  }
+
+  .button.primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    color: #062531;
+  }
+
+  .button.secondary {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--line);
+    color: var(--text);
+  }
+
+  .mini-stats {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    margin: 26px 0 0;
+  }
+
+  .mini-stats li {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .visual {
+    position: relative;
+    min-height: 440px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, rgba(11, 22, 34, 1), rgba(12, 17, 31, 0.8));
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .visual::before {
+    content: "";
+    position: absolute;
+    inset: 28px;
+    border-radius: 18px;
+    background:
+      linear-gradient(90deg, rgba(119, 215, 255, 0.12), transparent 35%, rgba(142, 240, 199, 0.08)),
+      linear-gradient(rgba(148, 168, 231, 0.09), transparent 60%);
+    border: 1px solid rgba(151, 179, 219, 0.18);
+  }
+
+  .nodes {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(122, 210, 255, 0.85) 0 3px, transparent 4px),
+      radial-gradient(circle at 72% 28%, rgba(142, 240, 199, 0.82) 0 3px, transparent 4px),
+      radial-gradient(circle at 42% 76%, rgba(152, 168, 255, 0.8) 0 3px, transparent 4px),
+      radial-gradient(circle at 82% 68%, rgba(119, 215, 255, 0.8) 0 3px, transparent 4px),
+      linear-gradient(rgba(137, 177, 255, 0.25), rgba(137, 177, 255, 0.25));
+    background-size: 100% 100%;
+    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+  }
+
+  .connections {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, transparent 0%, rgba(119, 215, 255, 0.18) 22%, transparent 28%, transparent 52%, rgba(142, 240, 199, 0.18) 58%, transparent 70%),
+      linear-gradient(32deg, transparent 10%, rgba(152, 168, 255, 0.16) 30%, transparent 40%, transparent 62%, rgba(119, 215, 255, 0.18) 72%, transparent 85%);
+    animation: pulse 9s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 0.5; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1.04); }
+  }
+
+  .module {
+    background: rgba(12, 22, 32, 0.75);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px 22px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .section {
+    padding-top: 34px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .section-header h2 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    letter-spacing: -0.05em;
+  }
+
+  .section-header span {
+    color: var(--primary);
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 22px;
+  }
+
+  .card h3 {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
+    letter-spacing: -0.03em;
+  }
+
+  .card p, .card li {
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .card ul {
+    margin: 10px 0 0;
+    padding-left: 18px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+  }
+
+  .quote {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .chip {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.02);
+    color: var(--muted);
+    font-size: 0.82rem;
+    padding: 8px 12px;
+  }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 18px 16px;
+  }
+
+  .stat strong {
+    display: block;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    letter-spacing: -0.06em;
+    color: var(--primary);
+  }
+
+  .stat span {
+    display: block;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  .contact-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(9, 19, 31, 0.9);
+    padding: 22px 26px;
+  }
+
+  .contact-box a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  footer {
+    color: var(--muted);
+    padding: 26px 0 10px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 900px) {
+    .hero, .two-col, .grid-3, .impact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .page-header .inner {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .nav {
+      justify-content: flex-start;
+    }
+  }
+</style>
+
+<header class="page-header">
+  <div class="inner">
+    <a class="brand" href="#home">Arul</a>
+    <nav>
+      <ul class="nav">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#ai-lab">AI Lab</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#ideas">Ideas</a></li>
+        <li><a href="#impact">Impact</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container" id="home">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">AI • Cloud • Architecture • Innovation</p>
+      <h1>Arularasan Deivassigamani</h1>
+      <p class="headline">Technical Lead building systems that connect architecture, AI, and business outcomes.</p>
+      <p>I am a hands-on technology leader focused on software architecture, cloud engineering, intelligent platforms, and practical AI transformation. My work sits between implementation and strategy: I help teams turn complex business problems into scalable systems that ship, operate, and evolve.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#projects">Explore My Work</a>
+        <a class="button secondary" href="#ai-lab">Explore My Thinking</a>
+      </div>
+      <ul class="mini-stats">
+        <li>Cloud Modernization</li>
+        <li>AI Systems</li>
+        <li>Distributed Platforms</li>
+        <li>Technical Leadership</li>
+      </ul>
+    </div>
+
+    <div class="visual" aria-label="Abstract engineering systems illustration">
+      <div class="nodes"></div>
+      <div class="connections"></div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="section-header">
+      <h2>Engineering journey</h2>
+      <span>About</span>
+    </div>
+    <div class="two-col">
+      <div class="module">
+        <p class="quote">I do not think in isolated features. I think in systems: business objectives, architecture, data flows, operational reliability, developer productivity, and the long-term shape of the platform.</p>
+        <div class="chips">
+          <span class="chip">Software Engineering</span>
+          <span class="chip">Full-Stack</span>
+          <span class="chip">Cloud Engineering</span>
+          <span class="chip">Architecture</span>
+          <span class="chip">AI-enabled delivery</span>
+        </div>
+      </div>
+      <div class="module">
+        <p>My professional path has evolved from software engineering and full-stack development into cloud engineering, application architecture, and technical leadership. I have worked across enterprise software, microservices, cloud modernization, distributed systems, DevOps, and AI-enabled engineering workflows.</p>
+        <p>I am strongest where technical depth meets system thinking: moving between implementation details and architecture decisions without losing the business context.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="section-header">
+      <h2>Inventions &amp; projects</h2>
+      <span>What I build</span>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <h3>AI Systems</h3>
+        <p>Exploring practical AI applications for engineering workflows, enterprise knowledge, and decision support using RAG patterns, embeddings, and agentic systems.</p>
+      </article>
+      <article class="card">
+        <h3>Cloud Platforms</h3>
+        <p>Designing and modernizing distributed systems on cloud-native platforms with service decomposition, automation, and platform reliability in mind.</p>
+      </article>
+      <article class="card">
+        <h3>Developer Productivity</h3>
+        <p>Improving how engineering teams move from requirements to delivery through automation, CI/CD, platform patterns, and better developer experience.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="ai-lab">
+    <div class="section-header">
+      <h2>AI Lab</h2>
+      <span>Research &amp; direction</span>
+    </div>
+    <div class="two-col">
+      <div class="module">
+        <p>My interest in AI is not simply chat interfaces. It is how AI, architecture, and software delivery can work together to create faster, more informed, more reliable engineering systems.</p>
+        <ul>
+          <li>RAG and enterprise knowledge systems</li>
+          <li>Vector embeddings and information retrieval</li>
+          <li>AI-assisted software engineering workflows</li>
+          <li>Agentic SDLC concepts spanning planning, coding, testing, and deployment</li>
+          <li>Multi-agent and workflow orchestration patterns</li>
+        </ul>
+      </div>
+      <div class="module">
+        <p>In practice, I am interested in the transformation of software engineering itself: how to combine human judgment, automation, and domain context to improve delivery speed without sacrificing quality.</p>
+        <div class="chips">
+          <span class="chip">LLM Applications</span>
+          <span class="chip">Agentic Workflows</span>
+          <span class="chip">AI for delivery</span>
+          <span class="chip">Knowledge systems</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="architecture">
+    <div class="section-header">
+      <h2>Architecture Lab</h2>
+      <span>Systems thinking</span>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <h3>Enterprise design</h3>
+        <p>Breaking complex business challenges into scalable technical solutions, aligning domain boundaries, integrations, and operational constraints.</p>
+      </article>
+      <article class="card">
+        <h3>Distributed systems</h3>
+        <p>Designing resilient services using microservices, event-driven patterns, messaging, and cloud-native deployment approaches.</p>
+      </article>
+      <article class="card">
+        <h3>Platform engineering</h3>
+        <p>Improving delivery flow through CI/CD, infrastructure automation, runtime governance, and developer enablement.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="ideas">
+    <div class="section-header">
+      <h2>Experiments &amp; ideas</h2>
+      <span>Exploring what comes next</span>
+    </div>
+    <div class="module">
+      <p>I do not wait for the perfect moment to prototype. I explore emerging ideas through working experiments, technical validation, and architecture-first design. That means testing new patterns early, learning from real constraints, and translating what works into usable engineering systems.</p>
+      <div class="chips">
+        <span class="chip">AI-native engineering</span>
+        <span class="chip">Cloud-native modernization</span>
+        <span class="chip">Event-driven systems</span>
+        <span class="chip">Developer experience</span>
+        <span class="chip">Architecture exploration</span>
+        <span class="chip">Business-driven software</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="impact">
+    <div class="section-header">
+      <h2>Impact</h2>
+      <span>What matters</span>
+    </div>
+    <div class="impact-grid">
+      <article class="card stat">
+        <strong>Architecture</strong>
+        <span>Translating large problems into clear technical direction and scalable implementation.</span>
+      </article>
+      <article class="card stat">
+        <strong>Cloud</strong>
+        <span>Modernizing applications, platforms, and delivery pipelines across enterprise environments.</span>
+      </article>
+      <article class="card stat">
+        <strong>AI</strong>
+        <span>Applying AI to real engineering workflows rather than treating it as isolated experimentation.</span>
+      </article>
+      <article class="card stat">
+        <strong>Delivery</strong>
+        <span>Connecting technical decisions to business value, speed, reliability, and operational clarity.</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="section-header">
+      <h2>Connect</h2>
+      <span>Contact</span>
+    </div>
+    <div class="contact-box">
+      <div>
+        <p style="margin: 0; font-size: 1.1rem; font-weight: 700;">Open to conversations on architecture, AI systems, cloud platforms, and technical leadership.</p>
+      </div>
+      <a class="button primary" href="https://www.linkedin.com/in/adeiva/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Arularasan Deivassigamani • AI, Cloud, Architecture, and Engineering Innovation
+  </footer>
+</div>
 
 
