@@ -44,7 +44,7 @@ h3 { margin: 0 0 8px; font-size: 1.25rem; }
 .star { position: absolute; font-size: clamp(2rem, 5vw, 4.5rem); animation: twinkle 2.4s ease-in-out infinite alternate; }
 .star.one { left: 11%; bottom: 13%; color: var(--yellow); } .star.two { right: 12%; bottom: 17%; color: #fff; animation-delay: -1.2s; }
 .section { padding-top: 68px; }
-.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 24px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 24px; }
 .card { display: flex; flex-direction: column; min-height: 250px; padding: 24px; border: 3px solid rgba(23,48,74,.07); border-radius: 25px; background: var(--card); box-shadow: 0 15px 30px rgba(35,70,104,.09); text-decoration: none; transition: transform .2s ease; }
 .card:hover { transform: translateY(-7px) rotate(-.5deg); }
 .card-icon { display: grid; width: 70px; height: 70px; margin-bottom: 20px; place-items: center; border-radius: 22px; background: #f2eeff; font-size: 2.3rem; }
