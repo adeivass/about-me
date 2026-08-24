@@ -301,6 +301,52 @@
         padding-left: 18px;
       }
 
+      .project-card {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .project-label {
+        color: var(--primary);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .project-detail {
+        border-top: 1px solid var(--line);
+        padding-top: 12px;
+      }
+
+      .project-detail strong {
+        display: block;
+        color: var(--text);
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .project-detail span { color: var(--muted); }
+
+      .journey {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .journey-step {
+        border-left: 2px solid var(--primary);
+        padding: 10px 12px;
+        background: rgba(255,255,255,0.025);
+        border-radius: 0 12px 12px 0;
+      }
+
+      .journey-step strong { display: block; font-size: 0.9rem; }
+      .journey-step span { color: var(--muted); font-size: 0.8rem; }
+
       .two-col {
         display: grid;
         grid-template-columns: 1.1fr 0.9fr;
@@ -389,7 +435,7 @@
       }
 
       @media (max-width: 900px) {
-        .hero, .two-col, .grid-3, .impact-grid {
+        .hero, .two-col, .grid-3, .impact-grid, .journey {
           grid-template-columns: 1fr;
         }
 
@@ -418,6 +464,7 @@
             <li><a href="ai-sdlc.html">AI SDLC</a></li>
             <li><a href="kids-corner/ai-for-kids.html">AI for Kids</a></li>
             <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#thinking">Thinking</a></li>
             <li><a href="#ideas">Ideas</a></li>
             <li><a href="#impact">Impact</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -491,6 +538,13 @@
             </p>
           </div>
         </div>
+        <div class="journey" aria-label="Professional growth journey">
+          <div class="journey-step"><strong>Build</strong><span>Software engineering</span></div>
+          <div class="journey-step"><strong>Scale</strong><span>Full-stack delivery</span></div>
+          <div class="journey-step"><strong>Architect</strong><span>Cloud &amp; distributed systems</span></div>
+          <div class="journey-step"><strong>Lead</strong><span>Technical enablement</span></div>
+          <div class="journey-step"><strong>Innovate</strong><span>AI-enabled engineering</span></div>
+        </div>
       </section>
 
       <section class="section" id="experience">
@@ -533,26 +587,26 @@
           <span>What I build</span>
         </div>
         <div class="grid-3">
-          <article class="card">
-            <h3>AI Systems</h3>
-            <p>
-              Exploring practical AI applications for engineering workflows, enterprise knowledge,
-              and decision support using RAG patterns, embeddings, and agentic systems.
-            </p>
+          <article class="card project-card">
+            <span class="project-label">Innovation concept</span>
+            <h3>Engineering Knowledge Assistant</h3>
+            <div class="project-detail"><strong>Problem</strong><span>Technical knowledge is often spread across documents, systems, and teams.</span></div>
+            <div class="project-detail"><strong>Approach</strong><span>Explore RAG, embeddings, and trusted retrieval to make engineering context easier to discover.</span></div>
+            <div class="project-detail"><strong>Learning</strong><span>Useful enterprise AI depends on quality context, security, and clear evaluation—not only a capable model.</span></div>
           </article>
-          <article class="card">
-            <h3>Cloud Platforms</h3>
-            <p>
-              Designing and modernizing distributed systems on GCP and cloud-native platforms with
-              service decomposition, automation, security, and platform reliability in mind.
-            </p>
+          <article class="card project-card">
+            <span class="project-label">Engineering practice</span>
+            <h3>Cloud Modernization</h3>
+            <div class="project-detail"><strong>Problem</strong><span>Enterprise applications need to evolve without losing reliability, security, or delivery momentum.</span></div>
+            <div class="project-detail"><strong>Approach</strong><span>Apply service decomposition, cloud-native patterns, automation, and operational readiness across modernization work.</span></div>
+            <div class="project-detail"><strong>Focus</strong><span>Design systems that are easier to change, operate, and support over time.</span></div>
           </article>
-          <article class="card">
-            <h3>Developer Productivity</h3>
-            <p>
-              Improving how engineering teams move from requirements to delivery through automation,
-              CI/CD, platform patterns, and better developer experience.
-            </p>
+          <article class="card project-card">
+            <span class="project-label">Exploration</span>
+            <h3>Agentic SDLC</h3>
+            <div class="project-detail"><strong>Problem</strong><span>Too much engineering time can be spent on repetitive work and disconnected handoffs.</span></div>
+            <div class="project-detail"><strong>Approach</strong><span>Explore specialized AI assistance from requirements and design through testing, review, and deployment.</span></div>
+            <div class="project-detail"><strong>Principle</strong><span>Use human approval, testing, and traceability at every consequential decision.</span></div>
           </article>
         </div>
       </section>
@@ -594,6 +648,16 @@
             </div>
           </div>
         </div>
+        <div class="module" style="margin-top: 18px;">
+          <p class="eyebrow">AI SDLC · From requirement to production</p>
+          <div class="journey" aria-label="AI software development lifecycle flow">
+            <div class="journey-step"><strong>Understand</strong><span>Requirement context</span></div>
+            <div class="journey-step"><strong>Design</strong><span>Architecture options</span></div>
+            <div class="journey-step"><strong>Build</strong><span>Implementation support</span></div>
+            <div class="journey-step"><strong>Verify</strong><span>Tests &amp; review</span></div>
+            <div class="journey-step"><strong>Operate</strong><span>Learn from production</span></div>
+          </div>
+        </div>
       </section>
 
       <section class="section" id="architecture">
@@ -622,6 +686,27 @@
               Improving delivery flow through CI/CD, infrastructure automation, runtime governance,
               GitOps practices, and developer enablement.
             </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="thinking">
+        <div class="section-header">
+          <h2>How I think</h2>
+          <span>Engineering philosophy</span>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Start with the problem</h3>
+            <p>Technology is a means, not the outcome. I first clarify the user, business, and operational problem a system needs to solve.</p>
+          </article>
+          <article class="card">
+            <h3>Design for change</h3>
+            <p>Architecture should make the next decision easier: clear boundaries, explicit trade-offs, and systems that can evolve in production.</p>
+          </article>
+          <article class="card">
+            <h3>Automate with intent</h3>
+            <p>I use automation and AI to remove repetitive effort, improve decisions, and give engineering teams more time for meaningful problem solving.</p>
           </article>
         </div>
       </section>
@@ -673,20 +758,20 @@
         </div>
         <div class="impact-grid">
           <article class="card stat">
-            <strong>Architecture</strong>
-            <span>Translating large problems into clear technical direction and scalable implementation.</span>
+            <strong>Systems</strong>
+            <span>Turning complex problems into technical direction, clear boundaries, and scalable implementation.</span>
           </article>
           <article class="card stat">
-            <strong>Cloud</strong>
-            <span>Modernizing applications, platforms, and delivery pipelines across hybrid and cloud-native enterprise environments.</span>
+            <strong>Modernize</strong>
+            <span>Helping applications, platforms, and delivery practices move toward cloud-native ways of working.</span>
           </article>
           <article class="card stat">
-            <strong>AI</strong>
-            <span>Applying AI to real engineering workflows rather than treating it as isolated experimentation.</span>
+            <strong>Enable</strong>
+            <span>Helping engineers use cloud, automation, and AI patterns with confidence and practical guardrails.</span>
           </article>
           <article class="card stat">
-            <strong>Delivery</strong>
-            <span>Connecting technical decisions to business value, speed, reliability, and operational clarity.</span>
+            <strong>Deliver</strong>
+            <span>Connecting technical decisions to business value, delivery speed, reliability, and operational clarity.</span>
           </article>
         </div>
       </section>
