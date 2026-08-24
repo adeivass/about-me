@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask Arul | Technical Leadership Guide</title>
+    <meta name="description" content="A curated guide to Arularasan Deivassigamani's work in AI, cloud, architecture, and engineering leadership." />
+    <style>
+      :root { --bg: #071521; --panel: rgba(15,27,39,.86); --line: rgba(145,175,203,.2); --text: #ebf2ff; --muted: #afc2d9; --primary: #77d7ff; --mint: #8ef0c7; }
+      * { box-sizing: border-box; } body { margin: 0; min-height: 100vh; color: var(--text); font-family: Inter, "Segoe UI", Arial, sans-serif; background: radial-gradient(circle at top left, rgba(119,215,255,.12), transparent 30%), radial-gradient(circle at bottom right, rgba(142,240,199,.1), transparent 30%), var(--bg); }
+      a { color: inherit; }.header { border-bottom: 1px solid var(--line); background: rgba(7,21,33,.78); backdrop-filter: blur(12px); }.header-inner, main { max-width: 920px; margin: auto; padding-left: 24px; padding-right: 24px; }.header-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }.brand { font-size: .82rem; font-weight: 800; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }.back { color: var(--muted); font-size: .9rem; text-decoration: none; }.back:hover { color: var(--primary); }
+      main { padding-top: 54px; padding-bottom: 64px; }.eyebrow { color: var(--primary); font-size: .76rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }h1 { margin: 12px 0 14px; font-size: clamp(2.7rem, 6vw, 4.8rem); letter-spacing: -.065em; line-height: .95; }.lede { max-width: 700px; color: var(--muted); font-size: 1.15rem; line-height: 1.7; }.disclosure { margin: 22px 0; padding: 12px 15px; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); font-size: .86rem; }.disclosure strong { color: var(--mint); }.chat { overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: 0 22px 50px rgba(0,0,0,.2); }.chat-header { display: flex; align-items: center; gap: 11px; padding: 16px 20px; border-bottom: 1px solid var(--line); }.avatar { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; color: #062531; background: linear-gradient(135deg, var(--primary), var(--mint)); font-weight: 900; }.chat-header strong { display: block; }.chat-header span { color: var(--muted); font-size: .78rem; }.messages { display: flex; flex-direction: column; min-height: 335px; max-height: 480px; gap: 16px; overflow-y: auto; padding: 22px; }.message { max-width: 82%; padding: 13px 15px; border-radius: 15px; line-height: 1.58; }.message.assistant { align-self: flex-start; border: 1px solid var(--line); border-top-left-radius: 4px; background: rgba(255,255,255,.045); color: var(--muted); }.message.user { align-self: flex-end; border-top-right-radius: 4px; background: #1f6da1; color: white; }.message a { color: var(--primary); font-weight: 700; }.suggestions { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 20px 18px; }.suggestion { padding: 8px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: transparent; cursor: pointer; font: inherit; font-size: .8rem; text-align: left; }.suggestion:hover { border-color: var(--primary); color: var(--text); }.form { display: flex; gap: 10px; padding: 16px 20px; border-top: 1px solid var(--line); }.form input { min-width: 0; flex: 1; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; outline: none; color: var(--text); background: rgba(0,0,0,.12); font: inherit; }.form input:focus { border-color: var(--primary); }.form button { padding: 12px 17px; border: 0; border-radius: 10px; color: #052330; background: linear-gradient(135deg, var(--primary), var(--mint)); cursor: pointer; font-weight: 800; }.form button:hover { filter: brightness(1.06); }.sources { margin-top: 26px; color: var(--muted); font-size: .88rem; }.sources a { color: var(--primary); } @media (max-width: 600px) { main { padding-top: 40px; }.message { max-width: 94%; }.form { padding: 12px; }.suggestions { padding: 0 12px 14px; }.messages { padding: 16px; } }
+    </style>
+  </head>
+  <body>
+    <header class="header"><div class="header-inner"><a class="brand" href="index.html">Arul</a><a class="back" href="index.html">← Back to main site</a></div></header>
+    <main>
+      <p class="eyebrow">Technical leadership guide</p>
+      <h1>Ask Arul</h1>
+      <p class="lede">Explore the public story behind my work in AI, cloud, architecture, and engineering leadership.</p>
+      <p class="disclosure"><strong>Curated, not generative AI:</strong> this guide uses pre-written answers from public pages on this website. It does not collect, store, or send your question anywhere.</p>
+      <section class="chat" aria-label="Ask Arul conversation">
+        <div class="chat-header"><div class="avatar" aria-hidden="true">A</div><div><strong>Ask Arul</strong><span>Public technical profile guide</span></div></div>
+        <div class="messages" id="messages" aria-live="polite">
+          <div class="message assistant">Hi—ask about my AI work, cloud architecture, technical leadership, or case studies. I’ll point you to the most relevant public information on the site.</div>
+        </div>
+        <div class="suggestions" aria-label="Suggested questions">
+          <button class="suggestion" type="button">What is Arul's AI experience?</button>
+          <button class="suggestion" type="button">Explain the Agentic SDLC work.</button>
+          <button class="suggestion" type="button">What cloud platforms has he worked with?</button>
+          <button class="suggestion" type="button">How does Arul approach architecture?</button>
+          <button class="suggestion" type="button">Tell me about technical leadership.</button>
+        </div>
+        <form class="form" id="chat-form"><input id="question" type="text" autocomplete="off" placeholder="Ask a question…" aria-label="Your question" /><button type="submit">Ask</button></form>
+      </section>
+      <p class="sources">Looking for more detail? Visit the <a href="case-studies.html">case studies</a>, read the <a href="ai-sdlc.html">AI SDLC article</a>, or <a href="https://www.linkedin.com/in/adeivass" target="_blank" rel="noopener">message Arul on LinkedIn</a> for additional questions.</p>
+    </main>
+    <script>
+      const answers = [
+        { terms: ["ai", "artificial intelligence", "rag", "agent"], text: "Arul focuses on practical AI for engineering: RAG and enterprise knowledge systems, agentic workflows, multi-agent orchestration, and AI-assisted software delivery. The emphasis is on trusted context, human judgment, and production-ready guardrails—not AI demos. <a href=\"index.html#ai-lab\">Explore the AI Lab →</a>" },
+        { terms: ["sdlc", "aignition", "software development lifecycle", "agentic"], text: "The Agentic SDLC concept explores specialized assistance across requirements, architecture, implementation, testing, review, and delivery. Its central principle is clear orchestration with human approval and quality checks at consequential stages. <a href=\"ai-sdlc.html\">Read the AI SDLC article →</a>" },
+        { terms: ["cloud", "gcp", "google", "kubernetes", "openshift", "argo", "devops"], text: "Arul works across cloud modernization, GCP, cloud-native platforms, CI/CD, OpenShift and Kubernetes, Argo CD, and developer enablement. The focus is not simply migration—it is making systems easier to change, operate, and support. <a href=\"case-studies.html\">See the cloud modernization case study →</a>" },
+        { terms: ["architecture", "microservice", "system", "api", "integration"], text: "Arul approaches architecture as a way to make change easier. That means clear domain boundaries, intentional APIs and integration patterns, operational awareness, and explicit trade-offs between delivery speed, reliability, security, and future evolution. <a href=\"case-studies.html\">Explore the enterprise systems case study →</a>" },
+        { terms: ["leadership", "lead", "mentor", "team", "experience"], text: "Arul is a hands-on technical leader: close to architecture and implementation while guiding teams through complex decisions. His approach includes mentoring, technical enablement, cloud and AI adoption, and translating ambiguous challenges into executable engineering plans. <a href=\"index.html#experience\">Read the experience overview →</a>" },
+        { terms: ["case study", "project", "build", "built"], text: "The public case studies cover an Engineering Knowledge Assistant, Agentic SDLC, Complex Enterprise Systems, and Cloud Modernization. Each explains the problem, architecture, decisions, and lessons in a public-safe way. <a href=\"case-studies.html\">Open case studies →</a>" }
+      ];
+      const messages = document.getElementById("messages");
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("question");
+      function addMessage(kind, content) { const item = document.createElement("div"); item.className = "message " + kind; item.innerHTML = content; messages.appendChild(item); messages.scrollTop = messages.scrollHeight; }
+      function reply(question) {
+        const value = question.toLowerCase();
+        const match = answers.find(answer => answer.terms.some(term => value.includes(term)));
+        return match ? match.text : "I can help with AI, the Agentic SDLC, cloud platforms, architecture, technical leadership, and public case studies. Try one of the suggested questions, or visit the <a href=\"case-studies.html\">case studies</a>.";
+      }
+      function ask(question) { const clean = question.trim(); if (!clean) return; addMessage("user", clean.replace(/[&<>]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[character])); addMessage("assistant", reply(clean)); input.value = ""; }
+      form.addEventListener("submit", event => { event.preventDefault(); ask(input.value); });
+      document.querySelectorAll(".suggestion").forEach(button => button.addEventListener("click", () => ask(button.textContent)));
+    </script>
+  </body>
+</html>
