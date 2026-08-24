@@ -70,9 +70,8 @@
 
       .nav {
         display: flex;
-        flex-wrap: wrap;
         justify-content: flex-end;
-        gap: 14px;
+        gap: 6px;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -84,62 +83,73 @@
         font-size: 0.85rem;
         letter-spacing: 0.04em;
         text-transform: uppercase;
-        transition: color 0.2s ease;
-      }
-
-      .nav a:hover { color: var(--text); }
-
-      .nav-dropdown {
-        position: relative;
-      }
-
-      .nav-dropdown summary {
-        color: var(--muted);
-        cursor: pointer;
-        font-size: 0.85rem;
-        letter-spacing: 0.04em;
-        list-style: none;
-        text-transform: uppercase;
-        transition: color 0.2s ease;
-      }
-
-      .nav-dropdown summary::-webkit-details-marker { display: none; }
-      .nav-dropdown summary::after { content: "⌄"; margin-left: 5px; }
-      .nav-dropdown[open] summary, .nav-dropdown summary:hover { color: var(--text); }
-
-      .submenu {
-        position: absolute;
-        top: calc(100% + 14px);
-        left: 50%;
-        z-index: 30;
-        width: max-content;
-        min-width: 178px;
-        margin: 0;
-        padding: 8px;
-        list-style: none;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: var(--panel-strong);
-        box-shadow: var(--shadow);
-        transform: translateX(-50%);
-      }
-
-      .submenu li { padding: 0; }
-
-      .submenu a {
-        display: block;
-        padding: 9px 10px;
+        padding: 8px 10px;
         border-radius: 8px;
-        font-size: 0.78rem;
-        white-space: nowrap;
+        transition: color 0.2s ease, background 0.2s ease;
       }
 
-      .submenu a:hover { background: rgba(255,255,255,0.06); }
+      .nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
 
       .container {
         max-width: 1180px;
         margin: 0 auto;
         padding: 28px 24px 80px;
+      }
+
+      .section-rail { display: none; }
+
+      @media (min-width: 1200px) {
+        .section-rail {
+          position: fixed;
+          top: 50%;
+          left: 16px;
+          z-index: 15;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          width: 128px;
+          padding-left: 16px;
+          opacity: 0;
+          pointer-events: none;
+          transform: translate(-12px, -50%);
+          transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .section-rail::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          width: 1px;
+          background: var(--line);
+        }
+
+        body.section-rail-visible .section-rail {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translate(0, -50%);
+        }
+
+        .section-rail a {
+          color: var(--muted);
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.07em;
+          padding: 5px 0;
+          text-decoration: none;
+          text-transform: uppercase;
+          transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .section-rail a:hover, .section-rail a.active {
+          color: var(--primary);
+          transform: translateX(4px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .section-rail, .section-rail a { transition: none !important; }
       }
 
       .hero {
@@ -493,18 +503,7 @@
 
         .nav {
           justify-content: flex-start;
-        }
-
-        .nav-dropdown { width: 100%; }
-
-        .nav-dropdown summary { padding: 2px 0; }
-
-        .submenu {
-          position: static;
-          width: 100%;
-          margin-top: 8px;
-          transform: none;
-          box-shadow: none;
+          flex-wrap: wrap;
         }
       }
     </style>
@@ -516,35 +515,24 @@
         <nav>
           <ul class="nav">
             <li><a href="#home">Home</a></li>
-            <li>
-              <details class="nav-dropdown">
-                <summary>Work</summary>
-                <ul class="submenu">
-                  <li><a href="case-studies.html">Case Studies</a></li>
-                  <li><a href="#experience">Experience</a></li>
-                  <li><a href="#architecture">Architecture Lab</a></li>
-                  <li><a href="#impact">Impact</a></li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details class="nav-dropdown">
-                <summary>Thinking</summary>
-                <ul class="submenu">
-                  <li><a href="#ai-lab">AI Lab</a></li>
-                  <li><a href="ai-sdlc.html">AI SDLC</a></li>
-                  <li><a href="ask-arul.html">Ask Arul</a></li>
-                  <li><a href="#thinking">How I Think</a></li>
-                  <li><a href="#ideas">Ideas</a></li>
-                </ul>
-              </details>
-            </li>
+            <li><a href="case-studies.html">Work</a></li>
+            <li><a href="ai-sdlc.html">Thinking</a></li>
             <li><a href="kids-corner/ai-for-kids.html">Kids Corner</a></li>
             <li><a href="#contact">Connect</a></li>
           </ul>
         </nav>
       </div>
     </header>
+
+    <aside class="section-rail" aria-label="On this page">
+      <a href="#about">Journey</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Case Studies</a>
+      <a href="#ai-lab">AI Lab</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#thinking">Thinking</a>
+      <a href="#contact">Connect</a>
+    </aside>
 
     <div class="container" id="home">
       <section class="hero">
@@ -871,6 +859,22 @@
         © 2026 Arularasan Deivassigamani • AI, Cloud, Architecture, and Engineering Innovation
       </footer>
     </div>
+    <script>
+      (() => {
+        const rail = document.querySelector(".section-rail");
+        const links = [...rail.querySelectorAll("a")];
+        const sections = links.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+        document.body.classList.add("section-rail-visible");
+
+        const observer = new IntersectionObserver(entries => {
+          const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          links.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
+        }, { rootMargin: "-35% 0px -50% 0px", threshold: [0.05, 0.2, 0.5] });
+
+        sections.forEach(section => observer.observe(section));
+      })();
+    </script>
     <script src="ask-arul-widget.js" defer></script>
   </body>
 </html>
