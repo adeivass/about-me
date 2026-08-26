@@ -23,6 +23,7 @@
       @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }.agent-card { transition: none; } }
     </style>
     <style>.dialog-disclaimer { margin: 0 0 18px; padding: 12px 14px; border-left: 2px solid var(--accent); color: var(--muted); background: rgba(243,196,122,.06); font-size: .82rem; }</style>
+    <style>.copy-notice { position: fixed; top: 88px; right: 24px; z-index: 10; width: min(420px, calc(100% - 32px)); padding: 14px 16px; border: 1px solid rgba(243,196,122,.55); border-radius: 10px; color: var(--text); background: rgba(15,27,39,.96); box-shadow: 0 16px 40px rgba(0,0,0,.35); font-size: .84rem; opacity: 0; pointer-events: none; transform: translateY(-12px); transition: opacity .2s ease, transform .2s ease; }.copy-notice.is-visible { opacity: 1; transform: translateY(0); }</style>
   </head>
   <body>
     <header class="header"><div class="header-inner"><a class="brand" href="index.html">Arul</a><a class="back" href="index.html">← Back to main site</a></div></header>
@@ -42,6 +43,7 @@
       <p class="empty" id="empty">No agents match that search. Try a broader skill, outcome, or persona.</p>
     </main>
     <dialog class="prompt-dialog" id="prompt-dialog" aria-labelledby="dialog-title"><div class="dialog-header"><div><p class="dialog-kicker" id="dialog-persona">Agent prompt</p><h2 id="dialog-title">Prompt preview</h2></div><button class="dialog-close" type="button" aria-label="Close prompt preview">×</button></div><div class="full-prompt" id="full-prompt"></div><p class="dialog-disclaimer"><strong>Use at your own risk.</strong> These prompts reflect my skills, knowledge, experience, and ongoing learning in software and IT. They provide decision support, not professional advice, authorization, diagnosis, legal guidance, or proof of compliance. Review the context, evidence, security implications, and results with qualified human judgment before acting.</p><button class="dialog-copy" type="button">Copy this prompt</button></dialog>
+    <div class="copy-notice" id="copy-notice" role="status" aria-live="polite"></div>
     <footer>© 2026 Arularasan Deivassigamani · Agent Market · Start with context, end with judgment.</footer>
     <script>
       const agentGroups = {
@@ -87,6 +89,11 @@
       document.querySelectorAll(".copy-button, .dialog-copy").forEach(button => button.addEventListener("click", async () => { try { await navigator.clipboard.writeText(getPrompt(button)); button.textContent = "Copied to clipboard"; } catch { button.textContent = "Select and copy from the prompt"; } window.setTimeout(() => { button.textContent = button.classList.contains("dialog-copy") ? "Copy this prompt" : "Copy prompt"; }, 2200); }));
       document.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
       dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+    </script>
+    <script>
+      const copyNotice = document.querySelector("#copy-notice");
+      const copyDisclaimer = "Use at your own risk. These prompts reflect my skills, knowledge, experience, and ongoing learning in software and IT. Review the context, evidence, security implications, and results with qualified human judgment before acting.";
+      document.querySelectorAll(".agent-card .copy-button").forEach(button => button.addEventListener("click", () => { copyNotice.textContent = `Prompt copied. ${copyDisclaimer}`; copyNotice.classList.add("is-visible"); window.clearTimeout(copyNotice.hideTimer); copyNotice.hideTimer = window.setTimeout(() => copyNotice.classList.remove("is-visible"), 5000); }));
     </script>
   </body>
 </html>
