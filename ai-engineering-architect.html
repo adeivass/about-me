@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Engineering Architect | Arularasan Deivassigamani</title>
+    <link rel="icon" type="image/jpeg" href="adeivass.jpeg" />
+    <meta
+      name="description"
+      content="An interactive architecture laboratory exploring AI as part of the software engineering organization."
+    />
+    <style>
+      :root {
+        --bg: #071521;
+        --panel: rgba(15, 27, 39, 0.82);
+        --line: rgba(145, 175, 203, 0.2);
+        --text: #ebf2ff;
+        --muted: #afc2d9;
+        --primary: #77d7ff;
+        --primary-2: #8ef0c7;
+        --accent: #98a8ff;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 12% 8%, rgba(119, 215, 255, 0.12), transparent 28%),
+          radial-gradient(circle at 88% 82%, rgba(142, 240, 199, 0.08), transparent 28%),
+          var(--bg);
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        line-height: 1.7;
+      }
+
+      a { color: inherit; }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        border-bottom: 1px solid var(--line);
+        background: rgba(7, 21, 33, 0.78);
+        backdrop-filter: blur(12px);
+      }
+      .header-inner {
+        max-width: 1180px;
+        min-height: 72px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .brand {
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .back {
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+      .back:hover { color: var(--primary); }
+      .section-rail {
+        position: fixed;
+        top: 50%;
+        right: 22px;
+        z-index: 4;
+        display: grid;
+        gap: 8px;
+        transform: translateY(-50%);
+      }
+      .section-rail a {
+        display: flex;
+        width: 142px;
+        min-height: 28px;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        border: 1px solid var(--muted);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 0.62rem;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        text-transform: uppercase;
+        padding: 5px 9px;
+        white-space: nowrap;
+        transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      }
+      .section-rail a:hover, .section-rail a.is-active {
+        border-color: var(--primary);
+        background: var(--primary);
+        color: #062531;
+        transform: none;
+      }
+      main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 92px 24px 100px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+        align-items: center;
+        gap: 56px;
+      }
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--primary);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      h1 {
+        max-width: 760px;
+        margin: 0 0 24px;
+        color: var(--text);
+        font-size: clamp(2.8rem, 6vw, 5.8rem);
+        letter-spacing: -0.07em;
+        line-height: 0.96;
+      }
+      .lede {
+        max-width: 690px;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(1.12rem, 2vw, 1.4rem);
+        line-height: 1.65;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 32px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 13px 21px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 20px 40px rgba(3, 11, 19, 0.35);
+      }
+      .primary {
+        color: #062531;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      }
+      .secondary {
+        color: var(--text);
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .signal {
+        position: relative;
+        min-height: 480px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: linear-gradient(160deg, rgba(11, 25, 38, 0.98), rgba(9, 18, 29, 0.85));
+        box-shadow: 0 28px 60px rgba(6, 12, 20, 0.42);
+      }
+      .signal::before {
+        content: "";
+        position: absolute;
+        inset: 30px;
+        border: 1px solid rgba(151, 179, 219, 0.18);
+        border-radius: 18px;
+        background:
+          linear-gradient(90deg, rgba(119, 215, 255, 0.08), transparent 36%, rgba(142, 240, 199, 0.06)),
+          linear-gradient(rgba(148, 168, 231, 0.08), transparent 68%);
+      }
+      .signal::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.35;
+        background-image: linear-gradient(rgba(119, 215, 255, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(119, 215, 255, 0.08) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(circle at center, black, transparent 78%);
+      }
+      .orbit {
+        position: absolute;
+        inset: 19% 16%;
+        border: 1px solid rgba(119, 215, 255, 0.24);
+        border-radius: 50%;
+        transform: rotate(-24deg);
+        animation: drift 12s ease-in-out infinite alternate;
+      }
+      .orbit.two {
+        inset: 30% 8%;
+        border-color: rgba(142, 240, 199, 0.2);
+        transform: rotate(34deg);
+        animation-delay: -4s;
+      }
+      .core {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 86px;
+        height: 86px;
+        border: 1px solid rgba(235, 242, 255, 0.7);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(142, 240, 199, 0.5), rgba(119, 215, 255, 0.12) 45%, transparent 70%);
+        box-shadow: 0 0 48px rgba(119, 215, 255, 0.25);
+        transform: translate(-50%, -50%);
+      }
+      .node {
+        position: absolute;
+        width: 11px;
+        height: 11px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        background: var(--bg);
+        box-shadow: 0 0 18px rgba(119, 215, 255, 0.65);
+      }
+      .node.one { top: 24%; left: 25%; }
+      .node.two { top: 28%; right: 18%; border-color: var(--primary-2); box-shadow: 0 0 18px rgba(142, 240, 199, 0.65); }
+      .node.three { right: 22%; bottom: 22%; border-color: var(--accent); box-shadow: 0 0 18px rgba(152, 168, 255, 0.65); }
+      .node.four { bottom: 18%; left: 22%; }
+      .signal-label {
+        position: absolute;
+        right: 30px;
+        bottom: 28px;
+        z-index: 1;
+        color: var(--muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .problem {
+        max-width: 980px;
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .problem h2 {
+        max-width: 760px;
+        margin: 0 0 18px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .problem-intro {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.12rem;
+      }
+      .context-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin: 28px 0;
+        padding: 0;
+        list-style: none;
+      }
+      .context-list li {
+        padding: 13px 15px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .principle {
+        margin: 0;
+        padding: 22px 24px;
+        border-left: 3px solid var(--primary-2);
+        color: var(--text);
+        background: var(--panel);
+        font-size: 1.12rem;
+      }
+      .architecture {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .architecture h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .architecture-intro {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+      }
+      .architecture-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
+        gap: 18px;
+        margin-top: 28px;
+      }
+      .layers {
+        display: grid;
+        gap: 10px;
+      }
+      .layer {
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .layer-label strong {
+        display: block;
+        color: var(--primary-2);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .layer-label span {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .layer-nodes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .arch-node {
+        cursor: pointer;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 11px;
+        color: var(--text);
+        background: var(--panel);
+        font: inherit;
+        font-size: 0.82rem;
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      }
+      .arch-node:hover, .arch-node:focus-visible, .arch-node.is-selected {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(119, 215, 255, 0.12);
+        transform: translateY(-1px);
+      }
+      .inspector {
+        align-self: start;
+        min-height: 290px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+      }
+      .inspector-kicker {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .inspector h3 { margin: 0 0 10px; font-size: 1.35rem; }
+      .inspector p, .inspector li { color: var(--muted); }
+      .inspector p { margin: 0; }
+      .inspector ul { margin: 12px 0 0; padding-left: 18px; }
+      .inspector ul { list-style: none; padding-left: 0; }
+      .prompt-button {
+        width: 100%;
+        margin-top: 20px;
+        cursor: pointer;
+        border: 1px solid var(--primary);
+        border-radius: 999px;
+        padding: 11px 14px;
+        color: var(--primary);
+        background: rgba(119, 215, 255, 0.08);
+        font: inherit;
+        font-weight: 700;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+      .prompt-button:hover, .prompt-button:focus-visible {
+        outline: none;
+        color: #062531;
+        background: var(--primary);
+      }
+      .prompt-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: rgba(2, 9, 15, 0.78);
+        backdrop-filter: blur(8px);
+      }
+      .prompt-modal[hidden] { display: none; }
+      .prompt-dialog {
+        width: min(720px, 100%);
+        max-height: min(760px, 90vh);
+        overflow: auto;
+        padding: 26px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--panel-strong, #09131f);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+      }
+      .prompt-dialog-header {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 18px;
+      }
+      .prompt-dialog h2 { margin: 0; font-size: 1.6rem; }
+      .prompt-close {
+        cursor: pointer;
+        border: 0;
+        color: var(--muted);
+        background: transparent;
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+      .prompt-close:hover, .prompt-close:focus-visible { color: var(--text); }
+      .prompt-help { margin: 10px 0 16px; color: var(--muted); font-size: 0.9rem; }
+      .prompt-output {
+        width: 100%;
+        min-height: 300px;
+        resize: vertical;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
+        font: 0.9rem/1.65 ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .copy-prompt {
+        margin-top: 14px;
+        cursor: pointer;
+        border: 0;
+        border-radius: 999px;
+        padding: 12px 18px;
+        color: #062531;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        font: inherit;
+        font-weight: 700;
+      }
+      .prompt-warning {
+        margin: 16px 0 0;
+        padding: 13px 15px;
+        border-left: 3px solid var(--primary-2);
+        color: var(--muted);
+        background: rgba(142, 240, 199, 0.07);
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
+      .architecture-note {
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+      .pipeline {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .pipeline h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .pipeline-intro {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+      }
+      .pipeline-track {
+        display: grid;
+        grid-template-columns: repeat(9, minmax(125px, 1fr));
+        gap: 10px;
+        overflow-x: auto;
+        margin-top: 28px;
+        padding-bottom: 8px;
+      }
+      .pipeline-stage {
+        min-height: 148px;
+        cursor: pointer;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        color: var(--text);
+        text-align: left;
+        background: rgba(255, 255, 255, 0.025);
+        font: inherit;
+        transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      }
+      .pipeline-stage:hover, .pipeline-stage:focus-visible, .pipeline-stage.is-selected {
+        outline: none;
+        border-color: var(--primary-2);
+        background: rgba(142, 240, 199, 0.09);
+        transform: translateY(-2px);
+      }
+      .stage-number {
+        display: block;
+        color: var(--primary);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+      }
+      .stage-name {
+        display: block;
+        margin-top: 18px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .stage-agent {
+        display: block;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+      .pipeline-detail {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr) 150px;
+        gap: 14px;
+        align-items: center;
+        margin-top: 18px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--panel);
+      }
+      .pipeline-detail strong {
+        display: block;
+        color: var(--primary-2);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .pipeline-detail span { color: var(--muted); }
+      .agents {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .agents h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .agents-intro {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+      }
+      .agent-layout {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.65fr) minmax(0, 1.35fr);
+        gap: 18px;
+        margin-top: 28px;
+      }
+      .agent-list {
+        display: grid;
+        align-content: start;
+        gap: 8px;
+      }
+      .agent-tab {
+        cursor: pointer;
+        padding: 13px 15px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--muted);
+        text-align: left;
+        background: rgba(255, 255, 255, 0.025);
+        font: inherit;
+        transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      }
+      .agent-tab:hover, .agent-tab:focus-visible, .agent-tab.is-selected {
+        outline: none;
+        color: var(--text);
+        border-color: var(--primary);
+        background: rgba(119, 215, 255, 0.1);
+      }
+      .agent-tab small {
+        display: block;
+        margin-top: 3px;
+        color: var(--primary);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .agent-panel {
+        min-height: 300px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+      }
+      .agent-panel h3 { margin: 0 0 10px; font-size: 1.5rem; }
+      .agent-panel p { margin: 0 0 18px; color: var(--muted); }
+      .agent-facts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .agent-fact {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .agent-fact strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--primary-2);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .agent-fact span { color: var(--muted); font-size: 0.9rem; }
+      .context-architecture {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .context-architecture h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .context-architecture-intro {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+      }
+      .context-flow {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 28px;
+      }
+      .context-step {
+        min-height: 150px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .context-step strong {
+        display: block;
+        color: var(--primary);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .context-step h3 { margin: 17px 0 7px; font-size: 1.05rem; }
+      .context-step p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+      .context-guardrails {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .guardrail {
+        padding: 18px;
+        border-left: 2px solid var(--primary-2);
+        background: var(--panel);
+      }
+      .guardrail strong { display: block; margin-bottom: 6px; }
+      .guardrail span { color: var(--muted); font-size: 0.88rem; }
+      .human-loop {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .human-loop h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .human-loop-intro {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+      }
+      .decision-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 28px;
+      }
+      .decision-card {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .decision-card strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--primary-2);
+      }
+      .decision-card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+      .approval-flow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-top: 18px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--panel);
+      }
+      .approval-step {
+        padding: 10px 13px;
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(119, 215, 255, 0.09);
+        font-size: 0.85rem;
+      }
+      .approval-arrow { color: var(--primary); }
+      .challenge {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .challenge h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .challenge-intro { max-width: 720px; margin: 0; color: var(--muted); }
+      .challenge-layout {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+        gap: 18px;
+        margin-top: 28px;
+      }
+      .scenario-list { display: grid; align-content: start; gap: 8px; }
+      .scenario {
+        cursor: pointer;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--text);
+        text-align: left;
+        background: rgba(255, 255, 255, 0.025);
+        font: inherit;
+        transition: border-color 0.2s ease, background 0.2s ease;
+      }
+      .scenario:hover, .scenario:focus-visible, .scenario.is-selected {
+        outline: none;
+        border-color: var(--primary-2);
+        background: rgba(142, 240, 199, 0.09);
+      }
+      .scenario small { display: block; margin-top: 4px; color: var(--muted); }
+      .response-panel {
+        min-height: 250px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+      }
+      .response-panel h3 { margin: 0 0 10px; font-size: 1.45rem; }
+      .response-panel p { margin: 0 0 18px; color: var(--muted); }
+      .response-steps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+      .response-steps li { padding: 11px 13px; border-left: 2px solid var(--primary); color: var(--text); background: rgba(255, 255, 255, 0.025); }
+      .decisions {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .decisions h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .decisions-intro { max-width: 720px; margin: 0; color: var(--muted); }
+      .decision-table {
+        display: grid;
+        gap: 8px;
+        margin-top: 28px;
+      }
+      .decision-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.6fr) minmax(0, 1fr) minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+        padding: 17px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .decision-row strong { color: var(--text); }
+      .decision-row span { color: var(--muted); font-size: 0.9rem; }
+      .decision-row span b {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--primary-2);
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .recovery {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .recovery h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .recovery-intro { max-width: 720px; margin: 0; color: var(--muted); }
+      .recovery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 28px;
+      }
+      .recovery-step {
+        min-height: 170px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .recovery-step strong {
+        display: block;
+        color: var(--primary);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .recovery-step h3 { margin: 17px 0 7px; font-size: 1.05rem; }
+      .recovery-step p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+      .recovery-principle {
+        margin: 18px 0 0;
+        padding: 18px 20px;
+        border-left: 3px solid var(--primary-2);
+        color: var(--text);
+        background: var(--panel);
+      }
+      .metrics {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .metrics h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .metrics-intro { max-width: 720px; margin: 0; color: var(--muted); }
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 28px;
+      }
+      .metric {
+        min-height: 170px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .metric strong { display: block; color: var(--primary); font-size: 1rem; }
+      .metric h3 { margin: 18px 0 7px; font-size: 1.02rem; }
+      .metric p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+      .philosophy {
+        margin-top: 108px;
+        padding-top: 34px;
+        border-top: 1px solid var(--line);
+      }
+      .philosophy h2 {
+        max-width: 760px;
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .philosophy-intro { max-width: 720px; margin: 0; color: var(--muted); }
+      .philosophy-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 28px;
+        padding: 0;
+        list-style: none;
+      }
+      .philosophy-list li {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .philosophy-list strong { display: block; margin-bottom: 6px; color: var(--primary-2); }
+      .philosophy-list span { color: var(--muted); font-size: 0.9rem; }
+      .philosophy-quote {
+        max-width: 880px;
+        margin: 18px 0 0;
+        padding: 22px 24px;
+        border-left: 3px solid var(--primary);
+        color: var(--text);
+        font-size: 1.2rem;
+        background: var(--panel);
+      }
+      .final-cta {
+        margin-top: 108px;
+        padding: 44px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: linear-gradient(135deg, rgba(119, 215, 255, 0.1), rgba(142, 240, 199, 0.06));
+      }
+      .final-cta h2 {
+        max-width: 700px;
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.6rem);
+        letter-spacing: -0.06em;
+        line-height: 1.02;
+      }
+      .final-cta p { max-width: 660px; margin: 0; color: var(--muted); font-size: 1.08rem; }
+      .final-cta .actions { margin-top: 24px; }
+      main > section { scroll-margin-top: 104px; }
+      html.js main > section:not(.hero) {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.65s ease, transform 0.65s ease;
+      }
+      html.js main > section.is-visible, html.js main > .hero {
+        opacity: 1;
+        transform: none;
+      }
+      @media (max-width: 520px) {
+        .final-cta { padding: 26px 20px; }
+      }
+      @keyframes drift {
+        from { transform: rotate(-24deg) scale(0.98); }
+        to { transform: rotate(-17deg) scale(1.04); }
+      }
+      footer {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 24px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      @media (max-width: 850px) {
+        .section-rail {
+          position: sticky;
+          top: 72px;
+          right: auto;
+          z-index: 4;
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding: 10px 24px;
+          border-bottom: 1px solid var(--line);
+          background: rgba(7, 21, 33, 0.9);
+          transform: none;
+        }
+        .section-rail a { width: auto; min-width: max-content; justify-content: flex-start; }
+        .section-rail a:hover, .section-rail a.is-active { transform: none; }
+        .hero { grid-template-columns: 1fr; gap: 34px; }
+        .signal { min-height: 360px; }
+        .context-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .architecture-layout { grid-template-columns: 1fr; }
+        .pipeline-track { grid-template-columns: repeat(9, minmax(150px, 1fr)); }
+        .agent-layout { grid-template-columns: 1fr; }
+        .context-flow, .context-guardrails { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .challenge-layout { grid-template-columns: 1fr; }
+        .decision-row { grid-template-columns: 1fr 1fr; }
+        .recovery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .philosophy-list { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 520px) {
+        .context-list { grid-template-columns: 1fr; }
+        .layer { grid-template-columns: 1fr; gap: 8px; }
+        .pipeline-detail { grid-template-columns: 1fr; gap: 8px; }
+        .agent-facts { grid-template-columns: 1fr; }
+        .context-flow, .context-guardrails { grid-template-columns: 1fr; }
+        .decision-grid { grid-template-columns: 1fr; }
+        .decision-row { grid-template-columns: 1fr; gap: 8px; }
+        .recovery-grid { grid-template-columns: 1fr; }
+        .metric-grid { grid-template-columns: 1fr; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .orbit { animation: none; }
+        .button, .arch-node, .pipeline-stage, .section-rail a { transition: none; }
+        html.js main > section:not(.hero) { opacity: 1; transform: none; transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" style="display: inline-flex; align-items: center; gap: 10px;"><img src="adeivass.jpeg" alt="" width="34" height="34" style="border: 2px solid rgba(119,215,255,.7); border-radius: 50%; object-fit: cover;" />Arul</a>
+        <a class="back" href="index.html">← Back to main site</a>
+      </div>
+    </header>
+
+    <aside class="section-rail" aria-label="Page sections">
+      <a href="#architecture" aria-label="Architecture">Architecture</a>
+      <a href="#pipeline" aria-label="Pipeline">Pipeline</a>
+      <a href="#agents" aria-label="Agents">Agents</a>
+      <a href="#context-architecture" aria-label="Context">Context</a>
+      <a href="#human-in-the-loop" aria-label="Human loop">Human loop</a>
+      <a href="#challenge" aria-label="Challenges">Challenges</a>
+      <a href="#decisions" aria-label="Decisions">Decisions</a>
+      <a href="#failure-recovery" aria-label="Recovery">Recovery</a>
+      <a href="#metrics" aria-label="Metrics">Metrics</a>
+      <a href="#philosophy" aria-label="Philosophy">Philosophy</a>
+      <a href="#final-cta" aria-label="Contact">Contact</a>
+    </aside>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">AI Engineering Architecture</p>
+          <h1 id="page-title">What happens when AI becomes part of the engineering organization?</h1>
+          <p class="lede">
+            Exploring an agentic software engineering architecture where AI accelerates requirements,
+            architecture, development, testing, security, and delivery, while engineers retain judgment
+            at every critical decision point.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#architecture">Explore the Architecture</a>
+            <a class="button secondary" href="#challenge">Challenge the Architecture</a>
+          </div>
+        </div>
+
+        <div class="signal" aria-label="Abstract architecture signal visualization">
+          <div class="orbit"></div>
+          <div class="orbit two"></div>
+          <div class="core"></div>
+          <span class="node one"></span>
+          <span class="node two"></span>
+          <span class="node three"></span>
+          <span class="node four"></span>
+          <span class="signal-label">Human judgment · AI capability · Feedback</span>
+        </div>
+      </section>
+
+      <section class="problem" aria-labelledby="problem-title">
+        <p class="eyebrow">The problem</p>
+        <h2 id="problem-title">Software Engineering Is Becoming a Context Problem</h2>
+        <p class="problem-intro">
+          Modern software engineering involves more than writing code. Engineers must understand the
+          systems, constraints, decisions, and operational reality surrounding every change.
+        </p>
+        <ul class="context-list">
+          <li>Business requirements</li>
+          <li>Existing systems</li>
+          <li>APIs and architecture</li>
+          <li>Security policies</li>
+          <li>Coding standards</li>
+          <li>Databases and data flows</li>
+          <li>Deployment environments</li>
+          <li>Observability and operations</li>
+          <li>Historical decisions</li>
+          <li>Organizational knowledge</li>
+        </ul>
+        <p class="problem-intro">
+          AI can generate code quickly. The difficult part is giving AI the right context and the right
+          decision boundaries.
+        </p>
+        <p class="principle">
+          “The quality of an AI engineering system is constrained by the quality of the context, tools,
+          guardrails, and feedback loops around it.”
+        </p>
+      </section>
+
+      <section class="architecture" id="architecture" aria-labelledby="architecture-title">
+        <p class="eyebrow">Architecture overview</p>
+        <h2 id="architecture-title">The AI Engineering System</h2>
+        <p class="architecture-intro">
+          A layered system keeps intent, orchestration, specialized capability, enterprise context,
+          tools, and feedback connected without collapsing human accountability.
+        </p>
+        <div class="architecture-layout">
+          <div class="layers" aria-label="Interactive AI engineering architecture layers">
+            <div class="layer">
+              <div class="layer-label"><strong>Layer 01</strong><span>Human intent</span></div>
+              <div class="layer-nodes">
+                <button class="arch-node" data-title="Product Owner" data-purpose="Defines outcomes, priorities, and acceptance criteria." data-inputs="Business goals, user needs" data-outputs="Validated intent">Product Owner</button>
+                <button class="arch-node" data-title="Engineer" data-purpose="Applies implementation judgment and owns the technical change." data-inputs="System context, requirements" data-outputs="Reviewed engineering decisions">Engineer</button>
+                <button class="arch-node" data-title="Architect" data-purpose="Sets boundaries, evaluates trade-offs, and approves system direction." data-inputs="Constraints, architecture options" data-outputs="Architecture decisions">Architect</button>
+                <button class="arch-node" data-title="Security" data-purpose="Protects the system through policy, threat analysis, and review." data-inputs="Risk profile, security policies" data-outputs="Security requirements">Security</button>
+                <button class="arch-node" data-title="Platform" data-purpose="Provides the runtime, delivery pathways, and operational guardrails." data-inputs="Platform standards, capacity" data-outputs="Usable engineering environment">Platform</button>
+              </div>
+            </div>
+            <div class="layer">
+              <div class="layer-label"><strong>Layer 02</strong><span>Orchestration</span></div>
+              <div class="layer-nodes">
+                <button class="arch-node" data-title="Engineering Orchestrator" data-purpose="Coordinates specialized agents around a traceable engineering workflow." data-inputs="Intent, state, context" data-outputs="Sequenced agent work">Orchestrator</button>
+                <button class="arch-node" data-title="Workflow Manager" data-purpose="Controls stage transitions, approvals, retries, and escalation paths." data-inputs="Workflow policy, agent results" data-outputs="Controlled progression">Workflow Manager</button>
+                <button class="arch-node" data-title="State Manager" data-purpose="Maintains the durable record of decisions, evidence, and current work state." data-inputs="Events, artifacts, approvals" data-outputs="Traceable state">State Manager</button>
+              </div>
+            </div>
+            <div class="layer">
+              <div class="layer-label"><strong>Layer 03</strong><span>Specialized agents</span></div>
+              <div class="layer-nodes">
+                <button class="arch-node" data-title="Requirement Agent" data-purpose="Clarifies intent and converts ambiguous requests into testable outcomes." data-inputs="Product intent, conversations" data-outputs="Structured requirements">Requirements</button>
+                <button class="arch-node" data-title="Context Agent" data-purpose="Retrieves relevant, permission-aware enterprise knowledge for the active task." data-inputs="Knowledge sources, query" data-outputs="Grounded context">Context</button>
+                <button class="arch-node" data-title="Architecture Agent" data-purpose="Transforms validated requirements and context into an implementation-ready design." data-inputs="Requirements, constraints, policies" data-outputs="Design, APIs, data flow">Architecture</button>
+                <button class="arch-node" data-title="Development Agent" data-purpose="Assists implementation while following approved patterns and repository rules." data-inputs="Design, coding standards" data-outputs="Code and tests">Development</button>
+                <button class="arch-node" data-title="Test Agent" data-purpose="Expands quality coverage and evaluates behavior against intended outcomes." data-inputs="Requirements, code, test strategy" data-outputs="Test evidence">Testing</button>
+                <button class="arch-node" data-title="Security Agent" data-purpose="Surfaces vulnerabilities, policy violations, and risky design assumptions." data-inputs="Code, policies, threat model" data-outputs="Findings and mitigations">Security</button>
+                <button class="arch-node" data-title="Review Agent" data-purpose="Prepares focused review context and checks changes against engineering standards." data-inputs="Diff, evidence, standards" data-outputs="Review recommendations">Review</button>
+              </div>
+            </div>
+            <div class="layer">
+              <div class="layer-label"><strong>Layer 04</strong><span>Enterprise context</span></div>
+              <div class="layer-nodes">
+                <button class="arch-node" data-title="Source Code" data-purpose="Provides the existing implementation and its local conventions." data-inputs="Repository access" data-outputs="Implementation context">Source Code</button>
+                <button class="arch-node" data-title="Architecture Documents" data-purpose="Preserves system intent, boundaries, and historical technical decisions." data-inputs="Approved documentation" data-outputs="Design context">Architecture Docs</button>
+                <button class="arch-node" data-title="Security Policies" data-purpose="Defines the non-negotiable controls and constraints for engineering work." data-inputs="Governance sources" data-outputs="Guardrails">Security Policies</button>
+                <button class="arch-node" data-title="Operational Metrics" data-purpose="Connects new decisions to how the system behaves in production." data-inputs="Telemetry and incidents" data-outputs="Operational context">Metrics</button>
+              </div>
+            </div>
+            <div class="layer">
+              <div class="layer-label"><strong>Layer 05</strong><span>Engineering tools</span></div>
+              <div class="layer-nodes">
+                <button class="arch-node" data-title="Git and CI/CD" data-purpose="Turns approved changes into traceable, tested delivery artifacts." data-inputs="Code, workflow state" data-outputs="Builds, reviews, releases">Git + CI/CD</button>
+                <button class="arch-node" data-title="Cloud Platform" data-purpose="Provides the runtime foundation for deployable and observable services." data-inputs="Release artifacts, platform policy" data-outputs="Running services">Cloud Platform</button>
+                <button class="arch-node" data-title="Observability Platform" data-purpose="Makes runtime behavior visible for diagnosis, learning, and improvement." data-inputs="Service telemetry" data-outputs="Signals and feedback">Observability</button>
+              </div>
+            </div>
+            <div class="layer">
+              <div class="layer-label"><strong>Layer 06</strong><span>Feedback</span></div>
+              <div class="layer-nodes">
+                <button class="arch-node" data-title="Engineering Feedback" data-purpose="Closes the loop with evidence from tests, security, review, production, and people." data-inputs="Results, findings, telemetry" data-outputs="Better context and decisions">Feedback Loop</button>
+              </div>
+            </div>
+          </div>
+          <aside class="inspector" aria-live="polite">
+            <p class="inspector-kicker">Selected component</p>
+            <h3 id="inspector-title">Choose a layer component</h3>
+            <p id="inspector-purpose">Select any component to inspect its purpose, inputs, and outputs.</p>
+            <ul>
+              <li><strong>Inputs:</strong> <span id="inspector-inputs">Awaiting selection</span></li>
+              <li><strong>Outputs:</strong> <span id="inspector-outputs">Awaiting selection</span></li>
+            </ul>
+            <button class="prompt-button" id="open-prompt" type="button">Open agent prompt</button>
+          </aside>
+        </div>
+        <p class="architecture-note">The diagram is intentionally layered: context and feedback surround every decision instead of appearing only at the end.</p>
+      </section>
+
+      <section class="pipeline" id="pipeline" aria-labelledby="pipeline-title">
+        <p class="eyebrow">Interactive SDLC pipeline</p>
+        <h2 id="pipeline-title">A lifecycle that learns at every stage</h2>
+        <p class="pipeline-intro">
+          Each stage has a specialist, a defined handoff, and a visible output. Select a stage to see
+          what moves through the system.
+        </p>
+        <div class="pipeline-track" aria-label="Interactive software development lifecycle stages">
+          <button class="pipeline-stage is-selected" data-stage="01" data-name="Requirement" data-agent="Requirement Agent" data-input="Business intent and constraints" data-output="Testable requirements"><span class="stage-number">01</span><span class="stage-name">Requirement</span><span class="stage-agent">Requirement Agent</span></button>
+          <button class="pipeline-stage" data-stage="02" data-name="Context" data-agent="Context Agent" data-input="Requirements and enterprise sources" data-output="Grounded context"><span class="stage-number">02</span><span class="stage-name">Context</span><span class="stage-agent">Context Agent</span></button>
+          <button class="pipeline-stage" data-stage="03" data-name="Architecture" data-agent="Architecture Agent" data-input="Context, constraints, and policies" data-output="Design and implementation plan"><span class="stage-number">03</span><span class="stage-name">Architecture</span><span class="stage-agent">Architecture Agent</span></button>
+          <button class="pipeline-stage" data-stage="04" data-name="Development" data-agent="Development Agent" data-input="Approved design and standards" data-output="Code and developer tests"><span class="stage-number">04</span><span class="stage-name">Development</span><span class="stage-agent">Development Agent</span></button>
+          <button class="pipeline-stage" data-stage="05" data-name="Testing" data-agent="Test Agent" data-input="Requirements and implementation" data-output="Behavior and quality evidence"><span class="stage-number">05</span><span class="stage-name">Testing</span><span class="stage-agent">Test Agent</span></button>
+          <button class="pipeline-stage" data-stage="06" data-name="Security" data-agent="Security Agent" data-input="Change, threat model, and policy" data-output="Findings and mitigations"><span class="stage-number">06</span><span class="stage-name">Security</span><span class="stage-agent">Security Agent</span></button>
+          <button class="pipeline-stage" data-stage="07" data-name="Review" data-agent="Review Agent" data-input="Diff, evidence, and standards" data-output="Human review decision"><span class="stage-number">07</span><span class="stage-name">Review</span><span class="stage-agent">Review Agent</span></button>
+          <button class="pipeline-stage" data-stage="08" data-name="Deployment" data-agent="Deployment Agent" data-input="Approved artifact and release policy" data-output="Released service"><span class="stage-number">08</span><span class="stage-name">Deployment</span><span class="stage-agent">Deployment Agent</span></button>
+          <button class="pipeline-stage" data-stage="09" data-name="Observability" data-agent="Observability Agent" data-input="Running service and telemetry" data-output="Signals for continuous learning"><span class="stage-number">09</span><span class="stage-name">Observability</span><span class="stage-agent">Observability Agent</span></button>
+        </div>
+        <div class="pipeline-detail" aria-live="polite">
+          <div><strong id="stage-detail-number">Stage 01</strong><span id="stage-detail-name">Requirement</span></div>
+          <div><strong>Agent</strong><span id="stage-detail-agent">Requirement Agent</span></div>
+          <div><strong>Input → Output</strong><span><span id="stage-detail-input">Business intent and constraints</span> → <span id="stage-detail-output">Testable requirements</span></span></div>
+        </div>
+      </section>
+
+      <section class="agents" id="agents" aria-labelledby="agents-title">
+        <p class="eyebrow">Agent explorer</p>
+        <h2 id="agents-title">Specialists, not a single black box</h2>
+        <p class="agents-intro">
+          Different engineering responsibilities need different context, tools, and guardrails. Explore
+          how each specialist contributes to the larger system.
+        </p>
+        <div class="agent-layout">
+          <div class="agent-list" role="tablist" aria-label="Engineering agents">
+            <button class="agent-tab is-selected" role="tab" aria-selected="true" data-agent-title="Requirement Agent" data-agent-purpose="Clarifies intent, finds ambiguity, and converts a request into outcomes an engineering system can test." data-agent-inputs="Product intent, conversations, constraints" data-agent-outputs="Structured and testable requirements" data-agent-guardrails="Human acceptance criteria">Requirement Agent<small>Intent → outcomes</small></button>
+            <button class="agent-tab" role="tab" aria-selected="false" data-agent-title="Context Agent" data-agent-purpose="Retrieves relevant, permission-aware knowledge so downstream agents work from evidence rather than guesses." data-agent-inputs="Query, repositories, documents, policies" data-agent-outputs="Grounded context package" data-agent-guardrails="Access controls, source traceability">Context Agent<small>Knowledge → evidence</small></button>
+            <button class="agent-tab" role="tab" aria-selected="false" data-agent-title="Architecture Agent" data-agent-purpose="Transforms validated requirements and enterprise context into an implementation-ready architecture." data-agent-inputs="Requirements, APIs, platform constraints" data-agent-outputs="Components, data flow, decisions, plan" data-agent-guardrails="Approved catalog, architecture review">Architecture Agent<small>Context → design</small></button>
+            <button class="agent-tab" role="tab" aria-selected="false" data-agent-title="Development Agent" data-agent-purpose="Assists implementation while following repository conventions, approved patterns, and the architecture decision record." data-agent-inputs="Design, codebase, coding standards" data-agent-outputs="Code, tests, documentation" data-agent-guardrails="Branch isolation, automated checks">Development Agent<small>Design → change</small></button>
+            <button class="agent-tab" role="tab" aria-selected="false" data-agent-title="Test Agent" data-agent-purpose="Builds confidence by connecting intended behavior to executable tests and quality evidence." data-agent-inputs="Requirements, implementation, test strategy" data-agent-outputs="Test cases, results, coverage signals" data-agent-guardrails="Reproducible environments, failure review">Test Agent<small>Change → evidence</small></button>
+            <button class="agent-tab" role="tab" aria-selected="false" data-agent-title="Security Agent" data-agent-purpose="Surfaces vulnerabilities, policy violations, and risky assumptions before a change reaches production." data-agent-inputs="Code, dependencies, threat model" data-agent-outputs="Findings, severity, mitigations" data-agent-guardrails="Security policy, human escalation">Security Agent<small>Risk → controls</small></button>
+          </div>
+          <aside class="agent-panel" role="tabpanel" aria-live="polite">
+            <p class="inspector-kicker">Selected specialist</p>
+            <h3 id="agent-panel-title">Requirement Agent</h3>
+            <p id="agent-panel-purpose">Clarifies intent, finds ambiguity, and converts a request into outcomes an engineering system can test.</p>
+            <div class="agent-facts">
+              <div class="agent-fact"><strong>Inputs</strong><span id="agent-panel-inputs">Product intent, conversations, constraints</span></div>
+              <div class="agent-fact"><strong>Outputs</strong><span id="agent-panel-outputs">Structured and testable requirements</span></div>
+              <div class="agent-fact"><strong>Guardrails</strong><span id="agent-panel-guardrails">Human acceptance criteria</span></div>
+            </div>
+            <button class="prompt-button" id="open-agent-prompt" type="button">Open agent prompt</button>
+          </aside>
+        </div>
+      </section>
+
+      <section class="context-architecture" id="context-architecture" aria-labelledby="context-title">
+        <p class="eyebrow">Context architecture</p>
+        <h2 id="context-title">Context is an engineered capability</h2>
+        <p class="context-architecture-intro">
+          The system does not send an agent an undifferentiated document dump. It assembles the smallest
+          useful context, preserves where it came from, and applies boundaries before the context reaches a decision.
+        </p>
+        <div class="context-flow" aria-label="Context architecture flow">
+          <article class="context-step"><strong>01 · Sources</strong><h3>Collect</h3><p>Code, APIs, requirements, architecture documents, standards, incidents, and operational signals.</p></article>
+          <article class="context-step"><strong>02 · Retrieval</strong><h3>Find</h3><p>Use the active question, permissions, and metadata to retrieve relevant enterprise knowledge.</p></article>
+          <article class="context-step"><strong>03 · Assembly</strong><h3>Ground</h3><p>Package evidence with source references, freshness, confidence, and the constraints that apply.</p></article>
+          <article class="context-step"><strong>04 · Delivery</strong><h3>Inform</h3><p>Give a specialist only the context and tools it needs, then capture the result for review.</p></article>
+        </div>
+        <div class="context-guardrails">
+          <div class="guardrail"><strong>Permission-aware</strong><span>Context follows the same access boundaries as the people and systems using it.</span></div>
+          <div class="guardrail"><strong>Traceable</strong><span>Important answers point back to evidence so engineers can verify rather than trust blindly.</span></div>
+          <div class="guardrail"><strong>Feedback-driven</strong><span>Corrections, test results, and production signals improve future retrieval and decisions.</span></div>
+        </div>
+      </section>
+
+      <section class="human-loop" id="human-in-the-loop" aria-labelledby="human-loop-title">
+        <p class="eyebrow">Human in the loop</p>
+        <h2 id="human-loop-title">AI handles complexity. Engineers retain judgment.</h2>
+        <p class="human-loop-intro">
+          The system is designed around decision boundaries, not blind autonomy. AI can prepare options,
+          evidence, and implementation work; accountable people decide what is acceptable and what ships.
+        </p>
+        <div class="decision-grid">
+          <article class="decision-card"><strong>AI can assist</strong><p>Summarize context, propose designs, draft code, generate tests, surface risks, and explain trade-offs.</p></article>
+          <article class="decision-card"><strong>Humans decide</strong><p>Clarify intent, approve architecture, accept risk, review consequential changes, and authorize release.</p></article>
+          <article class="decision-card"><strong>Systems prove</strong><p>Tests, security scans, traceability, telemetry, and feedback make decisions reviewable after the fact.</p></article>
+        </div>
+        <div class="approval-flow" aria-label="Human approval flow">
+          <span class="approval-step">AI proposes</span><span class="approval-arrow">→</span>
+          <span class="approval-step">Engineer reviews</span><span class="approval-arrow">→</span>
+          <span class="approval-step">Automated checks run</span><span class="approval-arrow">→</span>
+          <span class="approval-step">Human approves</span><span class="approval-arrow">→</span>
+          <span class="approval-step">System learns</span>
+        </div>
+      </section>
+
+      <section class="challenge" id="challenge" aria-labelledby="challenge-title">
+        <p class="eyebrow">Challenge the architecture</p>
+        <h2 id="challenge-title">What happens when the system is under pressure?</h2>
+        <p class="challenge-intro">
+          Strong architecture is not defined by its happy path. Select a failure scenario to see how
+          context, guardrails, human escalation, and feedback work together.
+        </p>
+        <div class="challenge-layout">
+          <div class="scenario-list" role="tablist" aria-label="Architecture failure scenarios">
+            <button class="scenario is-selected" role="tab" aria-selected="true" data-scenario-title="The agent receives incomplete context" data-scenario-summary="A fast answer built on missing system history can be confidently wrong." data-scenario-steps="Pause the workflow and flag missing evidence|Ask the Context Agent to retrieve the missing sources|Require an engineer to confirm the assumptions|Record the correction for future retrieval">Incomplete context<small>Confidence without evidence</small></button>
+            <button class="scenario" role="tab" aria-selected="false" data-scenario-title="The generated change fails a security check" data-scenario-summary="A useful implementation is still not ready when it violates a security policy." data-scenario-steps="Stop promotion at the security gate|Return the finding with policy references to the Development Agent|Route unresolved risk to Security and the owning engineer|Keep the failed result as feedback">Unsafe output<small>Quality gates catch risk</small></button>
+            <button class="scenario" role="tab" aria-selected="false" data-scenario-title="Production behavior drifts from the design" data-scenario-summary="A design can be sound while runtime behavior changes under real traffic." data-scenario-steps="Detect the signal through observability|Correlate telemetry with the architecture and recent changes|Escalate impact and recovery decisions to humans|Feed the incident back into context and tests">Production drift<small>Operations closes the loop</small></button>
+          </div>
+          <aside class="response-panel" role="tabpanel" aria-live="polite">
+            <p class="inspector-kicker">System response</p>
+            <h3 id="scenario-title">The agent receives incomplete context</h3>
+            <p id="scenario-summary">A fast answer built on missing system history can be confidently wrong.</p>
+            <ol class="response-steps" id="scenario-steps">
+              <li>Pause the workflow and flag missing evidence</li>
+              <li>Ask the Context Agent to retrieve the missing sources</li>
+              <li>Require an engineer to confirm the assumptions</li>
+              <li>Record the correction for future retrieval</li>
+            </ol>
+          </aside>
+        </div>
+      </section>
+
+      <section class="decisions" id="decisions" aria-labelledby="decisions-title">
+        <p class="eyebrow">Architecture decisions</p>
+        <h2 id="decisions-title">Make the trade-offs visible</h2>
+        <p class="decisions-intro">
+          The architecture is a set of deliberate boundaries. These decisions describe what the system
+          optimizes for, and what it refuses to hide behind automation.
+        </p>
+        <div class="decision-table" role="list">
+          <div class="decision-row" role="listitem"><strong>Specialists over one agent</strong><span><b>Decision</b>Separate agents by responsibility and context.</span><span><b>Why</b>Smaller scopes make capability, permissions, and failure modes easier to reason about.</span></div>
+          <div class="decision-row" role="listitem"><strong>Retrieval over memory</strong><span><b>Decision</b>Ground work in current, traceable enterprise sources.</span><span><b>Why</b>Engineering knowledge changes, and confident guesses are expensive to debug.</span></div>
+          <div class="decision-row" role="listitem"><strong>Approval over autonomy</strong><span><b>Decision</b>Keep humans accountable for consequential choices.</span><span><b>Why</b>Judgment, risk acceptance, and product intent cannot be delegated to a text generator.</span></div>
+          <div class="decision-row" role="listitem"><strong>Feedback over completion</strong><span><b>Decision</b>Treat tests, incidents, and telemetry as part of the system.</span><span><b>Why</b>A delivered change is a hypothesis until real evidence shows how it behaves.</span></div>
+        </div>
+      </section>
+
+      <section class="recovery" id="failure-recovery" aria-labelledby="recovery-title">
+        <p class="eyebrow">Failure &amp; recovery</p>
+        <h2 id="recovery-title">Design for recovery, not perfection</h2>
+        <p class="recovery-intro">
+          Failures are expected in complex systems. The goal is to make them visible, containable, and
+          useful without allowing an automated mistake to silently become production reality.
+        </p>
+        <div class="recovery-grid">
+          <article class="recovery-step"><strong>01 · Detect</strong><h3>Notice the signal</h3><p>Tests, policy gates, review findings, and production telemetry expose a mismatch early.</p></article>
+          <article class="recovery-step"><strong>02 · Contain</strong><h3>Stop the spread</h3><p>Pause promotion, isolate the change, and preserve the evidence needed to understand what happened.</p></article>
+          <article class="recovery-step"><strong>03 · Recover</strong><h3>Restore judgment</h3><p>Route the decision to the accountable engineer, architect, security owner, or product owner.</p></article>
+          <article class="recovery-step"><strong>04 · Learn</strong><h3>Improve the loop</h3><p>Turn the correction into better context, tests, policies, prompts, or workflow boundaries.</p></article>
+        </div>
+        <p class="recovery-principle">A resilient AI engineering system does not hide failure. It shortens the distance between failure, understanding, and improvement.</p>
+      </section>
+
+      <section class="metrics" id="metrics" aria-labelledby="metrics-title">
+        <p class="eyebrow">Metrics</p>
+        <h2 id="metrics-title">Measure the system, not the spectacle</h2>
+        <p class="metrics-intro">
+          A capable AI engineering system is judged by the quality of its outcomes and decisions, not
+          by how much text an agent can generate.
+        </p>
+        <div class="metric-grid">
+          <article class="metric"><strong>01</strong><h3>Context quality</h3><p>Are agents receiving relevant, current, permission-aware evidence with traceable sources?</p></article>
+          <article class="metric"><strong>02</strong><h3>Delivery flow</h3><p>Does the system reduce repetitive work and shorten the path from intent to verified change?</p></article>
+          <article class="metric"><strong>03</strong><h3>Reliability</h3><p>Do automated checks and operational signals reveal problems before they become expensive?</p></article>
+          <article class="metric"><strong>04</strong><h3>Decision quality</h3><p>Can engineers understand the trade-offs, assumptions, and evidence behind a proposal?</p></article>
+          <article class="metric"><strong>05</strong><h3>Learning velocity</h3><p>Does each correction improve the next requirement, retrieval, test, or architectural decision?</p></article>
+        </div>
+      </section>
+
+      <section class="philosophy" id="philosophy" aria-labelledby="philosophy-title">
+        <p class="eyebrow">Design philosophy</p>
+        <h2 id="philosophy-title">Build systems that make better decisions possible</h2>
+        <p class="philosophy-intro">
+          The point of AI in engineering is not to make people disappear from the workflow. It is to
+          give people better context, faster feedback, and more time for the decisions that matter.
+        </p>
+        <ul class="philosophy-list">
+          <li><strong>Start with the problem</strong><span>Technology serves an outcome. Architecture begins with intent, constraints, and the people affected by the system.</span></li>
+          <li><strong>Prefer evidence to confidence</strong><span>A fluent answer is not proof. Make sources, tests, assumptions, and uncertainty visible.</span></li>
+          <li><strong>Design for change</strong><span>Systems should be easier to evolve, operate, and understand as requirements and technology move.</span></li>
+          <li><strong>Keep accountability clear</strong><span>Automation can accelerate work, but ownership for risk, quality, and release decisions stays explicit.</span></li>
+        </ul>
+        <p class="philosophy-quote">AI should not replace engineering judgment. It should amplify it.</p>
+      </section>
+
+      <section class="final-cta" id="final-cta" aria-labelledby="final-cta-title">
+        <p class="eyebrow">Continue the conversation</p>
+        <h2 id="final-cta-title">The future of engineering will be built by people and systems that learn together.</h2>
+        <p>
+          I’m interested in the practical questions: where AI creates leverage, where architecture needs
+          stronger boundaries, and how engineering teams can move faster without giving up judgment.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="https://www.linkedin.com/in/adeivass" target="_blank" rel="noopener">Connect on LinkedIn</a>
+          <a class="button secondary" href="index.html">Return to Arul’s site</a>
+        </div>
+      </section>
+    </main>
+
+    <div class="prompt-modal" id="prompt-modal" role="dialog" aria-modal="true" aria-labelledby="prompt-title" hidden>
+      <div class="prompt-dialog">
+        <div class="prompt-dialog-header">
+          <div>
+            <p class="inspector-kicker">Prompt builder</p>
+            <h2 id="prompt-title">Agent prompt</h2>
+          </div>
+          <button class="prompt-close" id="close-prompt" type="button" aria-label="Close prompt dialog">×</button>
+        </div>
+        <p class="prompt-help">Copy this structured prompt and paste it into your agent chat. Replace the bracketed context with details from your own system.</p>
+        <textarea class="prompt-output" id="prompt-output" readonly aria-label="Generated agent prompt"></textarea>
+        <p class="prompt-warning"><strong>Use at your own risk.</strong> AI output may be incomplete or incorrect. Validate the context, assumptions, security implications, and generated results before applying them to a real system.</p>
+        <button class="copy-prompt" id="copy-prompt" type="button">Copy prompt to clipboard</button>
+      </div>
+    </div>
+
+    <script>
+      document.documentElement.classList.add('js');
+      const observedSections = document.querySelectorAll('main > section');
+      const railLinks = document.querySelectorAll('.section-rail a');
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            railLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`));
+          }
+        });
+      }, { threshold: 0.18, rootMargin: '-12% 0px -55% 0px' });
+      observedSections.forEach((section) => sectionObserver.observe(section));
+      document.querySelectorAll('.arch-node').forEach((node) => {
+        node.addEventListener('click', () => {
+          document.querySelectorAll('.arch-node').forEach((item) => item.classList.remove('is-selected'));
+          node.classList.add('is-selected');
+          document.getElementById('inspector-title').textContent = node.dataset.title;
+          document.getElementById('inspector-purpose').textContent = node.dataset.purpose;
+          document.getElementById('inspector-inputs').textContent = node.dataset.inputs;
+          document.getElementById('inspector-outputs').textContent = node.dataset.outputs;
+          document.getElementById('open-prompt').dataset.title = node.dataset.title;
+          document.getElementById('open-prompt').dataset.purpose = node.dataset.purpose;
+          document.getElementById('open-prompt').dataset.inputs = node.dataset.inputs;
+          document.getElementById('open-prompt').dataset.outputs = node.dataset.outputs;
+        });
+      });
+      const promptModal = document.getElementById('prompt-modal');
+      const openPrompt = document.getElementById('open-prompt');
+      const closePrompt = document.getElementById('close-prompt');
+      const promptOutput = document.getElementById('prompt-output');
+      const copyPrompt = document.getElementById('copy-prompt');
+      const buildPrompt = () => `Context:\nYou are working within an enterprise software engineering system. Relevant inputs include: ${openPrompt.dataset.inputs || '[add system context, constraints, and source references]'}.\n\nRole:\nAct as the ${openPrompt.dataset.title || 'selected engineering'} specialist.\n\nObjective:\n${openPrompt.dataset.purpose || 'Support the engineering workflow with a clear, evidence-based result.'}\n\nPurpose:\nProduce ${openPrompt.dataset.outputs || '[describe the desired output]'} while preserving traceability, security, and human approval for consequential decisions. State assumptions, cite evidence, identify uncertainty, and ask for clarification when context is incomplete.`;
+      openPrompt.addEventListener('click', () => {
+        promptOutput.value = buildPrompt();
+        document.getElementById('prompt-title').textContent = `${openPrompt.dataset.title || 'Agent'} prompt`;
+        promptModal.hidden = false;
+        closePrompt.focus();
+      });
+      closePrompt.addEventListener('click', () => {
+        promptModal.hidden = true;
+        openPrompt.focus();
+      });
+      promptModal.addEventListener('click', (event) => {
+        if (event.target === promptModal) closePrompt.click();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !promptModal.hidden) closePrompt.click();
+      });
+      copyPrompt.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(promptOutput.value);
+        copyPrompt.textContent = 'Prompt copied';
+        window.setTimeout(() => { copyPrompt.textContent = 'Copy prompt to clipboard'; }, 1800);
+      });
+      document.querySelectorAll('.pipeline-stage').forEach((stage) => {
+        stage.addEventListener('click', () => {
+          document.querySelectorAll('.pipeline-stage').forEach((item) => item.classList.remove('is-selected'));
+          stage.classList.add('is-selected');
+          document.getElementById('stage-detail-number').textContent = `Stage ${stage.dataset.stage}`;
+          document.getElementById('stage-detail-name').textContent = stage.dataset.name;
+          document.getElementById('stage-detail-agent').textContent = stage.dataset.agent;
+          document.getElementById('stage-detail-input').textContent = stage.dataset.input;
+          document.getElementById('stage-detail-output').textContent = stage.dataset.output;
+        });
+      });
+      document.querySelectorAll('.agent-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.agent-tab').forEach((item) => {
+            item.classList.remove('is-selected');
+            item.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('is-selected');
+          tab.setAttribute('aria-selected', 'true');
+          document.getElementById('agent-panel-title').textContent = tab.dataset.agentTitle;
+          document.getElementById('agent-panel-purpose').textContent = tab.dataset.agentPurpose;
+          document.getElementById('agent-panel-inputs').textContent = tab.dataset.agentInputs;
+          document.getElementById('agent-panel-outputs').textContent = tab.dataset.agentOutputs;
+          document.getElementById('agent-panel-guardrails').textContent = tab.dataset.agentGuardrails;
+          document.getElementById('open-agent-prompt').dataset.title = tab.dataset.agentTitle;
+          document.getElementById('open-agent-prompt').dataset.purpose = tab.dataset.agentPurpose;
+          document.getElementById('open-agent-prompt').dataset.inputs = tab.dataset.agentInputs;
+          document.getElementById('open-agent-prompt').dataset.outputs = tab.dataset.agentOutputs;
+          document.getElementById('open-agent-prompt').dataset.guardrails = tab.dataset.agentGuardrails;
+        });
+      });
+      const openAgentPrompt = document.getElementById('open-agent-prompt');
+      openAgentPrompt.dataset.title = 'Requirement Agent';
+      openAgentPrompt.dataset.purpose = 'Clarifies intent, finds ambiguity, and converts a request into outcomes an engineering system can test.';
+      openAgentPrompt.dataset.inputs = 'Product intent, conversations, constraints';
+      openAgentPrompt.dataset.outputs = 'Structured and testable requirements';
+      openAgentPrompt.dataset.guardrails = 'Human acceptance criteria';
+      openAgentPrompt.addEventListener('click', () => {
+        promptOutput.value = `Context:\nYou are working within an enterprise software engineering system. Relevant inputs include: ${openAgentPrompt.dataset.inputs}.\n\nRole:\nAct as the ${openAgentPrompt.dataset.title}.\n\nObjective:\n${openAgentPrompt.dataset.purpose}\n\nPurpose:\nProduce ${openAgentPrompt.dataset.outputs} while respecting these guardrails: ${openAgentPrompt.dataset.guardrails}. State assumptions, cite evidence, identify uncertainty, and ask for clarification when context is incomplete.`;
+        document.getElementById('prompt-title').textContent = `${openAgentPrompt.dataset.title} prompt`;
+        promptModal.hidden = false;
+        closePrompt.focus();
+      });
+      document.querySelectorAll('.scenario').forEach((scenario) => {
+        scenario.addEventListener('click', () => {
+          document.querySelectorAll('.scenario').forEach((item) => {
+            item.classList.remove('is-selected');
+            item.setAttribute('aria-selected', 'false');
+          });
+          scenario.classList.add('is-selected');
+          scenario.setAttribute('aria-selected', 'true');
+          document.getElementById('scenario-title').textContent = scenario.dataset.scenarioTitle;
+          document.getElementById('scenario-summary').textContent = scenario.dataset.scenarioSummary;
+          document.getElementById('scenario-steps').innerHTML = scenario.dataset.scenarioSteps
+            .split('|')
+            .map((step) => `<li>${step}</li>`)
+            .join('');
+        });
+      });
+    </script>
+
+    <footer>AI Engineering Architect · Arularasan Deivassigamani</footer>
+  </body>
+</html>
