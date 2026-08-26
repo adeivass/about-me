@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Evolution of AI | Arularasan Deivassigamani</title>
+  <meta name="description" content="An interactive technical evolution of AI: from symbolic rules to retrieval, agents, and autonomous systems thinking.">
+  <link rel="icon" type="image/jpeg" href="adeivass.jpeg">
+  <style>
+    :root {
+      --ink: #ebf2ff;
+      --muted: #afc2d9;
+      --dim: #8097ad;
+      --bg: #071521;
+      --bg-soft: #0d1d2e;
+      --panel: rgba(15, 27, 39, .82);
+      --line: rgba(145, 175, 203, .2);
+      --primary: #77d7ff;
+      --mint: #8ef0c7;
+      --accent: #98a8ff;
+      --warm: #ffc078;
+      --shadow: 0 24px 70px rgba(6, 12, 20, .45);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 Inter, 'Segoe UI', Arial, sans-serif; }
+    body::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .28; background-image: linear-gradient(rgba(119, 215, 255, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(119, 215, 255, .06) 1px, transparent 1px); background-size: 42px 42px; mask-image: linear-gradient(to bottom, black, transparent 80%); }
+    a { color: inherit; }
+    .header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(7, 21, 33, .82); backdrop-filter: blur(12px); }
+    .header-inner, .wrap { width: min(1160px, calc(100% - 44px)); margin: auto; }
+    .header-inner { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { color: var(--ink); font: 700 .8rem/1.2 'SFMono-Regular', Consolas, monospace; letter-spacing: .13em; text-decoration: none; text-transform: uppercase; }
+    .back { color: var(--muted); font: .75rem/1 'SFMono-Regular', Consolas, monospace; letter-spacing: .06em; text-decoration: none; text-transform: uppercase; }
+    .back:hover { color: var(--primary); }
+    .hero { min-height: 760px; padding: 110px 0 90px; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 70px; }
+    .eyebrow, .chapter-kicker { color: var(--primary); font: 700 .72rem/1.3 'SFMono-Regular', Consolas, monospace; letter-spacing: .14em; text-transform: uppercase; }
+    h1, h2, h3 { margin: 0; font-family: 'Arial Narrow', 'Avenir Next Condensed', Impact, sans-serif; letter-spacing: -.035em; line-height: .96; text-transform: uppercase; }
+    h1 { max-width: 720px; font-size: clamp(4rem, 10vw, 8.7rem); }
+    h2 { font-size: clamp(2.4rem, 5vw, 5rem); }
+    h3 { font-size: 1.25rem; letter-spacing: .02em; }
+    .hero h1 span { color: var(--primary); display: block; }
+    .lede { max-width: 600px; margin: 28px 0 0; color: var(--muted); font-size: 1.25rem; }
+    .hero-visual { position: relative; min-height: 430px; padding: 30px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(119, 215, 255, .1), rgba(142, 240, 199, .04)); box-shadow: var(--shadow); }
+    .hero-visual::after { content: 'SYSTEM 00 / CAPABILITY MAP'; position: absolute; right: 20px; bottom: 15px; color: var(--dim); font: .62rem 'SFMono-Regular', Consolas, monospace; }
+    .hero-visual svg { width: 100%; height: 360px; overflow: visible; }
+    .signal-path { fill: none; stroke: var(--primary); stroke-width: 2; stroke-dasharray: 5 9; animation: flow 8s linear infinite; }
+    .signal-node { fill: var(--bg); stroke: var(--mint); stroke-width: 2; }
+    .signal-label { fill: var(--ink); font: 700 11px 'SFMono-Regular', Consolas, monospace; letter-spacing: 1px; }
+    @keyframes flow { to { stroke-dashoffset: -112; } }
+    .progress { position: fixed; left: 0; top: 69px; z-index: 11; width: 100%; height: 3px; background: transparent; }
+    .progress span { display: block; width: 0; height: 100%; background: var(--primary); }
+    .timeline { position: sticky; top: 70px; z-index: 3; margin: 0 0 90px; padding: 18px 0; border-block: 1px solid var(--line); background: rgba(7, 21, 33, .94); overflow-x: auto; }
+    .timeline-track { display: flex; gap: 10px; min-width: max-content; }
+    .timeline a { padding: 7px 10px; color: var(--muted); font: .68rem 'SFMono-Regular', Consolas, monospace; text-decoration: none; text-transform: uppercase; border: 1px solid transparent; }
+    .timeline a:hover, .timeline a.active { color: var(--bg); background: var(--primary); }
+    .chapter, .future { scroll-margin-top: 145px; }
+    .chapter { display: grid; grid-template-columns: 180px 1fr; gap: 55px; padding: 105px 0; border-bottom: 1px solid var(--line); }
+    .chapter-kicker { color: var(--accent); }
+    .chapter-copy { max-width: 760px; }
+    .chapter-copy > p { color: var(--muted); font-size: 1.1rem; }
+    .chapter-copy > p:first-of-type { font-size: 1.35rem; color: var(--ink); }
+    .diagram { margin: 38px 0; padding: 25px; border: 1px solid var(--line); background: var(--bg-soft); color: var(--primary); font: .83rem/2 'SFMono-Regular', Consolas, monospace; white-space: pre-wrap; }
+    .diagram strong { color: var(--mint); }
+    .lens { margin: 40px 0 0; padding: 24px 28px; border-left: 3px solid var(--primary); background: rgba(119, 215, 255, .07); }
+    .lens strong { display: block; margin-bottom: 8px; color: var(--primary); font: .7rem 'SFMono-Regular', Consolas, monospace; letter-spacing: .12em; }
+    details { margin-top: 28px; border-top: 1px solid var(--line); }
+    summary { padding: 17px 0; color: var(--primary); cursor: pointer; font: .78rem 'SFMono-Regular', Consolas, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    details p, details ul { color: var(--muted); }
+    .future { padding: 120px 0; }
+    .future-intro { max-width: 760px; color: var(--muted); font-size: 1.25rem; }
+    .directions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 45px; border: 1px solid var(--line); background: var(--line); }
+    .direction { min-height: 210px; padding: 24px; background: var(--panel); }
+    .direction h3 { color: var(--primary); font-size: 1.1rem; }
+    .direction p { color: var(--muted); font-size: .94rem; }
+    .final { position: relative; z-index: 4; padding: 130px 0 160px; border-top: 1px solid var(--line); background: var(--bg); }
+    .final h2 { max-width: 900px; color: var(--primary); }
+    .final-quote { max-width: 700px; margin: 40px 0; color: var(--ink); font-size: clamp(1.35rem, 3vw, 2.3rem); line-height: 1.25; }
+    .question { color: var(--warm); font: 700 clamp(1.4rem, 3vw, 2.2rem) 'SFMono-Regular', Consolas, monospace; }
+    footer { padding: 28px 0; border-top: 1px solid var(--line); color: var(--dim); font: .75rem 'SFMono-Regular', Consolas, monospace; }
+    @media (max-width: 760px) { .header-inner, .wrap { width: min(100% - 30px, 1160px); } .back { display: none; } .hero { min-height: auto; padding: 80px 0; grid-template-columns: 1fr; gap: 45px; } h1 { font-size: clamp(3.3rem, 16vw, 6rem); } .hero-visual { min-height: 330px; padding: 15px; } .hero-visual svg { height: 285px; } .chapter { grid-template-columns: 1fr; gap: 20px; padding: 75px 0; } .directions { grid-template-columns: 1fr; } .future, .final { padding: 85px 0; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .signal-path { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  <header class="header"><div class="header-inner"><a class="brand" href="index.html">Arul / AI systems</a><a class="back" href="index.html">Back to main site</a></div></header>
+  <main>
+    <section class="hero wrap" aria-labelledby="page-title">
+      <div><p class="eyebrow">An interactive technical history</p><h1 id="page-title">The <span>Evolution</span> of AI</h1><p class="lede">From teaching machines rules to building systems that can reason, create, retrieve, and act.</p></div>
+      <div class="hero-visual" aria-label="Capability progression from rules to action"><svg viewBox="0 0 420 360" role="img"><path class="signal-path" d="M36 300 C85 280 60 220 115 195 S175 250 205 170 S250 75 300 130 S350 190 390 40"/><g><circle class="signal-node" cx="36" cy="300" r="8"/><text class="signal-label" x="18" y="330">RULES</text><circle class="signal-node" cx="115" cy="195" r="8"/><text class="signal-label" x="85" y="180">LEARNING</text><circle class="signal-node" cx="205" cy="170" r="8"/><text class="signal-label" x="180" y="205">REPRESENT</text><circle class="signal-node" cx="300" cy="130" r="8"/><text class="signal-label" x="285" y="115">GENERATE</text><circle class="signal-node" cx="390" cy="40" r="8"/><text class="signal-label" x="330" y="25">ACTION</text></g></svg></div>
+    </section>
+    <nav class="timeline" aria-label="AI evolution chapters"><div class="timeline-track wrap"><a href="#rules">01 Rules</a><a href="#learning">02 Learning</a><a href="#neural">03 Neural</a><a href="#language">04 Language</a><a href="#transformers">05 Transformers</a><a href="#generative">06 Generative</a><a href="#rag">07 RAG</a><a href="#agents">08 Agents</a><a href="#systems">09 Systems</a><a href="#future">10 Next</a></div></nav>
+        <section class="chapter wrap" id="rules"><div><p class="chapter-kicker">Chapter 01</p></div><div class="chapter-copy"><h2>When we taught machines rules</h2><p>Symbolic AI made knowledge explicit: logic, representations, expert systems, and deterministic inference.</p><p>It worked when the world could be described clearly. But humans had to encode every important distinction. As rules multiplied, maintenance became the problem.</p><div class="diagram"><strong>HUMAN KNOWLEDGE</strong>
+      ↓
+    <strong>RULES</strong>   IF temperature &gt; threshold
+      ↓        THEN activate cooling
+    <strong>INFERENCE ENGINE</strong>
+      ↓
+    <strong>DECISION</strong></div><div class="lens"><strong>CTO LENS / 01</strong>Rules are explainable, but explicit knowledge does not scale gracefully into ambiguous environments.</div></div></section>
+    <section class="chapter wrap" id="learning"><div><p class="chapter-kicker">Chapter 02</p></div><div class="chapter-copy"><h2>Machines start learning from data</h2><p>The shift was from programming decisions to learning statistical relationships from examples.</p><p>Supervised learning brought classification and regression. Unsupervised learning found clusters. Engineers gained leverage, but had to design features and often build domain-specific models for unstructured inputs.</p><div class="diagram"><strong>DATA</strong> → FEATURE ENGINEERING → <strong>LEARNING ALGORITHM</strong> → MODEL → PREDICTION</div><details><summary>Deep dive / the trade-off</summary><p>Statistical learning replaced hand-written rules with an empirical contract: performance depends on representative data, a useful objective, and evaluation that reflects the real task. It reduced rule maintenance without eliminating human judgment.</p></details></div></section>
+    <section class="chapter wrap" id="neural"><div><p class="chapter-kicker">Chapter 03</p></div><div class="chapter-copy"><h2>Neural networks learn representations</h2><p>Weights, activations, layers, backpropagation, and gradient descent allowed models to compose increasingly useful internal features.</p><p>Deep learning mattered because representation learning automated much of the feature engineering problem. The capability came with a new cost: training complexity, data hunger, and less obvious failure modes.</p><div class="diagram"><strong>INPUT</strong> → FEATURES → REPRESENTATION → PREDICTION
+
+  weights + activation + gradient descent
+      ↓
+  learned hierarchy of features</div></div></section>
+    <section class="chapter wrap" id="language"><div><p class="chapter-kicker">Chapter 04</p></div><div class="chapter-copy"><h2>Language becomes a context problem</h2><p>NLP moved from rules and statistical features through neural sequence models such as RNNs, LSTMs, and GRUs.</p><p>Tokens arrive in sequence, but meaning depends on relationships. “The bank was crowded” and “The river bank was flooded” need context, not just a dictionary lookup. Embeddings gave words coordinates in a semantic space, yet one word could still carry different meanings in different sentences.</p><div class="diagram">KING − MAN + WOMAN ≈ QUEEN
+
+  A vector can carry relationship,
+  but context still changes the meaning.</div></div></section>
+    <section class="chapter wrap" id="transformers"><div><p class="chapter-kicker">Chapter 05</p></div><div class="chapter-copy"><h2>Transformers change everything</h2><p>Self-attention asks a practical question: which other pieces of this input matter when interpreting this token?</p><p>Multi-head attention lets a model track different relationships in parallel. Positional information, feed-forward layers, normalization, and repeated blocks created an architecture that could scale efficiently across large datasets.</p><div class="diagram"><strong>INPUT</strong> → EMBEDDING → POSITION
+      ↓
+  <strong>SELF-ATTENTION</strong> → FEED FORWARD → NORMALIZE
+      ↑___________________________↓
+          repeated layers</div><details><summary>Deep dive / attention intuition</summary><p>Attention produces weighted interactions between tokens. A token can assign more weight to relevant context, making long-range dependencies easier to model than in strictly sequential architectures. This is an architectural mechanism, not a guarantee of understanding.</p></details><div class="lens"><strong>CTO LENS / 02</strong>Breakthroughs rarely come from an algorithm alone. A useful shorthand is Algorithm × Data × Compute × Infrastructure.</div></div></section>
+    <section class="chapter wrap" id="generative"><div><p class="chapter-kicker">Chapter 06</p></div><div class="chapter-copy"><h2>Language models become generative</h2><p>A language model predicts the next token. Scale, pretraining, larger context windows, fine-tuning, instruction tuning, and preference optimization turned that primitive into a flexible interface.</p><p>“The car drove down the ___” becomes a probability distribution over road, street, highway, and more. LLMs learn statistical representations of language; they are not simply databases of answers. The same interface now spans text, code, images, audio, video, and multimodal work.</p><div class="diagram">PROMPT → TOKENS → PROBABILITY DISTRIBUTION → NEXT TOKEN
+               ↖ repeat until complete</div></div></section>
+    <section class="chapter wrap" id="rag"><div><p class="chapter-kicker">Chapter 07</p></div><div class="chapter-copy"><h2>RAG gives AI context</h2><p>Generative models made a new limitation visible: fluent output without guaranteed ground truth. Hallucinations, stale knowledge, private enterprise context, and deterministic facts require an architecture around the model.</p><div class="diagram"><strong>DOCUMENTS</strong> → PARSE → CHUNK → EMBED → VECTOR DATABASE
+                      ↓
+  QUERY → RETRIEVE → RERANK → CONTEXT → <strong>LLM</strong> → GROUNDED ANSWER</div><p>RAG moves application knowledge from training time to inference time. Hybrid search, metadata filtering, reranking, permissions, and evaluation determine whether that promise survives contact with production.</p><div class="lens"><strong>CTO LENS / 03</strong>Not every problem requires an LLM. RAG changes the architecture, but it does not remove the need for source quality and verification.</div></div></section>
+    <section class="chapter wrap" id="agents"><div><p class="chapter-kicker">Chapter 08</p></div><div class="chapter-copy"><h2>From copilots to agents</h2><p>Copilots help a human perform work. Agents add a loop: perceive, reason, plan, use tools, act, observe, evaluate, and iterate.</p><div class="diagram"><strong>GOAL</strong> → PLAN → TOOL → OBSERVATION → REASON
+     ↑                                      ↓
+     └──────── EVALUATE ← ACTION ←─────────┘</div><p>The model is no longer the whole product. It becomes one component in a system connected to tools, state, permissions, environments, and feedback. Autonomy is a capability, and therefore a risk surface.</p><details><summary>Deep dive / failure modes</summary><ul><li>Tool permissions can turn a prompt mistake into a real action.</li><li>Long loops increase cost, latency, and debugging difficulty.</li><li>Evaluation must cover trajectories and outcomes, not only final text.</li></ul></details><div class="lens"><strong>CTO LENS / 04</strong>Agents introduce autonomy. Autonomy introduces risk, observability, economics, and accountability.</div></div></section>
+    <section class="chapter wrap" id="systems"><div><p class="chapter-kicker">Chapter 09</p></div><div class="chapter-copy"><h2>Agentic systems become workflows</h2><p>Multiple specialized agents can delegate and parallelize work, but “more agents” is not automatically better. Coordination overhead, state management, cost, security, and failure propagation all matter.</p><div class="diagram"><strong>HUMAN INTENT</strong> → ORCHESTRATOR
+        ↓
+REQUIREMENTS → ARCHITECTURE → CODE → TEST → SECURITY → DEPLOY
+        ↓              ↓          ↓       ↓       ↓          ↓
+      context       tools      state   evidence policies  observability</div><p>In an agentic SDLC, a human defines intent, architecture, risk, judgment, and accountability while AI systems execute bounded parts of the workflow. Memory and situational awareness are emerging directions, not solved guarantees.</p><div class="lens"><strong>CTO LENS / 05</strong>Production AI is a systems discipline: evaluation, observability, security, reliability, and economics belong in the design.</div></div></section>
+    <section class="future wrap" id="future"><p class="eyebrow">Chapter 10 / open horizon</p><h2>Where does AI go from here?</h2><p class="future-intro">The next era is not settled. Plausible directions include stronger reasoning, longer context, persistent memory, better tool use, multimodal intelligence, smaller specialist models, routing, robotics, and AI-native applications. Each creates an engineering problem alongside a capability.</p><div class="directions"><article class="direction"><h3>Memory</h3><p>Stateless inference → persistent experience. Challenge: consent, relevance, forgetting, and governance.</p></article><article class="direction"><h3>Situational awareness</h3><p>Prompt context → world state. Challenge: sensing, freshness, uncertainty, and consequences.</p></article><article class="direction"><h3>Autonomous workflows</h3><p>Answer → goal-directed action. Challenge: boundaries, evaluation, escalation, and trust.</p></article><article class="direction"><h3>Specialized intelligence</h3><p>One large model → routed systems. Challenge: composition, quality, and operational complexity.</p></article><article class="direction"><h3>Physical interaction</h3><p>Digital tools → embodied environments. Challenge: safety, latency, and imperfect sensors.</p></article><article class="direction"><h3>Continuous learning</h3><p>Fixed training → changing systems. Challenge: drift, feedback quality, and reproducibility.</p></article></div></section>
+    <section class="final wrap"><p class="eyebrow">The question that remains</p><h2>The AI stack is becoming a system.</h2><p class="final-quote">AI may not evolve from better answers to more answers. It may evolve from answering questions to understanding goals, reasoning about environments, and taking action.</p><p class="question">What happens when intelligence becomes a system?</p></section>
+  </main>
+  <footer><div class="wrap">A technical perspective on evolution, architecture, and responsibility. Future directions are possibilities, not predictions.</div></footer>
+  <script>
+    const progressBar = document.getElementById('progress-bar');
+    const links = [...document.querySelectorAll('.timeline a')];
+    const chapters = [...document.querySelectorAll('.chapter, .future')];
+    const updateProgress = () => { const max = document.documentElement.scrollHeight - innerHeight; progressBar.style.width = `${max ? scrollY / max * 100 : 0}%`; };
+    addEventListener('scroll', updateProgress, { passive: true }); updateProgress();
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`)); }), { rootMargin: '-35% 0px -55% 0px' });
+    chapters.forEach(chapter => observer.observe(chapter));
+  </script>
+</body>
+</html>
