@@ -371,6 +371,84 @@
       .inspector p { margin: 0; }
       .inspector ul { margin: 12px 0 0; padding-left: 18px; }
       .inspector ul { list-style: none; padding-left: 0; }
+      .prompt-button {
+        width: 100%;
+        margin-top: 20px;
+        cursor: pointer;
+        border: 1px solid var(--primary);
+        border-radius: 999px;
+        padding: 11px 14px;
+        color: var(--primary);
+        background: rgba(119, 215, 255, 0.08);
+        font: inherit;
+        font-weight: 700;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+      .prompt-button:hover, .prompt-button:focus-visible {
+        outline: none;
+        color: #062531;
+        background: var(--primary);
+      }
+      .prompt-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: rgba(2, 9, 15, 0.78);
+        backdrop-filter: blur(8px);
+      }
+      .prompt-modal[hidden] { display: none; }
+      .prompt-dialog {
+        width: min(720px, 100%);
+        max-height: min(760px, 90vh);
+        overflow: auto;
+        padding: 26px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--panel-strong, #09131f);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+      }
+      .prompt-dialog-header {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 18px;
+      }
+      .prompt-dialog h2 { margin: 0; font-size: 1.6rem; }
+      .prompt-close {
+        cursor: pointer;
+        border: 0;
+        color: var(--muted);
+        background: transparent;
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+      .prompt-close:hover, .prompt-close:focus-visible { color: var(--text); }
+      .prompt-help { margin: 10px 0 16px; color: var(--muted); font-size: 0.9rem; }
+      .prompt-output {
+        width: 100%;
+        min-height: 300px;
+        resize: vertical;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
+        font: 0.9rem/1.65 ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .copy-prompt {
+        margin-top: 14px;
+        cursor: pointer;
+        border: 0;
+        border-radius: 999px;
+        padding: 12px 18px;
+        color: #062531;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        font: inherit;
+        font-weight: 700;
+      }
       .architecture-note {
         margin: 18px 0 0;
         color: var(--muted);
@@ -1073,6 +1151,7 @@
               <li><strong>Inputs:</strong> <span id="inspector-inputs">Awaiting selection</span></li>
               <li><strong>Outputs:</strong> <span id="inspector-outputs">Awaiting selection</span></li>
             </ul>
+            <button class="prompt-button" id="open-prompt" type="button">Open agent prompt</button>
           </aside>
         </div>
         <p class="architecture-note">The diagram is intentionally layered: context and feedback surround every decision instead of appearing only at the end.</p>
@@ -1277,6 +1356,21 @@
       </section>
     </main>
 
+    <div class="prompt-modal" id="prompt-modal" role="dialog" aria-modal="true" aria-labelledby="prompt-title" hidden>
+      <div class="prompt-dialog">
+        <div class="prompt-dialog-header">
+          <div>
+            <p class="inspector-kicker">Prompt builder</p>
+            <h2 id="prompt-title">Agent prompt</h2>
+          </div>
+          <button class="prompt-close" id="close-prompt" type="button" aria-label="Close prompt dialog">×</button>
+        </div>
+        <p class="prompt-help">Copy this structured prompt and paste it into your agent chat. Replace the bracketed context with details from your own system.</p>
+        <textarea class="prompt-output" id="prompt-output" readonly aria-label="Generated agent prompt"></textarea>
+        <button class="copy-prompt" id="copy-prompt" type="button">Copy prompt to clipboard</button>
+      </div>
+    </div>
+
     <script>
       document.documentElement.classList.add('js');
       const observedSections = document.querySelectorAll('main > section');
@@ -1298,7 +1392,38 @@
           document.getElementById('inspector-purpose').textContent = node.dataset.purpose;
           document.getElementById('inspector-inputs').textContent = node.dataset.inputs;
           document.getElementById('inspector-outputs').textContent = node.dataset.outputs;
+          document.getElementById('open-prompt').dataset.title = node.dataset.title;
+          document.getElementById('open-prompt').dataset.purpose = node.dataset.purpose;
+          document.getElementById('open-prompt').dataset.inputs = node.dataset.inputs;
+          document.getElementById('open-prompt').dataset.outputs = node.dataset.outputs;
         });
+      });
+      const promptModal = document.getElementById('prompt-modal');
+      const openPrompt = document.getElementById('open-prompt');
+      const closePrompt = document.getElementById('close-prompt');
+      const promptOutput = document.getElementById('prompt-output');
+      const copyPrompt = document.getElementById('copy-prompt');
+      const buildPrompt = () => `Context:\nYou are working within an enterprise software engineering system. Relevant inputs include: ${openPrompt.dataset.inputs || '[add system context, constraints, and source references]'}.\n\nRole:\nAct as the ${openPrompt.dataset.title || 'selected engineering'} specialist.\n\nObjective:\n${openPrompt.dataset.purpose || 'Support the engineering workflow with a clear, evidence-based result.'}\n\nPurpose:\nProduce ${openPrompt.dataset.outputs || '[describe the desired output]'} while preserving traceability, security, and human approval for consequential decisions. State assumptions, cite evidence, identify uncertainty, and ask for clarification when context is incomplete.`;
+      openPrompt.addEventListener('click', () => {
+        promptOutput.value = buildPrompt();
+        document.getElementById('prompt-title').textContent = `${openPrompt.dataset.title || 'Agent'} prompt`;
+        promptModal.hidden = false;
+        closePrompt.focus();
+      });
+      closePrompt.addEventListener('click', () => {
+        promptModal.hidden = true;
+        openPrompt.focus();
+      });
+      promptModal.addEventListener('click', (event) => {
+        if (event.target === promptModal) closePrompt.click();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !promptModal.hidden) closePrompt.click();
+      });
+      copyPrompt.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(promptOutput.value);
+        copyPrompt.textContent = 'Prompt copied';
+        window.setTimeout(() => { copyPrompt.textContent = 'Copy prompt to clipboard'; }, 1800);
       });
       document.querySelectorAll('.pipeline-stage').forEach((stage) => {
         stage.addEventListener('click', () => {
