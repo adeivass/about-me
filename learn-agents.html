@@ -22,6 +22,16 @@
       @media (max-width: 560px) { .header-inner, main, footer { width: min(100% - 32px, 1160px); }.header-inner { align-items: flex-start; flex-direction: column; padding: 16px 0; } main { padding-top: 50px; }.hero { padding-bottom: 40px; }.section-heading { display: block; }.section-heading p { margin-top: 10px; text-align: left; }.concept-list { grid-template-columns: 1fr; }.concept-detail, .quiz { padding: 22px; }.detail-grid { grid-template-columns: 1fr; }.answers { display: grid; }.answer { text-align: left; } }
       @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }.concept-button, .flow-step.is-pulsing { transition: none; animation: none; } }
     </style>
+    <style>
+      .flow { position: relative; display: flex; align-items: center; gap: 0; margin: 40px 0 0; padding: 0 42px; }
+      .flow::before, .flow::after { position: absolute; top: 50%; z-index: 2; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; transform: translateY(-50%); }
+      .flow::before { content: "Input"; left: 0; }.flow::after { content: "Output"; right: 0; }
+      .flow-step { flex: 1 1 0; display: flex; min-height: 220px; align-items: center; justify-content: center; flex-direction: column; padding: 28px; border: 0; border-radius: 50%; color: var(--text); background: linear-gradient(145deg, #2c857b, #1c5d61); box-shadow: 0 16px 28px rgba(0,0,0,.22); text-align: center; }
+      .flow-step:nth-child(even) { background: linear-gradient(145deg, #6075c7, #394b91); }.flow-step + .flow-step { margin-left: -18px; }
+      .flow-step::after { content: "->"; top: 50%; right: -13px; color: var(--coral); text-shadow: 0 1px 4px rgba(0,0,0,.5); }.flow-step:last-child::after { display: none; }
+      .flow-step b { margin: 0 0 8px; color: var(--text); font-size: 1rem; }.flow-step span { max-width: 125px; color: rgba(239,248,238,.78); font-size: .75rem; line-height: 1.35; }.flow-step.is-pulsing { border: 2px solid var(--lime); box-shadow: 0 0 0 8px rgba(214,239,143,.1), 0 16px 28px rgba(0,0,0,.22); }
+      @media (max-width: 820px) { .flow { display: grid; grid-template-columns: 1fr; gap: 0; padding: 0 18px; }.flow::before, .flow::after { display: none; }.flow-step { width: min(220px, 72vw); min-height: 0; aspect-ratio: 1; margin: 0 auto !important; }.flow-step + .flow-step { margin-top: -20px !important; }.flow-step::after { top: auto; right: auto; bottom: -20px; left: 50%; content: "v"; }.flow-step:last-child::after { display: none; } }
+    </style>
   </head>
   <body>
     <header class="header"><div class="header-inner"><a class="brand" href="index.html">Arul</a><a class="back" href="agent-market.html">Back to Agent Market</a></div></header>
