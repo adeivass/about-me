@@ -449,6 +449,15 @@
         font: inherit;
         font-weight: 700;
       }
+      .prompt-warning {
+        margin: 16px 0 0;
+        padding: 13px 15px;
+        border-left: 3px solid var(--primary-2);
+        color: var(--muted);
+        background: rgba(142, 240, 199, 0.07);
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
       .architecture-note {
         margin: 18px 0 0;
         color: var(--muted);
@@ -1207,6 +1216,7 @@
               <div class="agent-fact"><strong>Outputs</strong><span id="agent-panel-outputs">Structured and testable requirements</span></div>
               <div class="agent-fact"><strong>Guardrails</strong><span id="agent-panel-guardrails">Human acceptance criteria</span></div>
             </div>
+            <button class="prompt-button" id="open-agent-prompt" type="button">Open agent prompt</button>
           </aside>
         </div>
       </section>
@@ -1367,6 +1377,7 @@
         </div>
         <p class="prompt-help">Copy this structured prompt and paste it into your agent chat. Replace the bracketed context with details from your own system.</p>
         <textarea class="prompt-output" id="prompt-output" readonly aria-label="Generated agent prompt"></textarea>
+        <p class="prompt-warning"><strong>Use at your own risk.</strong> AI output may be incomplete or incorrect. Validate the context, assumptions, security implications, and generated results before applying them to a real system.</p>
         <button class="copy-prompt" id="copy-prompt" type="button">Copy prompt to clipboard</button>
       </div>
     </div>
@@ -1449,7 +1460,24 @@
           document.getElementById('agent-panel-inputs').textContent = tab.dataset.agentInputs;
           document.getElementById('agent-panel-outputs').textContent = tab.dataset.agentOutputs;
           document.getElementById('agent-panel-guardrails').textContent = tab.dataset.agentGuardrails;
+          document.getElementById('open-agent-prompt').dataset.title = tab.dataset.agentTitle;
+          document.getElementById('open-agent-prompt').dataset.purpose = tab.dataset.agentPurpose;
+          document.getElementById('open-agent-prompt').dataset.inputs = tab.dataset.agentInputs;
+          document.getElementById('open-agent-prompt').dataset.outputs = tab.dataset.agentOutputs;
+          document.getElementById('open-agent-prompt').dataset.guardrails = tab.dataset.agentGuardrails;
         });
+      });
+      const openAgentPrompt = document.getElementById('open-agent-prompt');
+      openAgentPrompt.dataset.title = 'Requirement Agent';
+      openAgentPrompt.dataset.purpose = 'Clarifies intent, finds ambiguity, and converts a request into outcomes an engineering system can test.';
+      openAgentPrompt.dataset.inputs = 'Product intent, conversations, constraints';
+      openAgentPrompt.dataset.outputs = 'Structured and testable requirements';
+      openAgentPrompt.dataset.guardrails = 'Human acceptance criteria';
+      openAgentPrompt.addEventListener('click', () => {
+        promptOutput.value = `Context:\nYou are working within an enterprise software engineering system. Relevant inputs include: ${openAgentPrompt.dataset.inputs}.\n\nRole:\nAct as the ${openAgentPrompt.dataset.title}.\n\nObjective:\n${openAgentPrompt.dataset.purpose}\n\nPurpose:\nProduce ${openAgentPrompt.dataset.outputs} while respecting these guardrails: ${openAgentPrompt.dataset.guardrails}. State assumptions, cite evidence, identify uncertainty, and ask for clarification when context is incomplete.`;
+        document.getElementById('prompt-title').textContent = `${openAgentPrompt.dataset.title} prompt`;
+        promptModal.hidden = false;
+        closePrompt.focus();
       });
       document.querySelectorAll('.scenario').forEach((scenario) => {
         scenario.addEventListener('click', () => {
