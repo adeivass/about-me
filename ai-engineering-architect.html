@@ -66,7 +66,40 @@
         text-decoration: none;
       }
       .back:hover { color: var(--primary); }
-
+      .section-rail {
+        position: fixed;
+        top: 50%;
+        right: 22px;
+        z-index: 4;
+        display: grid;
+        gap: 8px;
+        transform: translateY(-50%);
+      }
+      .section-rail a {
+        display: flex;
+        width: 142px;
+        min-height: 28px;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        border: 1px solid var(--muted);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 0.62rem;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        text-transform: uppercase;
+        padding: 5px 9px;
+        white-space: nowrap;
+        transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      }
+      .section-rail a:hover, .section-rail a.is-active {
+        border-color: var(--primary);
+        background: var(--primary);
+        color: #062531;
+        transform: none;
+      }
       main {
         max-width: 1180px;
         margin: 0 auto;
@@ -337,6 +370,7 @@
       .inspector p, .inspector li { color: var(--muted); }
       .inspector p { margin: 0; }
       .inspector ul { margin: 12px 0 0; padding-left: 18px; }
+      .inspector ul { list-style: none; padding-left: 0; }
       .architecture-note {
         margin: 18px 0 0;
         color: var(--muted);
@@ -815,6 +849,16 @@
       }
       .final-cta p { max-width: 660px; margin: 0; color: var(--muted); font-size: 1.08rem; }
       .final-cta .actions { margin-top: 24px; }
+      main > section { scroll-margin-top: 104px; }
+      html.js main > section:not(.hero) {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.65s ease, transform 0.65s ease;
+      }
+      html.js main > section.is-visible, html.js main > .hero {
+        opacity: 1;
+        transform: none;
+      }
       @media (max-width: 520px) {
         .final-cta { padding: 26px 20px; }
       }
@@ -831,6 +875,21 @@
         font-size: 0.9rem;
       }
       @media (max-width: 850px) {
+        .section-rail {
+          position: sticky;
+          top: 72px;
+          right: auto;
+          z-index: 4;
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding: 10px 24px;
+          border-bottom: 1px solid var(--line);
+          background: rgba(7, 21, 33, 0.9);
+          transform: none;
+        }
+        .section-rail a { width: auto; min-width: max-content; justify-content: flex-start; }
+        .section-rail a:hover, .section-rail a.is-active { transform: none; }
         .hero { grid-template-columns: 1fr; gap: 34px; }
         .signal { min-height: 360px; }
         .context-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -859,7 +918,8 @@
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
         .orbit { animation: none; }
-        .button, .arch-node, .pipeline-stage { transition: none; }
+        .button, .arch-node, .pipeline-stage, .section-rail a { transition: none; }
+        html.js main > section:not(.hero) { opacity: 1; transform: none; transition: none; }
       }
     </style>
   </head>
@@ -870,6 +930,20 @@
         <a class="back" href="index.html">← Back to main site</a>
       </div>
     </header>
+
+    <aside class="section-rail" aria-label="Page sections">
+      <a href="#architecture" aria-label="Architecture">Architecture</a>
+      <a href="#pipeline" aria-label="Pipeline">Pipeline</a>
+      <a href="#agents" aria-label="Agents">Agents</a>
+      <a href="#context-architecture" aria-label="Context">Context</a>
+      <a href="#human-in-the-loop" aria-label="Human loop">Human loop</a>
+      <a href="#challenge" aria-label="Challenges">Challenges</a>
+      <a href="#decisions" aria-label="Decisions">Decisions</a>
+      <a href="#failure-recovery" aria-label="Recovery">Recovery</a>
+      <a href="#metrics" aria-label="Metrics">Metrics</a>
+      <a href="#philosophy" aria-label="Philosophy">Philosophy</a>
+      <a href="#final-cta" aria-label="Contact">Contact</a>
+    </aside>
 
     <main>
       <section class="hero" aria-labelledby="page-title">
@@ -1204,6 +1278,18 @@
     </main>
 
     <script>
+      document.documentElement.classList.add('js');
+      const observedSections = document.querySelectorAll('main > section');
+      const railLinks = document.querySelectorAll('.section-rail a');
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            railLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`));
+          }
+        });
+      }, { threshold: 0.18, rootMargin: '-12% 0px -55% 0px' });
+      observedSections.forEach((section) => sectionObserver.observe(section));
       document.querySelectorAll('.arch-node').forEach((node) => {
         node.addEventListener('click', () => {
           document.querySelectorAll('.arch-node').forEach((item) => item.classList.remove('is-selected'));
