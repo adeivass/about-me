@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Engineering Leadership Playbook | Arularasan Deivassigamani</title>
+    <link rel="icon" type="image/jpeg" href="adeivass.jpeg" />
+    <meta name="description" content="How Arularasan Deivassigamani builds capable, accountable, and continuously improving engineering teams." />
+    <style>
+      :root {
+        --bg: #08151b;
+        --bg-2: #10252a;
+        --panel: rgba(17, 36, 40, .82);
+        --panel-soft: rgba(255, 255, 255, .035);
+        --line: rgba(153, 203, 195, .22);
+        --text: #eef8f1;
+        --muted: #b0c9c4;
+        --mint: #91e4c4;
+        --lime: #d3ec8c;
+        --coral: #ffae86;
+        --ink: #10221f;
+        --shadow: 0 26px 70px rgba(0, 0, 0, .25);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--text);
+        background:
+          linear-gradient(rgba(145, 228, 196, .035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(145, 228, 196, .035) 1px, transparent 1px),
+          radial-gradient(circle at 90% 0%, rgba(255, 174, 134, .12), transparent 25%),
+          radial-gradient(circle at 0% 48%, rgba(145, 228, 196, .12), transparent 27%),
+          var(--bg);
+        background-size: 44px 44px, 44px 44px, auto, auto, auto;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        line-height: 1.65;
+      }
+      a { color: inherit; }
+      .header { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(8, 21, 27, .8); backdrop-filter: blur(14px); }
+      .header-inner, main, footer { max-width: 1160px; margin: auto; padding-left: 24px; padding-right: 24px; }
+      .header-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-size: .82rem; font-weight: 800; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+      .brand img { width: 34px; height: 34px; border: 2px solid rgba(145, 228, 196, .75); border-radius: 50%; object-fit: cover; }
+      .back { color: var(--muted); font-size: .88rem; text-decoration: none; }
+      .back:hover { color: var(--mint); }
+      main { padding-top: 82px; padding-bottom: 94px; }
+      .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); gap: 48px; align-items: center; }
+      .eyebrow, .kicker { margin: 0 0 16px; color: var(--mint); font-size: .74rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { max-width: 740px; margin-bottom: 22px; font-size: clamp(3rem, 7vw, 6rem); letter-spacing: -.07em; line-height: .91; }
+      h2 { margin-bottom: 12px; font-size: clamp(2rem, 4vw, 3.3rem); letter-spacing: -.06em; line-height: 1; }
+      h3 { margin-bottom: 8px; font-size: 1.35rem; letter-spacing: -.035em; }
+      .lede { max-width: 700px; color: var(--muted); font-size: clamp(1.08rem, 2vw, 1.32rem); line-height: 1.65; }
+      .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+      .button { display: inline-flex; align-items: center; justify-content: center; min-height: 45px; padding: 11px 17px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); font-weight: 700; text-decoration: none; }
+      .button:hover { border-color: var(--mint); color: var(--mint); }
+      .button.primary { border-color: transparent; color: var(--ink); background: linear-gradient(135deg, var(--mint), var(--lime)); }
+      .hero-map { position: relative; min-height: 390px; padding: 30px; overflow: hidden; border: 1px solid var(--line); border-radius: 24px; background: linear-gradient(145deg, rgba(24, 54, 54, .9), rgba(10, 28, 32, .88)); box-shadow: var(--shadow); }
+      .hero-map::before { content: ""; position: absolute; inset: 20px; border: 1px solid rgba(145, 228, 196, .2); border-radius: 17px; }
+      .hero-map::after { content: ""; position: absolute; width: 170px; height: 170px; right: -45px; bottom: -45px; border: 1px solid rgba(255, 174, 134, .5); border-radius: 50%; box-shadow: 0 0 0 23px rgba(255, 174, 134, .07), 0 0 0 48px rgba(255, 174, 134, .04); }
+      .map-label { position: relative; z-index: 1; color: var(--muted); font-size: .7rem; letter-spacing: .13em; text-transform: uppercase; }
+      .hero-ladder { position: relative; z-index: 1; display: grid; gap: 8px; margin-top: 38px; }
+      .hero-ladder div { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border: 1px solid var(--line); background: rgba(8, 21, 27, .5); }
+      .hero-ladder strong { min-width: 35px; color: var(--coral); font-size: .73rem; letter-spacing: .1em; }
+      .hero-ladder span { font-weight: 700; }
+      .hero-ladder i { width: 1px; height: 14px; margin-left: 18px; background: var(--mint); opacity: .75; }
+      .section { margin-top: 106px; padding-top: 34px; border-top: 1px solid var(--line); }
+      .section-heading { display: flex; justify-content: space-between; gap: 20px; align-items: end; }
+      .section-heading > span { color: var(--coral); font-size: .72rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+      .section-intro { max-width: 720px; color: var(--muted); }
+      .playbook-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 28px; }
+      .map-node { position: relative; min-height: 190px; padding: 18px; border: 1px solid var(--line); background: var(--panel-soft); transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+      .map-node:hover { transform: translateY(-3px); border-color: var(--mint); background: rgba(145, 228, 196, .1); }
+      .map-node:not(:last-child)::after { content: "→"; position: absolute; right: -18px; top: 50%; z-index: 2; color: var(--mint); font-size: 1.2rem; }
+      .map-node strong { display: block; color: var(--coral); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+      .map-node h3 { margin-top: 20px; }
+      .map-node p { margin-bottom: 14px; color: var(--muted); font-size: .9rem; }
+      .map-node a { color: var(--mint); font-size: .78rem; font-weight: 700; text-decoration: none; }
+      .topics { display: grid; gap: 16px; margin-top: 30px; }
+      .topic { display: grid; grid-template-columns: minmax(200px, .72fr) minmax(0, 1.28fr); gap: 28px; padding: 27px; border: 1px solid var(--line); background: var(--panel); box-shadow: 0 14px 36px rgba(0, 0, 0, .1); }
+      .topic-index { color: var(--coral); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+      .topic h3 { margin-top: 8px; font-size: 1.7rem; }
+      .principle { padding: 15px 17px; border-left: 3px solid var(--mint); color: var(--text); background: rgba(145, 228, 196, .07); font-size: 1.04rem; }
+      .topic-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+      .topic-content > div { min-width: 0; }
+      .topic-content h4, .scenario h4 { margin: 0 0 7px; color: var(--mint); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
+      .topic-content p, .topic-content li, .scenario p { color: var(--muted); font-size: .92rem; }
+      .topic-content ul { margin: 0; padding-left: 18px; }
+      .takeaway { grid-column: 1 / -1; margin: 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--lime) !important; font-weight: 700; }
+      .framework { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 3px; }
+      .framework span { padding: 8px 10px; border: 1px solid rgba(145, 228, 196, .3); color: var(--text); background: rgba(145, 228, 196, .07); font-size: .8rem; }
+      .framework b { color: var(--coral); font-size: .8rem; }
+      .scenario { grid-column: 1 / -1; padding: 17px; border: 1px dashed rgba(255, 174, 134, .45); background: rgba(255, 174, 134, .05); }
+      .scenario p { margin: 0; }
+      .breadth { display: grid; grid-template-columns: .8fr 1.2fr; gap: 18px; margin-top: 28px; }
+      .panel { padding: 22px; border: 1px solid var(--line); background: var(--panel); }
+      .panel p:last-child { margin-bottom: 0; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .chip { padding: 6px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: .78rem; }
+      .contract { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 28px; background: var(--line); }
+      .contract-panel { padding: 25px; background: var(--panel); }
+      .contract-panel:first-child { border-top: 3px solid var(--coral); }
+      .contract-panel:last-child { border-top: 3px solid var(--mint); }
+      .contract-panel h3 { margin-bottom: 17px; }
+      .expectations { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+      .expectations li { padding: 11px 12px; border: 1px solid var(--line); color: var(--muted); font-size: .9rem; cursor: help; }
+      .expectations li:hover, .expectations li:focus { border-color: var(--mint); color: var(--text); background: rgba(145, 228, 196, .08); }
+      .contract-message { margin: 18px 0 0; color: var(--lime); font-size: 1.15rem; font-weight: 700; text-align: center; }
+      .scale { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 28px; }
+      .scale-step { position: relative; min-height: 170px; padding: 18px; border: 1px solid var(--line); background: var(--panel-soft); }
+      .scale-step:not(:last-child)::after { content: "→"; position: absolute; top: 18px; right: -18px; z-index: 2; color: var(--coral); }
+      .scale-step strong { display: block; color: var(--coral); font-size: .7rem; letter-spacing: .11em; text-transform: uppercase; }
+      .scale-step h3 { margin-top: 25px; }
+      .scale-step p { margin: 0; color: var(--muted); font-size: .88rem; }
+      .final-note { max-width: 840px; margin-top: 32px; padding: 25px 0 0; border-top: 1px solid var(--line); font-size: clamp(1.35rem, 3vw, 2.1rem); letter-spacing: -.035em; line-height: 1.25; }
+      footer { padding-top: 26px; padding-bottom: 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+      .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
+      .reveal.visible { opacity: 1; transform: none; }
+      @media (max-width: 800px) {
+        .hero, .breadth { grid-template-columns: 1fr; }
+        .playbook-map, .scale { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .map-node:nth-child(2)::after { display: none; }
+        .map-node:nth-child(odd)::after { content: "↓"; top: auto; right: auto; bottom: -24px; left: 50%; }
+        .topic { grid-template-columns: 1fr; gap: 15px; }
+      }
+      @media (max-width: 560px) {
+        .header-inner { align-items: flex-start; flex-direction: column; padding-top: 14px; padding-bottom: 14px; }
+        main { padding-top: 54px; }
+        .hero-map { min-height: 340px; }
+        .playbook-map, .scale, .contract, .topic-content { grid-template-columns: 1fr; }
+        .map-node:not(:last-child)::after, .map-node:nth-child(odd)::after, .scale-step:not(:last-child)::after { content: "↓"; top: auto; right: auto; bottom: -25px; left: 50%; }
+        .map-node:nth-child(2)::after { display: block; }
+        .topic-content .takeaway, .topic-content .framework, .topic-content .scenario { grid-column: auto; }
+      }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { opacity: 1; transform: none; transition: none; } .map-node, .button { transition: none; } }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a class="brand" href="index.html"><img src="adeivass.jpeg" alt="" />Arul</a>
+        <a class="back" href="index.html">← Back to main site</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div>
+          <p class="eyebrow">Engineering leadership playbook</p>
+          <h1>How I build high-performing engineering teams.</h1>
+          <p class="lede">Technical leadership is more than architecture and code. It is creating the environment where engineers can make good decisions, own outcomes, challenge ideas, and continuously improve.</p>
+          <div class="actions"><a class="button primary" href="#map">Explore the playbook</a><a class="button" href="#mentoring">See how I mentor engineers</a></div>
+        </div>
+        <div class="hero-map" aria-label="Leadership scales from engineer to engineering organization">
+          <span class="map-label">Capability scales through context</span>
+          <div class="hero-ladder">
+            <div><strong>01</strong><span>Engineer</span></div><i></i>
+            <div><strong>02</strong><span>Team</span></div><i></i>
+            <div><strong>03</strong><span>Cross-team</span></div><i></i>
+            <div><strong>04</strong><span>Engineering organization</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="map">
+        <div class="section-heading"><div><p class="eyebrow">The operating model</p><h2>People → decisions → delivery → growth.</h2></div><span>Four connected systems</span></div>
+        <p class="section-intro">My leadership work moves through a connected loop. Better context helps people make better decisions; better decisions make execution more dependable; dependable execution creates room for growth.</p>
+        <div class="playbook-map">
+          <article class="map-node"><strong>01 · People</strong><h3>Make context shared.</h3><p>Communication, mentoring, and feedback create the conditions for honest contribution.</p><a href="#communication">Open people practices →</a></article>
+          <article class="map-node"><strong>02 · Decisions</strong><h3>Make trade-offs visible.</h3><p>Architecture and conflict become useful when the problem and constraints stay in view.</p><a href="#conflict">Open decision practices →</a></article>
+          <article class="map-node"><strong>03 · Execution</strong><h3>Make quality habitual.</h3><p>Engineering excellence connects design, delivery, production, and learning.</p><a href="#excellence">Open execution practices →</a></article>
+          <article class="map-node"><strong>04 · Growth</strong><h3>Make capability compound.</h3><p>AI, automation, and emerging leaders extend what the organization can do.</p><a href="#ai">Open growth practices →</a></article>
+        </div>
+      </section>
+
+      <section class="section" id="practices">
+        <div class="section-heading"><div><p class="eyebrow">The playbook</p><h2>How I work with teams.</h2></div><span>Principle · approach · scenario</span></div>
+        <div class="topics">
+          <article class="topic reveal" id="communication"><div><span class="topic-index">01 · Technical communication</span><h3>Complexity is part of engineering. Confusion does not have to be.</h3><p class="principle">I adapt the depth and language to the audience without losing the technical truth.</p></div><div class="topic-content"><div><h4>My approach</h4><p>I bring engineers, architects, product partners, and leadership to a shared understanding of the problem. I use diagrams, written decisions, demos, and direct conversations early, especially when risks or dependencies change.</p></div><div><h4>Decision frame</h4><p>Start with the problem and constraints. Show the options and trade-offs. State the decision and the next action clearly.</p></div><div class="framework"><span>Context</span><b>→</b><span>Problem</span><b>→</b><span>Options</span><b>→</b><span>Trade-offs</span><b>→</b><span>Decision</span><b>→</b><span>Action</span></div><div class="scenario"><h4>Typical situation</h4><p>A design makes sense to its author but not to a partner team or a leadership audience. I lead with the business problem, constraints, architecture, and consequences before implementation detail.</p></div><p class="takeaway">Good technical communication reduces rework because everyone understands the same problem and why the decision was made.</p></div></article>
+
+          <article class="topic reveal" id="ownership"><div><span class="topic-index">02 · Ownership and accountability</span><h3>Ownership without blame.</h3><p class="principle">Accountability means owning the outcome, not finding someone to blame.</p></div><div class="topic-content"><div><h4>My approach</h4><p>I make ownership explicit: service, API, deployment, production health, customer experience, and dependencies. I want engineers to surface risks before someone else discovers them.</p></div><div><h4>When things go wrong</h4><p>I ask what happened, why it happened, why we did not detect it earlier, and how we prevent it. The goal is stronger systems, not a culture of fear.</p></div><div class="framework"><span>Own</span><b>→</b><span>Understand</span><b>→</b><span>Fix</span><b>→</b><span>Learn</span><b>→</b><span>Prevent</span></div><div class="scenario"><h4>Typical situation</h4><p>A production issue occurs and the first conversation turns toward finding the person who introduced it. I redirect the team toward technical and process conditions, recovery, and prevention.</p></div><p class="takeaway">High-performing teams have strong accountability without creating a culture of fear.</p></div></article>
+
+          <article class="topic reveal" id="feedback"><div><span class="topic-index">03 · Feedback and coaching</span><h3>Feedback that makes engineers better.</h3><p class="principle">Feedback should improve the next decision, not punish the previous one.</p></div><div class="topic-content"><div><h4>My approach</h4><p>I keep feedback specific, timely, observable, actionable, and respectful. I focus on the behavior, decision, or engineering outcome, not a person's character. I also expect engineers to challenge my decisions.</p></div><div><h4>Coaching frame</h4><p>Observe what happened, explain the impact, discuss the context, agree on an improvement, and follow up. Feedback is a conversation, not a verdict.</p></div><div class="framework"><span>Observe</span><b>→</b><span>Explain</span><b>→</b><span>Discuss</span><b>→</b><span>Improve</span><b>→</b><span>Follow up</span></div><div class="scenario"><h4>Typical situation</h4><p>Instead of “improve your architecture skills,” I might say: “This design optimizes implementation simplicity but does not address failure recovery. Let us walk through the failure scenarios.”</p></div><p class="takeaway">The purpose of feedback is to make the person and the team better.</p></div></article>
+
+          <article class="topic reveal" id="mentoring"><div><span class="topic-index">04 · Mentoring engineers</span><h3>Developing engineers into decision makers.</h3><p class="principle">I do not want engineers to depend on me for answers. I want them to develop the ability to find good answers.</p></div><div class="topic-content"><div><h4>My approach</h4><p>I ask questions about alternatives, failure, scale, security, observability, deployment, and how the design changes when the requirements double. I encourage engineers to own designs, lead discussions, and explain trade-offs.</p></div><div><h4>Leadership move</h4><p>When an engineer proposes an architecture, I do not redesign it for them. I guide and challenge until they identify the resiliency, security, observability, and maintainability concerns themselves.</p></div><div class="framework"><span>Guide</span><b>→</b><span>Question</span><b>→</b><span>Challenge</span><b>→</b><span>Enable</span><b>→</b><span>Delegate</span></div><div class="scenario"><h4>Typical situation</h4><p>A junior engineer has a good solution but lacks confidence presenting it. I help them prepare the reasoning, give them the room to present, and stay close enough to support without taking the decision away.</p></div><p class="takeaway">A leader scales by developing other leaders.</p></div></article>
+
+          <article class="topic reveal" id="conflict"><div><span class="topic-index">05 · Technical conflict</span><h3>Turning disagreement into better decisions.</h3><p class="principle">Strong engineering teams do not avoid disagreement. They know how to use it.</p></div><div class="topic-content"><div><h4>My approach</h4><p>I separate facts from assumptions and keep disagreement focused on the problem. I compare reliability, scalability, security, cost, complexity, delivery speed, maintainability, and operational impact.</p></div><div><h4>Decision frame</h4><p>After a decision is made, the team moves forward together. The decision and its reasoning should be documented so the same argument does not have to be won repeatedly.</p></div><div class="framework"><span>Understand</span><b>→</b><span>Constraints</span><b>→</b><span>Facts</span><b>→</b><span>Trade-offs</span><b>→</b><span>Decide</span><b>→</b><span>Commit</span></div><div class="scenario"><h4>Typical situation</h4><p>Two engineers disagree on SQL versus NoSQL. The useful questions are access patterns, consistency, relationships, scale, operations, and failure scenarios, not which technology is “better.”</p></div><p class="takeaway">Good technical leadership turns disagreement into better engineering decisions.</p></div></article>
+
+          <article class="topic reveal" id="excellence"><div><span class="topic-index">06 · Engineering excellence</span><h3>Engineering excellence is a system.</h3><p class="principle">Engineering excellence is not a tool. It is a collection of habits.</p></div><div class="topic-content"><div><h4>My approach</h4><p>Quality runs through architecture, development, testing, security, CI/CD, deployment, observability, production, and continuous improvement. I reinforce reviews, automation, infrastructure as code, performance testing, and production readiness.</p></div><div><h4>Technical breadth</h4><p>I work across cloud-native and enterprise environments, from GCP, Cloud Run, GKE, Terraform, Jenkins, and Argo CD to Java, Spring Boot, React, databases, messaging, and AI/RAG systems.</p></div><div class="framework"><span>Design</span><b>→</b><span>Build</span><b>→</b><span>Test</span><b>→</b><span>Secure</span><b>→</b><span>Deploy</span><b>→</b><span>Observe</span><b>→</b><span>Improve</span></div><div class="scenario"><h4>Typical situation</h4><p>A team wants to move quickly by skipping operational readiness. I help make the risk visible and find the smallest quality gate that protects customers without turning delivery into ceremony.</p></div><p class="takeaway">The goal is not perfect software. It is teams that consistently make good engineering decisions.</p></div></article>
+
+          <article class="topic reveal" id="safety"><div><span class="topic-index">07 · Safety and standards</span><h3>Safe to speak. Accountable to deliver.</h3><p class="principle">Make it safe to speak up and make it unacceptable to ignore problems.</p></div><div class="topic-content"><div><h4>My approach</h4><p>Engineers should be able to say “I do not understand,” “I disagree,” “I made a mistake,” or “There may be a better solution.” Psychological safety does not mean lowering standards around quality, ownership, security, reliability, or customer impact.</p></div><div><h4>Leadership signal</h4><p>When someone raises a security or architecture concern late, I want the response to be gratitude, understanding, and problem solving, not discouragement.</p></div><div class="scenario"><h4>Typical situation</h4><p>A concern appears late in development. We address the issue and the conditions that made it hard to raise earlier, so honesty becomes part of the engineering system.</p></div><p class="takeaway">People should never have to choose between being honest and being safe.</p></div></article>
+
+          <article class="topic reveal" id="ai"><div><span class="topic-index">08 · AI-enabled culture</span><h3>AI as an engineering multiplier.</h3><p class="principle">AI should amplify engineering judgment, not replace it.</p></div><div class="topic-content"><div><h4>My approach</h4><p>I look across requirements, design, development, testing, documentation, deployment, and operations for measurable leverage. My interests include RAG, vector search, LLM applications, AI enablement, multi-agent concepts, and AI-assisted software engineering.</p></div><div><h4>Questions I ask</h4><ul><li>Where can AI reduce cycle time or improve quality?</li><li>Where must humans remain in the loop?</li><li>How do we protect data and validate generated output?</li><li>How do we measure whether it improves outcomes?</li></ul></div><div class="framework"><span>Identify</span><b>→</b><span>Experiment</span><b>→</b><span>Validate</span><b>→</b><span>Govern</span><b>→</b><span>Measure</span><b>→</b><span>Scale</span></div><div class="scenario"><h4>Typical situation</h4><p>AI-generated code speeds up development but introduces security or maintainability concerns. The answer is evaluation, review, testing, and clear ownership, not blind adoption or blanket rejection.</p></div><p class="takeaway">The goal is not to use AI everywhere. It is to use AI where it creates measurable engineering leverage.</p></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="contract">
+        <div class="section-heading"><div><p class="eyebrow">The leadership contract</p><h2>Expectations work both ways.</h2></div><span>Trust with standards</span></div>
+        <div class="contract">
+          <div class="contract-panel"><h3>What I expect from engineers</h3><ul class="expectations"><li title="Take responsibility for the outcome, not only the task.">Ownership</li><li title="Ask why, explore alternatives, and keep learning.">Curiosity</li><li title="Make reasoning, quality, and trade-offs visible.">Technical rigor</li><li title="Share risks early, especially when plans change.">Transparency</li><li title="Challenge ideas with respect and evidence.">Respectful challenge</li><li title="Care about quality, outcomes, and learning from mistakes.">Continuous learning</li></ul></div>
+          <div class="contract-panel"><h3>What engineers can expect from me</h3><ul class="expectations"><li title="I will explain the problem, constraints, and why the work matters.">Clear context</li><li title="I will make direction and decision rights explicit.">Clear direction</li><li title="I will give feedback that is specific and actionable.">Honest feedback</li><li title="I will help remove blockers and make room to lead.">Technical support</li><li title="I will recognize strong work and create opportunities to grow.">Opportunities to lead</li><li title="I will focus on learning and recovery when things go wrong.">Support without blame</li></ul></div>
+        </div>
+        <p class="contract-message">Leadership is a two-way contract.</p>
+      </section>
+
+      <section class="section" id="scale">
+        <div class="section-heading"><div><p class="eyebrow">The scaling model</p><h2>From individual contribution to organizational capability.</h2></div><span>Leadership changes shape</span></div>
+        <p class="section-intro">As teams grow, leadership has to scale beyond the individual. The work shifts from solving more problems personally to creating systems in which more people can solve the right problems well.</p>
+        <div class="scale">
+          <article class="scale-step"><strong>01 · Individual</strong><h3>Solve problems.</h3><p>Bring technical depth, make the next decision clearer, and model good engineering habits.</p></article>
+          <article class="scale-step"><strong>02 · Team</strong><h3>Enable engineers.</h3><p>Share context, coach decisions, distribute ownership, and build confidence through practice.</p></article>
+          <article class="scale-step"><strong>03 · Cross-team</strong><h3>Create alignment.</h3><p>Make dependencies, standards, interfaces, and trade-offs visible across boundaries.</p></article>
+          <article class="scale-step"><strong>04 · Organization</strong><h3>Create systems and leaders.</h3><p>Make capability repeatable through patterns, platforms, automation, and emerging leaders.</p></article>
+        </div>
+        <p class="final-note">The ultimate measure of technical leadership is not how much I personally deliver. It is how much capability I create across the organization.</p>
+      </section>
+    </main>
+    <footer>© 2026 Arularasan Deivassigamani · Engineering Leadership Playbook · People, decisions, delivery, and growth.</footer>
+    <script>
+      (() => {
+        const items = document.querySelectorAll(".reveal");
+        if (!("IntersectionObserver" in window)) { items.forEach(item => item.classList.add("visible")); return; }
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+        }), { threshold: .12 });
+        items.forEach(item => observer.observe(item));
+      })();
+    </script>
+    <script src="ask-arul-widget.js" defer></script>
+  </body>
+</html>
