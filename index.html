@@ -58,6 +58,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 18px;
+        flex-wrap: wrap;
       }
 
       .brand {
@@ -71,11 +72,13 @@
 
       .nav {
         display: flex;
+        flex: 1 1 640px;
         justify-content: flex-end;
         gap: 6px;
         margin: 0;
         padding: 0;
         list-style: none;
+        flex-wrap: wrap;
       }
 
       .nav a {
@@ -86,10 +89,54 @@
         text-transform: uppercase;
         padding: 8px 10px;
         border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        line-height: 1.2;
         transition: color 0.2s ease, background 0.2s ease;
       }
 
       .nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+      .nav-more {
+        position: relative;
+      }
+
+      .nav-more summary {
+        cursor: pointer;
+        color: var(--muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 8px 10px;
+        border-radius: 8px;
+        list-style: none;
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        line-height: 1.2;
+        outline-offset: 2px;
+      }
+
+      .nav-more summary::-webkit-details-marker { display: none; }
+      .nav-more summary::after { content: " +"; color: var(--primary); }
+      .nav-more[open] summary, .nav-more summary:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+      .nav-more-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        z-index: 3;
+        display: grid;
+        min-width: 190px;
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(9, 24, 35, 0.98);
+        box-shadow: 0 18px 40px rgba(0,0,0,.28);
+      }
+
+      .nav-more-menu a { white-space: nowrap; }
 
       .container {
         max-width: 1180px;
@@ -518,13 +565,21 @@
           <ul class="nav">
             <li><a href="#home">Home</a></li>
             <li><a href="case-studies.html">Work</a></li>
-            <li><a href="ai-sdlc.html">Thinking</a></li>
-            <li><a href="ai-engineering-architect.html">AI Architect</a></li>
+            <li><a href="evolution-of-ai.html">Thinking</a></li>
             <li><a href="leadership-playbook.html">Leadership</a></li>
-            <li><a href="devops.html">DevOps</a></li>
-            <li><a href="evolution-of-ai.html">Evolution of AI</a></li>
-            <li><a href="agent-market.html">Agent Market</a></li>
-            <li><a href="kids-corner/ai-for-kids.html">Kids Corner</a></li>
+            <li class="nav-more">
+              <details>
+                <summary>Explore</summary>
+                <div class="nav-more-menu">
+                  <a href="ai-engineering-architect.html">AI Architect</a>
+                  <a href="ai-sdlc.html">AI SDLC</a>
+                  <a href="devops.html">DevOps</a>
+                  <a href="evolution-of-ai.html">Evolution of AI</a>
+                  <a href="agent-market.html">Agent Market</a>
+                  <a href="kids-corner/ai-for-kids.html">Kids Corner</a>
+                </div>
+              </details>
+            </li>
             <li><a href="#contact">Connect</a></li>
           </ul>
         </nav>
