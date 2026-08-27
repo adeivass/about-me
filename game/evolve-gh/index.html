@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVOLVE — A Tiny Daily World</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        grid-template-columns: 320px 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .date-badge {
+      font-size: 0.75rem;
+      background: var(--border);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+
+    .stats-group {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .stat-box {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-top: 2px;
+    }
+
+    /* Grid Simulation */
+    .viewport-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    #grid-container {
+      display: grid;
+      grid-template-columns: repeat(15, 1fr);
+      gap: 2px;
+      background: var(--border);
+      padding: 2px;
+      border-radius: 8px;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+    }
+
+    .cell {
+      background: #090d16;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      user-select: none;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    .cell:hover {
+      background: #1e293b;
+    }
+
+    /* Palette Bar for Tool Selection */
+    .palette-container {
+      margin-bottom: 0.75rem;
+    }
+
+    .palette-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+
+    .palette {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .tool-btn {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      transition: all 0.2s;
+    }
+
+    .tool-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      font-weight: bold;
+    }
+
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    button {
+      flex: 1;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    button.secondary {
+      background: var(--border);
+      color: var(--text-main);
+    }
+
+    button.secondary:hover {
+      background: #475569;
+    }
+
+    /* Discoveries List */
+    .discovery-list {
+      list-style: none;
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .discovery-item {
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    .discovery-item.unlocked {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .log-box {
+      font-family: monospace;
+      font-size: 0.75rem;
+      background: #050811;
+      border: 1px solid var(--border);
+      padding: 0.5rem;
+      border-radius: 6px;
+      height: 80px;
+      overflow-y: auto;
+      margin-top: 0.75rem;
+      color: #38bdf8;
+    }
+
+    .log-entry {
+      margin-bottom: 0.25rem;
+    }
+
+    /* Game Rules Styling */
+    .rules-section {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .rules-list {
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      line-height: 1.35;
+    }
+
+    .rules-list strong {
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Sidebar / Stats Controls -->
+    <div class="card">
+      <h1>EVOLVE <span class="date-badge" id="date-display">2026-08-26</span></h1>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Deterministic Daily Ecosystem</p>
+
+      <div class="stats-group">
+        <div class="stat-box">
+          <div class="stat-label">World Temp</div>
+          <div class="stat-value" id="val-temp">--°C</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Rainfall</div>
+          <div class="stat-value" id="val-rain">--</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Population</div>
+          <div class="stat-value" id="val-pop">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Generation</div>
+          <div class="stat-value" id="val-gen">1</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.25rem;">
+        <div class="stat-label">Discoveries</div>
+        <ul class="discovery-list" id="discovery-list">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+
+      <div class="controls">
+        <button id="btn-step">Tick Day</button>
+        <button id="btn-share" class="secondary">Share Result</button>
+      </div>
+
+      <!-- Game Rules Box -->
+      <div class="rules-section">
+        <div class="stat-label">📖 How to Play & Rules</div>
+        <ul class="rules-list">
+          <li><strong>🗓️ Daily Seed:</strong> World temperature, rainfall, and initial placement generate automatically based on today's date. Everyone gets the same initial world.</li>
+          <li><strong>⌛ Tick Day:</strong> Advances time by 1 step, triggering growth, feeding, and starvation across the grid.</li>
+          <li><strong>🌱 Plants:</strong> Spread to adjacent empty tiles. Spread faster near 💧 Water or during HIGH rainfall.</li>
+          <li><strong>🐛 Herbivores:</strong> Eat adjacent 🌱 Plants to reproduce. Starve if no plants are nearby.</li>
+          <li><strong>🐺 Predators:</strong> Eat adjacent 🐛 Herbivores. Die out if prey is missing.</li>
+          <li><strong>🪨 Rocks:</strong> Serve as permanent, indestructible terrain barriers.</li>
+          <li><strong>🏆 Discoveries & Score:</strong> Meet special world conditions to unlock hidden discoveries worth +100 bonus points each.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Simulation Main Viewport -->
+    <div class="card" style="display: flex; flex-direction: column;">
+      <div class="viewport-header">
+        <h2 style="font-size: 1.1rem;">Ecosystem Grid</h2>
+        <span style="font-size: 0.8rem; color: var(--text-muted);" id="status-text">Simulated locally</span>
+      </div>
+
+      <!-- Interactive Placement Palette -->
+      <div class="palette-container">
+        <div class="palette-label">Placer Tool</div>
+        <div class="palette">
+          <button class="tool-btn active" data-tool="🌱">🌱 Plant</button>
+          <button class="tool-btn" data-tool="💧">💧 Water</button>
+          <button class="tool-btn" data-tool="🐺">🐺 Predator</button>
+          <button class="tool-btn" data-tool="🪨">🪨 Rock</button>
+          <button class="tool-btn" data-tool="CLEAR">🧹 Clear</button>
+        </div>
+      </div>
+
+      <div id="grid-container"></div>
+
+      <div class="log-box" id="log-box"></div>
+    </div>
+  </div>
+
+  <script>
+    // --- 1. DETERMINISTIC PRNG ---
+    class SeededPRNG {
+      constructor(seed) {
+        this.m = 0x80000000;
+        this.a = 1103515245;
+        this.c = 12345;
+        this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1));
+      }
+      nextFloat() {
+        this.state = (this.a * this.state + this.c) % this.m;
+        return this.state / (this.m - 1);
+      }
+      nextInt(min, max) {
+        return Math.floor(this.nextFloat() * (max - min + 1)) + min;
+      }
+    }
+
+    function getStringSeed(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash << 5) - hash + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash);
+    }
+
+    // --- 2. GAME STATE & DISCOVERIES ---
+    const GRID_SIZE = 15;
+    const TODAY_STR = new Date().toISOString().split('T')[0];
+    const SEED = getStringSeed(TODAY_STR);
+    const rng = new SeededPRNG(SEED);
+
+    let activeTool = '🌱'; // Current selected placement tool
+
+    const DISCOVERIES = [
+      { id: 'photosynthesis', label: 'Photosynthesis', key: '🌱' },
+      { id: 'hydration', label: 'Irrigation', key: '💧' },
+      { id: 'herbivore', label: 'Herbivores', key: '🐛' },
+      { id: 'predator', label: 'Predators', key: '🐺' },
+      { id: 'heat_res', label: 'Heat Adaptation', key: '🔥' },
+      { id: 'overpopulation', label: 'Overcrowding', key: '💀' }
+    ];
+
+    let gameState = {
+      lastPlayed: TODAY_STR,
+      generation: 1,
+      population: 0,
+      discoveries: [],
+      grid: [] 
+    };
+
+    const worldConditions = {
+      temp: rng.nextInt(15, 42),
+      rain: ['LOW', 'MEDIUM', 'HIGH'][rng.nextInt(0, 2)],
+      predatorRisk: rng.nextFloat() > 0.5
+    };
+
+    // --- 3. INITIALIZATION & PERSISTENCE ---
+    function init() {
+      document.getElementById('date-display').innerText = TODAY_STR;
+      document.getElementById('val-temp').innerText = `${worldConditions.temp}°C`;
+      document.getElementById('val-rain').innerText = worldConditions.rain;
+
+      setupPaletteControls();
+      loadSavedState();
+      calculateOfflineProgress();
+      
+      if (!gameState.grid || gameState.grid.length === 0) {
+        setupInitialGrid();
+      }
+
+      render();
+    }
+
+    function setupPaletteControls() {
+      const buttons = document.querySelectorAll('.tool-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          buttons.forEach(b => b.classList.remove('active'));
+          const target = e.currentTarget;
+          target.classList.add('active');
+          activeTool = target.getAttribute('data-tool');
+        });
+      });
+    }
+
+    function setupInitialGrid() {
+      gameState.grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const val = rng.nextFloat();
+          if (val < 0.22) gameState.grid[r][c] = '🌱';
+          else if (val < 0.28) gameState.grid[r][c] = '🐛';
+          else if (val < 0.30 && worldConditions.predatorRisk) gameState.grid[r][c] = '🐺';
+        }
+      }
+    }
+
+    function loadSavedState() {
+      const raw = localStorage.getItem('evolve_game_state');
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          gameState = { ...gameState, ...parsed };
+        } catch(e) { console.error("Could not parse save state."); }
+      }
+    }
+
+    function saveState() {
+      gameState.lastPlayed = TODAY_STR;
+      localStorage.setItem('evolve_game_state', JSON.stringify(gameState));
+    }
+
+    function calculateOfflineProgress() {
+      if (!gameState.lastPlayed) return;
+      
+      const last = new Date(gameState.lastPlayed);
+      const today = new Date(TODAY_STR);
+      const diffTime = Math.abs(today - last);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays > 0) {
+        logMessage(`WELCOME BACK: ${diffDays} day(s) elapsed. World caught up offline!`);
+        for (let i = 0; i < Math.min(diffDays, 10); i++) {
+          runSimulationTick();
+        }
+      } else {
+        logMessage("World loaded. Click tiles to modify ecosystem.");
+      }
+    }
+
+    // --- 4. TILE INTERACTION ---
+    function handleCellClick(r, c) {
+      const newValue = activeTool === 'CLEAR' ? null : activeTool;
+      gameState.grid[r][c] = newValue;
+
+      if (newValue === '💧') {
+        unlockDiscovery('hydration');
+      } else if (newValue === '🌱') {
+        unlockDiscovery('photosynthesis');
+      }
+
+      saveState();
+      render();
+    }
+
+    // --- 5. SIMULATION ENGINE ---
+    function runSimulationTick() {
+      gameState.generation++;
+      const nextGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
+
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const cell = gameState.grid[r][c];
+          const neighbors = getNeighbors(r, c);
+          
+          if (cell === '🪨') {
+            nextGrid[r][c] = '🪨';
+          } else if (cell === '💧') {
+            nextGrid[r][c] = '💧';
+          } else if (cell === '🌱') {
+            unlockDiscovery('photosynthesis');
+            if (neighbors.includes('🐛')) {
+              nextGrid[r][c] = '🐛';
+            } else {
+              nextGrid[r][c] = '🌱';
+              const hasWater = neighbors.includes('💧');
+              const spreadChance = hasWater ? 0.35 : (worldConditions.rain === 'HIGH' ? 0.15 : 0.05);
+              if (Math.random() < spreadChance) {
+                spreadToEmpty(nextGrid, r, c, '🌱');
+              }
+            }
+          } else if (cell === '🐛') {
+            unlockDiscovery('herbivore');
+            if (neighbors.includes('🐺')) {
+              nextGrid[r][c] = '🐺';
+            } else if (!neighbors.includes('🌱') && Math.random() < 0.4) {
+              nextGrid[r][c] = null;
+            } else {
+              nextGrid[r][c] = '🐛';
+            }
+          } else if (cell === '🐺') {
+            unlockDiscovery('predator');
+            if (!neighbors.includes('🐛') && Math.random() < 0.5) {
+              nextGrid[r][c] = null;
+            } else {
+              nextGrid[r][c] = '🐺';
+            }
+          } else {
+            if (neighbors.includes('💧') && Math.random() < 0.2) {
+              nextGrid[r][c] = '🌱';
+            } else if (worldConditions.temp > 35 && Math.random() < 0.02) {
+              unlockDiscovery('heat_res');
+            } else if (neighbors.filter(n => n === '🌱').length >= 2 && Math.random() < 0.2) {
+              nextGrid[r][c] = '🌱';
+            }
+          }
+        }
+      }
+
+      gameState.grid = nextGrid;
+      saveState();
+    }
+
+    function getNeighbors(r, c) {
+      const neighbors = [];
+      const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+      dirs.forEach(([dr, dc]) => {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
+          if (gameState.grid[nr][nc]) neighbors.push(gameState.grid[nr][nc]);
+        }
+      });
+      return neighbors;
+    }
+
+    function spreadToEmpty(gridTarget, r, c, entity) {
+      const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+      const [dr, dc] = dirs[Math.floor(Math.random() * dirs.length)];
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
+        if (!gridTarget[nr][nc]) gridTarget[nr][nc] = entity;
+      }
+    }
+
+    function unlockDiscovery(id) {
+      if (!gameState.discoveries.includes(id)) {
+        gameState.discoveries.push(id);
+        const item = DISCOVERIES.find(d => d.id === id);
+        logMessage(`NEW DISCOVERY: ${item.key} ${item.label}`);
+      }
+    }
+
+    // --- 6. RENDER & UI ---
+    function render() {
+      document.getElementById('val-gen').innerText = gameState.generation;
+
+      const container = document.getElementById('grid-container');
+      container.innerHTML = '';
+      
+      let popCount = 0;
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const div = document.createElement('div');
+          div.className = 'cell';
+          const entity = gameState.grid[r][c];
+          
+          if (entity) {
+            div.innerText = entity;
+            if (entity === '🌱' || entity === '🐛' || entity === '🐺') popCount++;
+          }
+
+          div.addEventListener('click', () => handleCellClick(r, c));
+          container.appendChild(div);
+        }
+      }
+
+      if (popCount > (GRID_SIZE * GRID_SIZE) * 0.6) {
+        unlockDiscovery('overpopulation');
+      }
+
+      gameState.population = popCount;
+      document.getElementById('val-pop').innerText = gameState.population;
+
+      const discoveryContainer = document.getElementById('discovery-list');
+      discoveryContainer.innerHTML = '';
+      DISCOVERIES.forEach(d => {
+        const isUnlocked = gameState.discoveries.includes(d.id);
+        const li = document.createElement('li');
+        li.className = `discovery-item ${isUnlocked ? 'unlocked' : ''}`;
+        li.innerHTML = `<span>${isUnlocked ? '◉' : '○'}</span> ${isUnlocked ? d.key : '❓'} ${isUnlocked ? d.label : 'Locked Discovery'}`;
+        discoveryContainer.appendChild(li);
+      });
+    }
+
+    function logMessage(msg) {
+      const box = document.getElementById('log-box');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerText = `> ${msg}`;
+      box.appendChild(entry);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    // --- 7. LISTENERS & BOOT ---
+    document.getElementById('btn-step').addEventListener('click', () => {
+      runSimulationTick();
+      render();
+    });
+
+    document.getElementById('btn-share').addEventListener('click', () => {
+      const score = (gameState.population * 12) + (gameState.generation * 45) + (gameState.discoveries.length * 100);
+      const shareText = `EVOLVE #${TODAY_STR.replace(/-/g, '')}\nGen: ${gameState.generation} | Pop: ${gameState.population}\nDiscoveries: ${gameState.discoveries.length}/${DISCOVERIES.length}\nScore: ${score.toLocaleString()}\n\nPlay at: ${window.location.hostname}`;
+      
+      navigator.clipboard.writeText(shareText).then(() => {
+        alert("Result copied to clipboard!\n\n" + shareText);
+      });
+    });
+
+    init();
+  </script>
+</body>
+</html>
