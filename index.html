@@ -21,7 +21,7 @@
         --primary: #77d7ff;
         --primary-2: #8ef0c7;
         --accent: #98a8ff;
-        --shadow: 0 28px 60px rgba(6, 12, 20, 0.45);
+        --shadow: 0 18px 44px rgba(6, 12, 20, 0.24);
       }
 
       * { box-sizing: border-box; }
@@ -32,8 +32,7 @@
         margin: 0;
         font-family: Inter, "Segoe UI", Arial, sans-serif;
         background:
-          radial-gradient(circle at top left, rgba(119, 215, 255, 0.12), transparent 30%),
-          radial-gradient(circle at bottom right, rgba(142, 240, 199, 0.10), transparent 30%),
+          radial-gradient(circle at 50% 0%, rgba(119, 215, 255, 0.08), transparent 42%),
           var(--bg);
         color: var(--text);
         line-height: 1.6;
@@ -45,95 +44,103 @@
         position: sticky;
         top: 0;
         z-index: 20;
-        background: rgba(7, 21, 33, 0.75);
-        backdrop-filter: blur(12px);
+        background: rgba(7, 21, 33, 0.94);
+        backdrop-filter: blur(10px);
         border-bottom: 1px solid var(--line);
       }
 
       .page-header .inner {
         max-width: 1180px;
         margin: 0 auto;
-        padding: 18px 24px;
+        padding: 9px 24px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 18px;
-        flex-wrap: wrap;
+        gap: 24px;
       }
 
       .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        flex: 0 0 auto;
         font-weight: 800;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
         color: var(--text);
-        font-size: 0.82rem;
+        font-size: 0.78rem;
         text-decoration: none;
       }
+
+      .brand img {
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgba(119, 215, 255, 0.45);
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .page-header nav { min-width: 0; }
 
       .nav {
         display: flex;
-        flex: 1 1 640px;
+        align-items: center;
         justify-content: flex-end;
-        gap: 6px;
+        gap: 4px;
         margin: 0;
         padding: 0;
         list-style: none;
-        flex-wrap: wrap;
       }
 
-      .nav a {
-        color: var(--muted);
-        text-decoration: none;
-        font-size: 0.85rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        padding: 8px 10px;
-        border-radius: 8px;
+      .nav a,
+      .nav-more summary {
         display: inline-flex;
         align-items: center;
-        min-height: 40px;
+        min-height: 36px;
+        padding: 7px 10px;
+        border-radius: 7px;
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 600;
+        letter-spacing: 0.035em;
         line-height: 1.2;
-        transition: color 0.2s ease, background 0.2s ease;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transition: color 0.18s ease, background-color 0.18s ease;
       }
 
-      .nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-
-      .nav-more {
-        position: relative;
+      .nav a:hover,
+      .nav-more summary:hover,
+      .nav-more[open] summary {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.055);
       }
+
+      .nav-more { position: relative; }
 
       .nav-more summary {
         cursor: pointer;
-        color: var(--muted);
-        font-size: 0.85rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        padding: 8px 10px;
-        border-radius: 8px;
         list-style: none;
-        display: inline-flex;
-        align-items: center;
-        min-height: 40px;
-        line-height: 1.2;
-        outline-offset: 2px;
+        outline-offset: 3px;
       }
 
       .nav-more summary::-webkit-details-marker { display: none; }
-      .nav-more summary::after { content: " +"; color: var(--primary); }
-      .nav-more[open] summary, .nav-more summary:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+      .nav-more summary::after { content: "＋"; margin-left: 6px; color: var(--primary); font-size: 0.68rem; }
+      .nav-more[open] summary::after { content: "−"; }
 
       .nav-more-menu {
         position: absolute;
-        top: calc(100% + 8px);
+        top: calc(100% + 6px);
         right: 0;
-        z-index: 3;
+        z-index: 30;
         display: grid;
         min-width: 190px;
-        padding: 8px;
+        padding: 6px;
         border: 1px solid var(--line);
         border-radius: 10px;
-        background: rgba(9, 24, 35, 0.98);
-        box-shadow: 0 18px 40px rgba(0,0,0,.28);
+        background: #0b1b29;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
       }
 
       .nav-more-menu a { white-space: nowrap; }
@@ -144,115 +151,61 @@
         padding: 28px 24px 80px;
       }
 
-      .section-rail { display: none; }
-
-      @media (min-width: 1200px) {
-        .section-rail {
-          position: fixed;
-          top: 50%;
-          left: 16px;
-          z-index: 15;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          width: 128px;
-          padding-left: 16px;
-          opacity: 0;
-          pointer-events: none;
-          transform: translate(-12px, -50%);
-          transition: opacity 0.35s ease, transform 0.35s ease;
-        }
-
-        .section-rail::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 1px;
-          background: var(--line);
-        }
-
-        body.section-rail-visible .section-rail {
-          opacity: 1;
-          pointer-events: auto;
-          transform: translate(0, -50%);
-        }
-
-        .section-rail a {
-          color: var(--muted);
-          font-size: 0.7rem;
-          font-weight: 700;
-          letter-spacing: 0.07em;
-          padding: 5px 0;
-          text-decoration: none;
-          text-transform: uppercase;
-          transition: color 0.2s ease, transform 0.2s ease;
-        }
-
-        .section-rail a:hover, .section-rail a.active {
-          color: var(--primary);
-          transform: translateX(4px);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .section-rail, .section-rail a { transition: none !important; }
-      }
-
       .hero {
         display: grid;
-        grid-template-columns: 1.25fr 0.95fr;
-        gap: 32px;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+        gap: clamp(36px, 7vw, 88px);
         align-items: center;
-        padding: 56px 0 26px;
+        padding: clamp(50px, 8vw, 96px) 0 68px;
       }
 
       .eyebrow {
         display: inline-block;
-        margin: 0 0 18px;
+        margin: 0 0 14px;
         color: var(--primary);
-        letter-spacing: 0.14em;
+        letter-spacing: 0.11em;
         text-transform: uppercase;
-        font-size: 0.74rem;
+        font-size: 0.72rem;
         font-weight: 700;
       }
 
-      h1 {
-        font-size: clamp(2.6rem, 5vw, 5rem);
-        line-height: 0.95;
-        letter-spacing: -0.06em;
-        margin: 0 0 18px;
-        max-width: 640px;
+      .hero h1 {
+        font-size: clamp(2.8rem, 5vw, 4.45rem);
+        line-height: 1.02;
+        letter-spacing: -0.055em;
+        margin: 0 0 20px;
+        max-width: 700px;
       }
 
       .headline {
-        font-size: clamp(1.2rem, 2vw, 1.75rem);
-        margin: 0 0 18px;
-        color: var(--muted);
-        line-height: 1.45;
-        max-width: 680px;
+        font-size: clamp(1.25rem, 2vw, 1.55rem);
+        margin: 0 0 14px;
+        color: var(--text);
+        line-height: 1.5;
+        max-width: 640px;
       }
 
-      .hero p:not(.eyebrow):not(.muted) {
+      .hero .intro-copy {
         color: var(--muted);
-        font-size: 1.04rem;
+        font-size: 0.98rem;
         line-height: 1.8;
-        max-width: 680px;
+        max-width: 620px;
+        margin: 0;
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 14px;
-        margin-top: 28px;
+        gap: 12px;
+        margin-top: 24px;
       }
 
       .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 14px 22px;
+        min-height: 48px;
+        padding: 12px 20px;
         border-radius: 999px;
         text-decoration: none;
         font-weight: 700;
@@ -279,68 +232,70 @@
         list-style: none;
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px 18px;
         padding: 0;
-        margin: 26px 0 0;
+        margin: 22px 0 0;
       }
 
       .mini-stats li {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--line);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         color: var(--muted);
-        border-radius: 999px;
-        padding: 9px 14px;
-        font-size: 0.76rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
+        font-size: 0.82rem;
+        white-space: nowrap;
+      }
+
+      .mini-stats li::before {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--primary);
       }
 
       .visual {
         position: relative;
-        min-height: 440px;
-        border-radius: 26px;
-        background: linear-gradient(180deg, rgba(11, 22, 34, 1), rgba(12, 17, 31, 0.8));
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow);
-        overflow: hidden;
+        display: grid;
+        justify-items: center;
+        gap: 12px;
+        padding: 0;
+        background: transparent;
       }
 
-      .visual::before {
-        content: "";
-        position: absolute;
-        inset: 28px;
-        border-radius: 18px;
-        background:
-          linear-gradient(90deg, rgba(119, 215, 255, 0.12), transparent 35%, rgba(142, 240, 199, 0.08)),
-          linear-gradient(rgba(148, 168, 231, 0.09), transparent 60%);
-        border: 1px solid rgba(151, 179, 219, 0.18);
+      .visual .avatar {
+        display: block;
+        width: min(100%, 330px);
+        aspect-ratio: 4 / 4.5;
+        object-fit: cover;
+        border: 1px solid rgba(239,242,255,.14);
+        border-radius: 48% 48% 22px 22px;
+        box-shadow: 0 16px 42px rgba(0,0,0,.2);
       }
 
-      .nodes {
-        position: absolute;
-        inset: 0;
-        background-image:
-          radial-gradient(circle at 20% 30%, rgba(122, 210, 255, 0.85) 0 3px, transparent 4px),
-          radial-gradient(circle at 72% 28%, rgba(142, 240, 199, 0.82) 0 3px, transparent 4px),
-          radial-gradient(circle at 42% 76%, rgba(152, 168, 255, 0.8) 0 3px, transparent 4px),
-          radial-gradient(circle at 82% 68%, rgba(119, 215, 255, 0.8) 0 3px, transparent 4px),
-          linear-gradient(rgba(137, 177, 255, 0.25), rgba(137, 177, 255, 0.25));
-        background-size: 100% 100%;
-        mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+      .visual-caption {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+        text-align: center;
       }
 
-      .connections {
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(120deg, transparent 0%, rgba(119, 215, 255, 0.18) 22%, transparent 28%, transparent 52%, rgba(142, 240, 199, 0.18) 58%, transparent 70%),
-          linear-gradient(32deg, transparent 10%, rgba(152, 168, 255, 0.16) 30%, transparent 40%, transparent 62%, rgba(119, 215, 255, 0.18) 72%, transparent 85%);
-        animation: pulse 9s ease-in-out infinite alternate;
+      .hero-copy,
+      .hero .visual {
+        animation: gentle-fade 0.4s ease-out both;
       }
 
-      @keyframes pulse {
-        0% { opacity: 0.5; transform: scale(0.98); }
-        100% { opacity: 1; transform: scale(1.04); }
+      .scroll-reveal {
+        opacity: 0;
+        transition: opacity 0.45s ease-out;
+      }
+
+      .scroll-reveal.is-visible { opacity: 1; }
+
+      @keyframes gentle-fade {
+        from { opacity: 0; }
+        to { opacity: 1; }
       }
 
       .module {
@@ -540,22 +495,100 @@
       }
 
       @media (max-width: 900px) {
-        .hero, .two-col, .grid-3, .impact-grid, .journey {
+        .two-col, .grid-3, .impact-grid, .journey {
           grid-template-columns: 1fr;
         }
 
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 30px;
+          padding-top: 42px;
+        }
+
+        .visual {
+          width: min(100%, 430px);
+          margin: 0 auto;
+        }
+
         .page-header .inner {
-          align-items: flex-start;
-          flex-direction: column;
+          align-items: center;
+          flex-direction: row;
+          gap: 12px;
+        }
+
+        .page-header nav {
+          min-width: 0;
+          flex: 0 1 auto;
         }
 
         .nav {
-          justify-content: flex-start;
-          flex-wrap: wrap;
+          flex: 0 1 auto;
+          justify-content: flex-end;
+          gap: 2px;
         }
       }
+
+      @media (max-width: 680px) {
+        .page-header .inner {
+          align-items: center;
+          flex-direction: row;
+          gap: 8px;
+          padding: 8px 12px;
+        }
+
+        .page-header nav {
+          width: auto;
+          flex: 0 1 auto;
+        }
+
+        .nav {
+          justify-content: flex-end;
+          flex-wrap: nowrap;
+          gap: 0;
+        }
+
+        .nav a,
+        .nav-more summary {
+          min-height: 34px;
+          padding: 6px 7px;
+          font-size: 0.66rem;
+          letter-spacing: 0.015em;
+        }
+
+        .brand {
+          gap: 7px;
+          font-size: 0.72rem;
+          letter-spacing: 0.04em;
+        }
+
+        .brand img {
+          width: 29px;
+          height: 29px;
+        }
+
+        .container {
+          padding-top: 18px;
+        }
+
+        .hero h1 {
+          font-size: clamp(2.65rem, 11vw, 4rem);
+        }
+
+        .hero-actions .button {
+          flex: 1 1 180px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after {
+          animation: none !important;
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+        .scroll-reveal { opacity: 1 !important; }
+      }
     </style>
-    <style>.avatar { position: absolute; top: 50%; left: 50%; z-index: 2; width: min(270px, 62%); aspect-ratio: 1; object-fit: cover; border: 8px solid rgba(239,242,255,.88); border-radius: 50%; box-shadow: 0 0 0 12px rgba(119,215,255,.13), 0 24px 50px rgba(0,0,0,.42); transform: translate(-50%, -50%); }.visual:has(.avatar)::after { content: ""; position: absolute; inset: 13%; z-index: 1; border: 1px solid rgba(119,215,255,.28); border-radius: 50%; animation: orbit 12s linear infinite; } @keyframes orbit { to { transform: rotate(360deg); } } @media (prefers-reduced-motion: reduce) { .visual:has(.avatar)::after { animation: none; } }</style>
   </head>
   <body>
     <header class="page-header">
@@ -563,18 +596,16 @@
         <a class="brand" href="#home" style="display: inline-flex; align-items: center; gap: 10px;"><img src="adeivass.jpeg" alt="" width="34" height="34" style="border: 2px solid rgba(119,215,255,.7); border-radius: 50%; object-fit: cover;" />Arul</a>
         <nav>
           <ul class="nav">
-            <li><a href="#home">Home</a></li>
             <li><a href="case-studies.html">Work</a></li>
-            <li><a href="evolution-of-ai.html">Thinking</a></li>
-            <li><a href="leadership-playbook.html">Leadership</a></li>
             <li class="nav-more">
               <details>
-                <summary>Explore</summary>
+                <summary>More</summary>
                 <div class="nav-more-menu">
+                  <a href="evolution-of-ai.html">Thinking</a>
+                  <a href="leadership-playbook.html">Leadership</a>
                   <a href="ai-engineering-architect.html">AI Architect</a>
                   <a href="ai-sdlc.html">AI SDLC</a>
                   <a href="devops.html">DevOps</a>
-                  <a href="evolution-of-ai.html">Evolution of AI</a>
                   <a href="agent-market.html">Agent Market</a>
                   <a href="kids-corner/ai-for-kids.html">Kids Corner</a>
                 </div>
@@ -586,45 +617,31 @@
       </div>
     </header>
 
-    <aside class="section-rail" aria-label="On this page">
-      <a href="#about">Journey</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Case Studies</a>
-      <a href="#ai-lab">AI Lab</a>
-      <a href="#architecture">Architecture</a>
-      <a href="#thinking">Thinking</a>
-      <a href="#contact">Connect</a>
-    </aside>
-
     <div class="container" id="home">
       <section class="hero">
-        <div>
-          <p class="eyebrow">AI • Cloud • Architecture • Innovation</p>
+        <div class="hero-copy">
+          <p class="eyebrow">Technical Lead · Cloud &amp; AI</p>
           <h1>Arularasan Deivassigamani</h1>
-          <p class="headline">Technical Lead &amp; Full Stack Cloud Engineer building systems that connect architecture, AI, and business outcomes.</p>
-          <p>
-            At Ford Motor Company, I help turn complex enterprise challenges into cloud-native,
-            scalable, and secure applications. With more than a decade in solution architecture and
-            hands-on engineering, I work across implementation and strategy to build systems that ship,
-            operate, and evolve.
+          <p class="headline">I help teams build thoughtful cloud and AI systems—and grow along the way.</p>
+          <p class="intro-copy">
+            I am a Technical Lead and Full Stack Cloud Engineer at Ford Motor Company. I bring
+            hands-on engineering and solution architecture together to solve complex problems, and
+            I enjoy sharing practical lessons that help engineers find confidence in their next step.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="case-studies.html">Explore My Work</a>
-            <a class="button secondary" href="#ai-lab">Explore My Thinking</a>
+            <a class="button primary" href="case-studies.html">Explore my work</a>
+            <a class="button secondary" href="leadership-playbook.html">How I lead &amp; mentor</a>
           </div>
           <ul class="mini-stats">
-            <li>Cloud Modernization</li>
-            <li>GCP &amp; DevOps</li>
-            <li>AI Systems</li>
-            <li>Distributed Platforms</li>
-            <li>Technical Leadership</li>
+            <li>10+ years in engineering</li>
+            <li>Cloud architecture</li>
+            <li>Mentoring engineers</li>
           </ul>
         </div>
 
-        <div class="visual" aria-label="Portrait of Arularasan Deivassigamani with an abstract engineering systems background">
+        <div class="visual">
           <img class="avatar" src="adeivass.jpeg" alt="Portrait of Arularasan Deivassigamani" />
-          <div class="nodes"></div>
-          <div class="connections"></div>
+          <p class="visual-caption">Good systems are built together.</p>
         </div>
       </section>
 
@@ -925,18 +942,22 @@
     </div>
     <script>
       (() => {
-        const rail = document.querySelector(".section-rail");
-        const links = [...rail.querySelectorAll("a")];
-        const sections = links.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
-        document.body.classList.add("section-rail-visible");
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReducedMotion || !("IntersectionObserver" in window)) return;
 
-        const observer = new IntersectionObserver(entries => {
-          const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (!visible) return;
-          links.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
-        }, { rootMargin: "-35% 0px -50% 0px", threshold: [0.05, 0.2, 0.5] });
+        const targets = document.querySelectorAll(
+          ".section-header, .module, .project-card, .impact-grid .card, .contact-box"
+        );
+        targets.forEach(target => target.classList.add("scroll-reveal"));
+        const observer = new IntersectionObserver((entries, currentObserver) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("scroll-reveal", "is-visible");
+            currentObserver.unobserve(entry.target);
+          });
+        }, { threshold: 0.12, rootMargin: "0px 0px -24px 0px" });
 
-        sections.forEach(section => observer.observe(section));
+        targets.forEach(target => observer.observe(target));
       })();
     </script>
     <script src="ask-arul-widget.js" defer></script>
