@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Daily Incident — adeivass.dev</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0a0d12;
+      --panel: #10151d;
+      --panel-2: #151b24;
+      --border: #252d38;
+      --text: #edf2f7;
+      --muted: #8b96a5;
+      --green: #42d392;
+      --red: #ff5c5c;
+      --yellow: #f5c451;
+      --blue: #6ea8fe;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    /* HEADER */
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .streak {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .streak strong {
+      color: var(--text);
+    }
+
+    /* HERO */
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px 45px;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      margin-bottom: 22px;
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: auto;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .hero-meta {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      border: 1px solid var(--border);
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* GAME */
+
+    .game {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .game-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .incident-number {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .timer {
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .timer.warning {
+      color: var(--yellow);
+    }
+
+    .timer.danger {
+      color: var(--red);
+    }
+
+    .game-body {
+      padding: 28px;
+    }
+
+    .incident-header {
+      margin-bottom: 28px;
+    }
+
+    .incident-header h2 {
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .incident-header p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ARCHITECTURE */
+
+    .architecture {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+      padding: 35px 15px;
+      background: #0c1118;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 28px;
+    }
+
+    .node {
+      width: 130px;
+      min-height: 82px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-2);
+      cursor: pointer;
+      transition: 0.2s ease;
+      position: relative;
+    }
+
+    .node:hover {
+      border-color: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    .node.selected {
+      border-color: var(--yellow);
+      box-shadow: 0 0 0 1px var(--yellow);
+    }
+
+    .node .icon {
+      font-size: 20px;
+    }
+
+    .node-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .node-status {
+      font-size: 10px;
+      color: var(--green);
+    }
+
+    .node.problem .node-status {
+      color: var(--red);
+    }
+
+    .arrow {
+      color: #46515f;
+      font-size: 20px;
+    }
+
+    /* CLUES */
+
+    .section-title {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .clues {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .clue {
+      padding: 16px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .clue-label {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    .clue-value {
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .clue-value.bad {
+      color: var(--red);
+    }
+
+    .clue-value.good {
+      color: var(--green);
+    }
+
+    /* ACTIONS */
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-top: 1px solid var(--border);
+      padding-top: 22px;
+    }
+
+    .selected-text {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .selected-text strong {
+      color: var(--text);
+    }
+
+    .primary-button {
+      border: none;
+      background: var(--text);
+      color: #080b0f;
+      border-radius: 9px;
+      padding: 12px 20px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-1px);
+      opacity: 0.9;
+    }
+
+    .primary-button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* RESULT */
+
+    .result {
+      display: none;
+      padding: 45px 30px;
+      text-align: center;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result-icon {
+      font-size: 44px;
+      margin-bottom: 15px;
+    }
+
+    .result h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .result-subtitle {
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+
+    .score {
+      font-size: 70px;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      margin-bottom: 30px;
+    }
+
+    .result-grid {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .result-stat {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .result-stat small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+
+    .result-stat strong {
+      font-size: 18px;
+    }
+
+    .explanation {
+      max-width: 650px;
+      margin: auto;
+      text-align: left;
+      padding: 20px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .explanation h3 {
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .explanation p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding-top: 30px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: var(--text);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 700px) {
+      .app {
+        width: min(100% - 20px, 1200px);
+        padding-top: 15px;
+      }
+
+      header {
+        padding-bottom: 18px;
+      }
+
+      .hero {
+        padding: 45px 10px 30px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .game-body {
+        padding: 18px;
+      }
+
+      .clues {
+        grid-template-columns: 1fr;
+      }
+
+      .architecture {
+        flex-direction: column;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .primary-button {
+        width: 100%;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="brand">
+      ADEIVASS<span>.DEV</span>
+    </div>
+
+    <div class="streak">
+      🔥 Streak <strong id="streak">0</strong>
+    </div>
+  </header>
+
+  <section class="hero">
+
+    <div class="eyebrow">
+      DAILY ENGINEERING INCIDENT
+    </div>
+
+    <h1>
+      Find the<br>
+      failure.
+    </h1>
+
+    <p>
+      One production system. One hidden failure.
+      You have 60 seconds to identify the root cause.
+    </p>
+
+    <div class="hero-meta">
+      <span class="badge">1 incident / day</span>
+      <span class="badge">60 seconds</span>
+      <span class="badge">No hints</span>
+    </div>
+
+  </section>
+
+
+  <main class="game">
+
+    <div class="game-top">
+
+      <div class="incident-number">
+        INCIDENT #<span id="incidentNumber">001</span>
+      </div>
+
+      <div class="timer" id="timer">
+        01:00
+      </div>
+
+    </div>
+
+
+    <!-- GAME AREA -->
+
+    <div id="gameArea">
+
+      <div class="game-body">
+
+        <div class="incident-header">
+
+          <h2 id="incidentTitle">
+            Checkout requests are timing out.
+          </h2>
+
+          <p id="incidentDescription">
+            Customers are reporting that checkout is extremely slow.
+            Traffic appears normal, but request latency has increased significantly.
+          </p>
+
+        </div>
+
+
+        <div class="section-title">
+          SYSTEM
+        </div>
+
+
+        <div class="architecture">
+
+          <div class="node" data-node="gateway">
+            <div class="icon">⇄</div>
+            <div class="node-name">API Gateway</div>
+            <div class="node-status">HEALTHY</div>
+          </div>
+
+          <div class="arrow">→</div>
+
+          <div class="node" data-node="order">
+            <div class="icon">▣</div>
+            <div class="node-name">Order API</div>
+            <div class="node-status">HEALTHY</div>
+          </div>
+
+          <div class="arrow">→</div>
+
+          <div class="node problem" data-node="database">
+            <div class="icon">▤</div>
+            <div class="node-name">Database</div>
+            <div class="node-status">DEGRADED</div>
+          </div>
+
+        </div>
+
+
+        <div class="section-title">
+          TELEMETRY
+        </div>
+
+
+        <div class="clues">
+
+          <div class="clue">
+            <div class="clue-label">
+              REQUEST TRAFFIC
+            </div>
+
+            <div class="clue-value good">
+              NORMAL
+            </div>
+          </div>
+
+
+          <div class="clue">
+            <div class="clue-label">
+              API CPU
+            </div>
+
+            <div class="clue-value good">
+              42%
+            </div>
+          </div>
+
+
+          <div class="clue">
+            <div class="clue-label">
+              DB CONNECTIONS
+            </div>
+
+            <div class="clue-value bad">
+              98%
+            </div>
+          </div>
+
+
+          <div class="clue">
+            <div class="clue-label">
+              CACHE HIT RATE
+            </div>
+
+            <div class="clue-value bad">
+              21% ↓
+            </div>
+          </div>
+
+
+          <div class="clue">
+            <div class="clue-label">
+              MEMORY
+            </div>
+
+            <div class="clue-value good">
+              51%
+            </div>
+          </div>
+
+
+          <div class="clue">
+            <div class="clue-label">
+              ERROR RATE
+            </div>
+
+            <div class="clue-value bad">
+              8.4% ↑
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="actions">
+
+          <div class="selected-text">
+            Selected:
+            <strong id="selectedNode">
+              Nothing
+            </strong>
+          </div>
+
+          <button
+            class="primary-button"
+            id="submitButton"
+            disabled
+          >
+            IDENTIFY ROOT CAUSE
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div class="result" id="result">
+
+      <div class="result-icon" id="resultIcon">
+        ✓
+      </div>
+
+      <h2 id="resultTitle">
+        ROOT CAUSE FOUND
+      </h2>
+
+      <p class="result-subtitle" id="resultSubtitle">
+        Excellent diagnosis.
+      </p>
+
+      <div class="score" id="score">
+        8,420
+      </div>
+
+
+      <div class="result-grid">
+
+        <div class="result-stat">
+          <small>DIAGNOSIS</small>
+          <strong id="diagnosisScore">+5,000</strong>
+        </div>
+
+        <div class="result-stat">
+          <small>SPEED</small>
+          <strong id="speedScore">+2,000</strong>
+        </div>
+
+        <div class="result-stat">
+          <small>ACCURACY</small>
+          <strong>+1,420</strong>
+        </div>
+
+      </div>
+
+
+      <div class="explanation">
+
+        <h3>
+          Engineering Insight
+        </h3>
+
+        <p id="explanationText">
+          Database connection pool exhaustion can cause requests
+          to wait for available connections even when application
+          CPU and memory look healthy.
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <footer>
+    Built for engineers who enjoy finding problems.
+    <br><br>
+    <strong>adeivass.dev</strong>
+  </footer>
+
+</div>
+
+
+<script>
+
+  /*
+   * ============================================
+   * DAILY INCIDENT DATA
+   * ============================================
+   */
+
+  const incidents = [
+
+    {
+      number: "001",
+
+      title: "Checkout requests are timing out.",
+
+      description:
+        "Customers are reporting that checkout is extremely slow. Traffic appears normal, but request latency has increased significantly.",
+
+      correctNode: "database",
+
+      explanation:
+        "Database connection pool exhaustion can cause requests to wait for available connections even when application CPU and memory look healthy.",
+
+      difficulty: "Engineer"
+    },
+
+    {
+      number: "002",
+
+      title: "Orders are disappearing from the processing queue.",
+
+      description:
+        "Order creation succeeds, but downstream fulfillment processing has slowed dramatically.",
+
+      correctNode: "order",
+
+      explanation:
+        "The Order API is experiencing downstream processing pressure. A service can remain reachable while becoming the bottleneck in asynchronous workflows.",
+
+      difficulty: "Engineer"
+    },
+
+    {
+      number: "003",
+
+      title: "The API suddenly became unreachable.",
+
+      description:
+        "Users are receiving intermittent gateway errors. Backend services appear healthy.",
+
+      correctNode: "gateway",
+
+      explanation:
+        "The API Gateway is the first component to investigate when requests fail before reaching otherwise healthy backend services.",
+
+      difficulty: "Apprentice"
+    }
+
+  ];
+
+
+  /*
+   * ============================================
+   * DAILY INCIDENT
+   * ============================================
+   */
+
+  const today = new Date();
+
+  const dayNumber =
+    Math.floor(
+      Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+      ) / 86400000
+    );
+
+  const incident =
+    incidents[
+      Math.abs(dayNumber) % incidents.length
+    ];
+
+
+  /*
+   * ============================================
+   * ELEMENTS
+   * ============================================
+   */
+
+  const incidentNumber =
+    document.getElementById("incidentNumber");
+
+  const incidentTitle =
+    document.getElementById("incidentTitle");
+
+  const incidentDescription =
+    document.getElementById("incidentDescription");
+
+  const selectedNode =
+    document.getElementById("selectedNode");
+
+  const submitButton =
+    document.getElementById("submitButton");
+
+  const timerElement =
+    document.getElementById("timer");
+
+  const gameArea =
+    document.getElementById("gameArea");
+
+  const result =
+    document.getElementById("result");
+
+  const resultTitle =
+    document.getElementById("resultTitle");
+
+  const resultSubtitle =
+    document.getElementById("resultSubtitle");
+
+  const resultIcon =
+    document.getElementById("resultIcon");
+
+  const scoreElement =
+    document.getElementById("score");
+
+  const diagnosisScore =
+    document.getElementById("diagnosisScore");
+
+  const speedScore =
+    document.getElementById("speedScore");
+
+  const explanationText =
+    document.getElementById("explanationText");
+
+  const streakElement =
+    document.getElementById("streak");
+
+
+  /*
+   * ============================================
+   * LOAD INCIDENT
+   * ============================================
+   */
+
+  incidentNumber.textContent =
+    incident.number;
+
+  incidentTitle.textContent =
+    incident.title;
+
+  incidentDescription.textContent =
+    incident.description;
+
+  explanationText.textContent =
+    incident.explanation;
+
+
+  /*
+   * ============================================
+   * STREAK
+   * ============================================
+   */
+
+  let streak =
+    Number(
+      localStorage.getItem("incidentStreak") || 0
+    );
+
+  streakElement.textContent =
+    streak;
+
+
+  /*
+   * ============================================
+   * NODE SELECTION
+   * ============================================
+   */
+
+  let selected = null;
+
+  const nodes =
+    document.querySelectorAll(".node");
+
+  nodes.forEach(node => {
+
+    node.addEventListener("click", () => {
+
+      nodes.forEach(n =>
+        n.classList.remove("selected")
+      );
+
+      node.classList.add("selected");
+
+      selected =
+        node.dataset.node;
+
+      selectedNode.textContent =
+        node.querySelector(".node-name").textContent;
+
+      submitButton.disabled = false;
+
+    });
+
+  });
+
+
+  /*
+   * ============================================
+   * TIMER
+   * ============================================
+   */
+
+  let seconds = 60;
+
+  let gameFinished = false;
+
+  function updateTimer() {
+
+    const minutes =
+      Math.floor(seconds / 60);
+
+    const remainingSeconds =
+      seconds % 60;
+
+    timerElement.textContent =
+      `${String(minutes).padStart(2, "0")}:${String(
+        remainingSeconds
+      ).padStart(2, "0")}`;
+
+
+    if (seconds <= 20) {
+
+      timerElement.classList.add("warning");
+
+    }
+
+    if (seconds <= 10) {
+
+      timerElement.classList.remove("warning");
+
+      timerElement.classList.add("danger");
+
+    }
+
+  }
+
+
+  updateTimer();
+
+
+  const timer =
+    setInterval(() => {
+
+      if (gameFinished) {
+        clearInterval(timer);
+        return;
+      }
+
+      seconds--;
+
+      updateTimer();
+
+      if (seconds <= 0) {
+
+        clearInterval(timer);
+
+        finishGame(false, true);
+
+      }
+
+    }, 1000);
+
+
+  /*
+   * ============================================
+   * SUBMIT
+   * ============================================
+   */
+
+  submitButton.addEventListener(
+    "click",
+    () => {
+
+      if (!selected || gameFinished)
+        return;
+
+      const correct =
+        selected === incident.correctNode;
+
+      finishGame(correct, false);
+
+    }
+  );
+
+
+  /*
+   * ============================================
+   * FINISH GAME
+   * ============================================
+   */
+
+  function finishGame(correct, timeout) {
+
+    gameFinished = true;
+
+    clearInterval(timer);
+
+    gameArea.style.display = "none";
+
+    result.classList.add("show");
+
+
+    if (correct) {
+
+      resultIcon.textContent = "✓";
+
+      resultTitle.textContent =
+        "ROOT CAUSE FOUND";
+
+      resultSubtitle.textContent =
+        "Excellent diagnosis.";
+
+      const baseScore = 5000;
+
+      const speed =
+        seconds * 50;
+
+      const total =
+        baseScore + speed;
+
+      scoreElement.textContent =
+        total.toLocaleString();
+
+      diagnosisScore.textContent =
+        `+${baseScore.toLocaleString()}`;
+
+      speedScore.textContent =
+        `+${speed.toLocaleString()}`;
+
+
+      streak++;
+
+      localStorage.setItem(
+        "incidentStreak",
+        streak
+      );
+
+      streakElement.textContent =
+        streak;
+
+    } else {
+
+      resultIcon.textContent =
+        timeout ? "⏱" : "×";
+
+      resultTitle.textContent =
+        timeout
+          ? "TIME'S UP"
+          : "WRONG DIAGNOSIS";
+
+      resultSubtitle.textContent =
+        timeout
+          ? "The incident escaped."
+          : "The selected component was not the root cause.";
+
+      scoreElement.textContent =
+        "0";
+
+      diagnosisScore.textContent =
+        "+0";
+
+      speedScore.textContent =
+        "+0";
+
+      /*
+       * Reset streak after failure.
+       */
+
+      streak = 0;
+
+      localStorage.setItem(
+        "incidentStreak",
+        0
+      );
+
+      streakElement.textContent =
+        "0";
+
+    }
+
+  }
+
+</script>
+
+</body>
+</html>

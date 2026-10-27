@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Daily Incident — Engineering Systems Game | adeivass.dev</title>
+  <meta name="description" content="Diagnose a different production engineering incident every day. Investigate systems, find root causes, and test your engineering instincts.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="site-header">
+      <div>
+        <div class="brand-title">ADEIVASS.DEV</div>
+        <div class="brand-sub">ENGINEERING LABS</div>
+      </div>
+      <nav class="nav-links">
+        <button id="btn-nav-history" class="nav-btn">History</button>
+        <button id="btn-nav-leaderboard" class="nav-btn">Leaderboard</button>
+      </nav>
+    </header>
+
+    <!-- LANDING SCREEN -->
+    <main id="screen-landing" class="screen active">
+      <section class="hero-section">
+        <h1 class="game-title">THE DAILY INCIDENT</h1>
+        <p class="game-tagline">One system. One failure. Three minutes. Find the root cause.</p>
+
+        <div class="landing-stats-card">
+          <div class="stat-row">
+            <div class="stat-item">
+              <div class="stat-label">Daily Streak</div>
+              <div id="landing-streak" class="stat-val">🔥 0</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Category</div>
+              <div id="landing-category" class="stat-val">LOADING</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Difficulty</div>
+              <div id="landing-difficulty" class="stat-val">LOADING</div>
+            </div>
+          </div>
+          <button id="btn-start-game" class="primary-btn">START INCIDENT</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ACTIVE GAME SCREEN -->
+    <main id="screen-game" class="screen">
+      <div class="game-status-bar">
+        <div>
+          <span id="incident-diff-badge" class="badge">ENGINEER</span>
+          <span id="incident-title" style="font-weight:700; margin-left:8px;">Incident Title</span>
+        </div>
+        <div id="timer-display" class="timer-display">03:00</div>
+        <div>
+          <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Investigations</div>
+          <div id="budget-dots" class="budget-dots"></div>
+        </div>
+      </div>
+
+      <div class="game-grid">
+        <!-- Left Panel: System Architecture & Telemetry -->
+        <div class="panel">
+          <div class="panel-title">System Architecture (Click Component)</div>
+          <div id="arch-svg-container" class="arch-diagram-container"></div>
+
+          <div class="panel-title">Initial Telemetry</div>
+          <div id="telemetry-grid" class="telemetry-grid"></div>
+        </div>
+
+        <!-- Right Panel: Investigation & Hypothesis -->
+        <div class="panel">
+          <div class="panel-title">Incident Brief</div>
+          <p id="incident-desc" style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:16px;"></p>
+
+          <div class="panel-title">Available Investigations</div>
+          <div id="investigation-options" class="investigation-list"></div>
+
+          <div class="panel-title">Investigation Terminal Logs</div>
+          <div id="log-terminal" class="log-terminal"></div>
+
+          <!-- Hypothesis Section -->
+          <div class="hypothesis-section">
+            <div class="panel-title">Identify Root Cause</div>
+            <div id="hypothesis-options" class="hypothesis-options"></div>
+            <button id="btn-submit-hypothesis" class="primary-btn" disabled>CONFIRM DIAGNOSIS</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RESULTS SCREEN -->
+    <main id="screen-result" class="screen">
+      <div class="result-card">
+        <div class="result-header">
+          <div id="result-title" class="result-status-title">ROOT CAUSE FOUND</div>
+          <div id="result-root-cause" style="color:var(--text-secondary); font-size:1.1rem;">-</div>
+        </div>
+
+        <div class="score-breakdown">
+          <div class="score-row">
+            <span>Diagnosis Success</span>
+            <span id="result-diagnosis-score">+0</span>
+          </div>
+          <div class="score-row">
+            <span>Speed Bonus</span>
+            <span id="result-speed-score">+0</span>
+          </div>
+          <div class="score-row">
+            <span>Investigation Efficiency</span>
+            <span id="result-efficiency-score">+0</span>
+          </div>
+          <div class="score-row total">
+            <span>TOTAL SCORE</span>
+            <span id="result-total-score">0</span>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          <div class="insight-title">Engineering Insight</div>
+          <div id="result-explanation" style="font-size:0.9rem; margin-bottom:8px;"></div>
+          <div id="result-lesson" style="font-size:0.85rem; color:var(--text-secondary); font-style:italic;"></div>
+        </div>
+
+        <div style="text-align:center; margin-bottom:20px;">
+          <div id="result-streak-display" style="font-size:1.2rem; font-weight:700; color:var(--accent-yellow);">🔥 1 DAY STREAK</div>
+        </div>
+
+        <div style="display:flex; gap:12px;">
+          <button id="btn-share-result" class="primary-btn">SHARE RESULT</button>
+          <button id="btn-result-done" class="secondary-btn" style="width:100%;">RETURN HOME</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- HISTORY SCREEN -->
+    <main id="screen-history" class="screen">
+      <div class="panel" style="max-width:800px; margin:0 auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 style="font-size:1.2rem;">INCIDENT HISTORY</h2>
+          <button id="btn-history-back" class="secondary-btn">Back</button>
+        </div>
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Incident</th>
+              <th>Difficulty</th>
+              <th>Score</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- LEADERBOARD MODAL -->
+    <div id="modal-leaderboard" class="modal-overlay">
+      <div class="modal-content">
+        <h3 style="font-size:1.1rem; margin-bottom:8px;">GLOBAL LEADERBOARD</h3>
+        <span class="badge badge-senior" style="margin-bottom:12px;">COMING SOON</span>
+        <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:20px;">
+          Global engineering leaderboards and team competition modes are currently under development for V2.
+        </p>
+        <button id="btn-close-modal" class="secondary-btn" style="width:100%;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="incidents.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
