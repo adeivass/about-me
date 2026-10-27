@@ -165,9 +165,14 @@
 
         .section-rail::before {
           content: "";
-          position: absolute;
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
           top: 0;
-          bottom: 0;
+            background: var(--primary);
+            margin: 0 9px 2px 0;
           left: 0;
           width: 1px;
           background: var(--line);
@@ -202,57 +207,59 @@
 
       .hero {
         display: grid;
-        grid-template-columns: 1.25fr 0.95fr;
-        gap: 32px;
+        grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+        gap: clamp(32px, 6vw, 72px);
         align-items: center;
-        padding: 56px 0 26px;
+        padding: clamp(44px, 7vw, 82px) 0 52px;
       }
 
       .eyebrow {
         display: inline-block;
-        margin: 0 0 18px;
+        margin: 0 0 14px;
         color: var(--primary);
-        letter-spacing: 0.14em;
+        letter-spacing: 0.11em;
         text-transform: uppercase;
-        font-size: 0.74rem;
+        font-size: 0.72rem;
         font-weight: 700;
       }
 
-      h1 {
-        font-size: clamp(2.6rem, 5vw, 5rem);
-        line-height: 0.95;
-        letter-spacing: -0.06em;
-        margin: 0 0 18px;
-        max-width: 640px;
+      .hero h1 {
+        font-size: clamp(2.8rem, 5.1vw, 4.65rem);
+        line-height: 1.02;
+        letter-spacing: -0.055em;
+        margin: 0 0 20px;
+        max-width: 700px;
       }
 
       .headline {
-        font-size: clamp(1.2rem, 2vw, 1.75rem);
-        margin: 0 0 18px;
-        color: var(--muted);
+        font-size: clamp(1.25rem, 2vw, 1.55rem);
+        margin: 0 0 14px;
+        color: var(--text);
         line-height: 1.45;
-        max-width: 680px;
+        max-width: 640px;
       }
 
-      .hero p:not(.eyebrow):not(.muted) {
+      .hero .intro-copy {
         color: var(--muted);
-        font-size: 1.04rem;
-        line-height: 1.8;
-        max-width: 680px;
+        font-size: 1rem;
+        line-height: 1.75;
+        max-width: 620px;
+        margin: 0;
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 14px;
-        margin-top: 28px;
+        gap: 12px;
+        margin-top: 24px;
       }
 
       .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 14px 22px;
+        min-height: 48px;
+        padding: 12px 20px;
         border-radius: 999px;
         text-decoration: none;
         font-weight: 700;
@@ -279,68 +286,55 @@
         list-style: none;
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px 18px;
         padding: 0;
-        margin: 26px 0 0;
+        margin: 22px 0 0;
       }
 
       .mini-stats li {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--line);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         color: var(--muted);
-        border-radius: 999px;
-        padding: 9px 14px;
-        font-size: 0.76rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
+        font-size: 0.82rem;
+        white-space: nowrap;
+      }
+
+      .mini-stats li::before {
+        content: "";
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--primary);
       }
 
       .visual {
         position: relative;
-        min-height: 440px;
-        border-radius: 26px;
-        background: linear-gradient(180deg, rgba(11, 22, 34, 1), rgba(12, 17, 31, 0.8));
+        display: grid;
+        justify-items: center;
+        gap: 14px;
+        padding: 16px;
         border: 1px solid var(--line);
-        box-shadow: var(--shadow);
-        overflow: hidden;
+        border-radius: 28px;
+        background: linear-gradient(145deg, rgba(255,255,255,0.045), rgba(119,215,255,0.035));
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
       }
 
-      .visual::before {
-        content: "";
-        position: absolute;
-        inset: 28px;
-        border-radius: 18px;
-        background:
-          linear-gradient(90deg, rgba(119, 215, 255, 0.12), transparent 35%, rgba(142, 240, 199, 0.08)),
-          linear-gradient(rgba(148, 168, 231, 0.09), transparent 60%);
-        border: 1px solid rgba(151, 179, 219, 0.18);
+      .visual .avatar {
+        display: block;
+        width: min(100%, 360px);
+        aspect-ratio: 4 / 4.4;
+        object-fit: cover;
+        border: 1px solid rgba(239,242,255,.18);
+        border-radius: 20px;
+        box-shadow: 0 14px 36px rgba(0,0,0,.24);
       }
 
-      .nodes {
-        position: absolute;
-        inset: 0;
-        background-image:
-          radial-gradient(circle at 20% 30%, rgba(122, 210, 255, 0.85) 0 3px, transparent 4px),
-          radial-gradient(circle at 72% 28%, rgba(142, 240, 199, 0.82) 0 3px, transparent 4px),
-          radial-gradient(circle at 42% 76%, rgba(152, 168, 255, 0.8) 0 3px, transparent 4px),
-          radial-gradient(circle at 82% 68%, rgba(119, 215, 255, 0.8) 0 3px, transparent 4px),
-          linear-gradient(rgba(137, 177, 255, 0.25), rgba(137, 177, 255, 0.25));
-        background-size: 100% 100%;
-        mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-      }
-
-      .connections {
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(120deg, transparent 0%, rgba(119, 215, 255, 0.18) 22%, transparent 28%, transparent 52%, rgba(142, 240, 199, 0.18) 58%, transparent 70%),
-          linear-gradient(32deg, transparent 10%, rgba(152, 168, 255, 0.16) 30%, transparent 40%, transparent 62%, rgba(119, 215, 255, 0.18) 72%, transparent 85%);
-        animation: pulse 9s ease-in-out infinite alternate;
-      }
-
-      @keyframes pulse {
-        0% { opacity: 0.5; transform: scale(0.98); }
-        100% { opacity: 1; transform: scale(1.04); }
+      .visual-caption {
+        color: var(--muted);
+        font-size: 0.82rem;
+        letter-spacing: 0.02em;
       }
 
       .module {
@@ -540,22 +534,74 @@
       }
 
       @media (max-width: 900px) {
-        .hero, .two-col, .grid-3, .impact-grid, .journey {
+        .two-col, .grid-3, .impact-grid, .journey {
           grid-template-columns: 1fr;
         }
 
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 30px;
+          padding-top: 42px;
+        }
+
+        .visual {
+          width: min(100%, 430px);
+          margin: 0 auto;
+        }
+
         .page-header .inner {
-          align-items: flex-start;
-          flex-direction: column;
+          align-items: center;
+          flex-direction: row;
+        }
+
+        .page-header nav {
+          min-width: 0;
+          flex: 1;
         }
 
         .nav {
+          flex: 0 1 auto;
+          justify-content: flex-end;
+          gap: 2px;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .page-header .inner {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .page-header nav {
+          width: 100%;
+        }
+
+        .nav {
+          width: 100%;
           justify-content: flex-start;
           flex-wrap: wrap;
+          overflow: visible;
+          padding-bottom: 3px;
+        }
+
+        .nav > li {
+          flex: 0 0 auto;
+        }
+
+        .container {
+          padding-top: 18px;
+        }
+
+        .hero h1 {
+          font-size: clamp(2.65rem, 11vw, 4rem);
+        }
+
+        .hero-actions .button {
+          flex: 1 1 180px;
         }
       }
     </style>
-    <style>.avatar { position: absolute; top: 50%; left: 50%; z-index: 2; width: min(270px, 62%); aspect-ratio: 1; object-fit: cover; border: 8px solid rgba(239,242,255,.88); border-radius: 50%; box-shadow: 0 0 0 12px rgba(119,215,255,.13), 0 24px 50px rgba(0,0,0,.42); transform: translate(-50%, -50%); }.visual:has(.avatar)::after { content: ""; position: absolute; inset: 13%; z-index: 1; border: 1px solid rgba(119,215,255,.28); border-radius: 50%; animation: orbit 12s linear infinite; } @keyframes orbit { to { transform: rotate(360deg); } } @media (prefers-reduced-motion: reduce) { .visual:has(.avatar)::after { animation: none; } }</style>
   </head>
   <body>
     <header class="page-header">
@@ -563,14 +609,13 @@
         <a class="brand" href="#home" style="display: inline-flex; align-items: center; gap: 10px;"><img src="adeivass.jpeg" alt="" width="34" height="34" style="border: 2px solid rgba(119,215,255,.7); border-radius: 50%; object-fit: cover;" />Arul</a>
         <nav>
           <ul class="nav">
-            <li><a href="#home">Home</a></li>
             <li><a href="case-studies.html">Work</a></li>
             <li><a href="evolution-of-ai.html">Thinking</a></li>
-            <li><a href="leadership-playbook.html">Leadership</a></li>
             <li class="nav-more">
               <details>
-                <summary>Explore</summary>
+                <summary>More</summary>
                 <div class="nav-more-menu">
+                  <a href="leadership-playbook.html">Leadership</a>
                   <a href="ai-engineering-architect.html">AI Architect</a>
                   <a href="ai-sdlc.html">AI SDLC</a>
                   <a href="devops.html">DevOps</a>
@@ -599,32 +644,29 @@
     <div class="container" id="home">
       <section class="hero">
         <div>
-          <p class="eyebrow">AI • Cloud • Architecture • Innovation</p>
+          <p class="eyebrow">Technical Lead · Cloud &amp; AI</p>
           <h1>Arularasan Deivassigamani</h1>
-          <p class="headline">Technical Lead &amp; Full Stack Cloud Engineer building systems that connect architecture, AI, and business outcomes.</p>
-          <p>
-            At Ford Motor Company, I help turn complex enterprise challenges into cloud-native,
-            scalable, and secure applications. With more than a decade in solution architecture and
-            hands-on engineering, I work across implementation and strategy to build systems that ship,
-            operate, and evolve.
+          <p class="headline">I build cloud and AI systems—and help the people behind them grow.</p>
+          <p class="intro-copy">
+            At Ford Motor Company, I am a Technical Lead and Full Stack Cloud Engineer. I connect
+            hands-on engineering with solution architecture to turn complex challenges into secure,
+            scalable systems with business value. I also enjoy mentoring engineers—making difficult
+            ideas clearer and helping people grow into their next challenge.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="case-studies.html">Explore My Work</a>
-            <a class="button secondary" href="#ai-lab">Explore My Thinking</a>
+            <a class="button primary" href="case-studies.html">View selected work</a>
+            <a class="button secondary" href="leadership-playbook.html">How I lead &amp; mentor</a>
           </div>
           <ul class="mini-stats">
-            <li>Cloud Modernization</li>
-            <li>GCP &amp; DevOps</li>
-            <li>AI Systems</li>
-            <li>Distributed Platforms</li>
-            <li>Technical Leadership</li>
+            <li>10+ years in engineering</li>
+            <li>Cloud &amp; solution architecture</li>
+            <li>Mentoring &amp; growth</li>
           </ul>
         </div>
 
-        <div class="visual" aria-label="Portrait of Arularasan Deivassigamani with an abstract engineering systems background">
+        <div class="visual">
           <img class="avatar" src="adeivass.jpeg" alt="Portrait of Arularasan Deivassigamani" />
-          <div class="nodes"></div>
-          <div class="connections"></div>
+          <p class="visual-caption">Thoughtful engineering. Practical outcomes.</p>
         </div>
       </section>
 
